@@ -118,9 +118,9 @@ export default function BookingTeam() {
                     <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5" htmlFor="subject">
                       Subject <span className="text-rose-500">*</span>
                     </label>
-                    <select id="subject" name="subject" required className="input-field" onChange={checkValidity} defaultValue="">
+                    <select id="subject" name="subject" required className="input-field" onChange={checkValidity} defaultValue="Maths">
                       <option value="" disabled>Select Subject</option>
-                      {SUBJECTS.map(s => <option key={s}>{s}</option>)}
+                      {SUBJECTS.map(s => <option key={s} value={s}>{s}</option>)}
                     </select>
                   </div>
                 </div>

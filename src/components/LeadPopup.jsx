@@ -93,9 +93,9 @@ export default function LeadPopup() {
 
               <div>
                 <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Subject *</label>
-                <select name="subject" required className="input-field text-sm py-2.5" onChange={checkValidity} defaultValue="">
+                <select name="subject" required className="input-field text-sm py-2.5" onChange={checkValidity} defaultValue="Maths">
                   <option value="" disabled>Select Subject</option>
-                  {SUBJECTS.map(s => <option key={s}>{s}</option>)}
+                  {SUBJECTS.map(s => <option key={s} value={s}>{s}</option>)}
                 </select>
               </div>
 

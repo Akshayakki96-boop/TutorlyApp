@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+
+
+</head>
+
+<body>
+
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="Images/skillbridge_logo_only.png" alt="SkillBridge Logo" />
+                <span class="brand-name">SkillBridge Tutors</span>
+            </a>
+
+            <div class="nav-links" id="nav-links">
+                <a href="index.html#about">About Us</a>
+                <a href="index.html#services">Our Services</a>
+                <a href="index.html#board-info">GCSE Board</a>
+                <a href="index.html#fees">Course Fees</a>
+                <a href="Blogs.html">Blog</a>
+                <a href="index.html#contact">Contact Us</a>
+            </div>
+
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav> 
+
+    <section class="blogs-container">
+        <h2 class="section-title">Latest GCSE Blogs and Study Tips</h2>
+
+        <!-- Blog Card 1 -->
+        <div class="blog-card">
+            <img src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=800&q=60"
+                alt="GCSE Study Tips">
+            <div class="blog-content">
+                <h3>Top 10 GCSE Revision Tips for Students</h3>
+                <p>Preparing for GCSE exams can feel overwhelming. Here are 10 practical revision tips to help students
+                    manage time, stay organised, and boost performance...</p>
+                <a href="#">Read More</a>
+            </div>
+        </div>
+
+        <!-- Blog Card 2 -->
+        <div class="blog-card">
+            <img src="https://images.pexels.com/photos/4145198/pexels-photo-4145198.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                alt="Classroom with desks and laptop">
+            <div class="blog-content">
+                <h3>Mastering GCSE Maths: A Complete Guide</h3>
+                <p>Maths is one of the most important GCSE subjects. Learn key strategies, common exam pitfalls, and how
+                    to tackle problem-solving questions effectively...</p>
+                <a href="#">Read More</a>
+            </div>
+        </div>
+
+        <!-- Blog Card 3 -->
+        <div class="blog-card">
+            <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=800&q=60"
+                alt="GCSE English">
+            <div class="blog-content">
+                <h3>How to Excel in GCSE English Exams</h3>
+                <p>GCSE English requires strong reading, writing, and analytical skills. Here’s how students can prepare
+                    effectively for both Language and Literature papers...</p>
+                <a href="#">Read More</a>
+            </div>
+        </div>
+
+        <!-- Blog Card 4 -->
+        <div class="blog-card">
+            <img src="https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&w=800&q=60"
+                alt="GCSE Success Mindset">
+            <div class="blog-content">
+                <h3>Building the Right Mindset for GCSE Success</h3>
+                <p>Success in GCSEs isn’t just about hard work; it’s also about the right mindset. Learn how confidence,
+                    planning, and resilience help students succeed...</p>
+                <a href="#">Read More</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>
+            &copy; 2025 SkillBridge Tutors – Connecting Students with the Right
+            Guidance. | <a style="cursor: pointer" id="privacyLink">Privacy Policy</a>
+        </p>
+    </footer>
+
+    <div id="privacyModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h2>Privacy Policy – SkillBridge Tutors</h2>
+            <p><strong>Effective Date:</strong>September 1,2025</p>
+
+            <h3>About Us</h3>
+            <p>We provide high-quality online tuition for <strong>Maths and English</strong>, tailored for students from
+                <strong>Year 1 to Year 10</strong>. Our experienced tutors ensure every child gets the attention they
+                deserve, building strong academic foundations and boosting confidence.
+            </p>
+
+            <h3>Information We Collect</h3>
+            <ul>
+                <li><strong>Personal Information</strong>: Name, email, phone number, login details.</li>
+                <li><strong>Student Information</strong>: Age, school year, learning requirements.</li>
+                <li><strong>Payment Information</strong>: Billing details (processed securely).</li>
+                <li><strong>Usage Data</strong>: How you interact with our app (pages, sessions, device info).</li>
+            </ul>
+
+            <h3>How We Use Your Information</h3>
+            <ul>
+                <li>Provide and improve our tuition services.</li>
+                <li>Schedule and manage tutoring sessions.</li>
+                <li>Communicate with parents and students.</li>
+                <li>Process payments securely.</li>
+                <li>Ensure a safe, personalized learning experience.</li>
+            </ul>
+
+            <h3>Data Sharing</h3>
+            <p>We do not sell or rent your data. We only share with tutors, service providers, or legal authorities if
+                required.</p>
+
+            <h3>Data Security</h3>
+            <p>We use strong security measures but cannot guarantee 100% security online.</p>
+
+            <h3>Your Rights</h3>
+            <p>You may access, update, or request deletion of your data, and opt out of marketing communications
+                anytime.</p>
+
+            <h3>Children’s Privacy</h3>
+            <p>Our services require parental consent. We do not knowingly collect info from children under 13 without
+                parental permission.</p>
+
+            <h3>Changes to This Policy</h3>
+            <p>We may update this policy and will post updates with the effective date.</p>
+
+            <h3>Contact Us</h3>
+            <p>📧 <strong>info@skillbridgetutors.com</strong></p>
+        </div>
+    </div>
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+        const links = navLinks.querySelectorAll('a');
+    const privacyLink = document.getElementById("privacyLink");
+    const privacyModal = document.getElementById("privacyModal");
+    const closeModal = document.getElementById("closeModal");
+    hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+    links.forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+        });
+    });
+    privacyLink.onclick = () => {
+        privacyModal.style.display = "block";
+    };
+
+    closeModal.onclick = () => {
+        privacyModal.style.display = "none";
+    };
+
+    window.onclick = (event) => {
+        if (event.target === privacyModal) {
+            privacyModal.style.display = "none";
+        }
+    };
+</script>
+</body>
+
+</html>

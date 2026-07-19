@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base ─── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply font-sans antialiased text-slate-900 bg-white dark:bg-slate-950 dark:text-slate-100;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', Inter, sans-serif;
+  }
+}
+
+/* ─── Reusable Components ─── */
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full font-semibold text-white
+           bg-gradient-to-r from-blue-700 to-purple-700
+           shadow-lg hover:shadow-glow-blue hover:-translate-y-0.5
+           transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full font-semibold text-blue-700
+           bg-white border-2 border-blue-200
+           shadow-md hover:shadow-lg hover:bg-blue-50 hover:-translate-y-0.5
+           transition-all duration-200 dark:bg-slate-800 dark:text-blue-300 dark:border-slate-600
+           focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+  }
+  .btn-outline-white {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full font-semibold text-white
+           border-2 border-white/70 hover:bg-white/10
+           transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2;
+  }
+  .card {
+    @apply bg-white dark:bg-slate-800 rounded-2xl shadow-card border border-slate-100 dark:border-slate-700
+           transition-all duration-300;
+  }
+  .card-hover {
+    @apply hover:shadow-card-hover hover:-translate-y-1;
+  }
+  .section-wrap {
+    @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  .section-tag {
+    @apply inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-semibold
+           bg-blue-50 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300 mb-4;
+  }
+  .section-heading {
+    @apply text-3xl md:text-4xl font-bold text-slate-900 dark:text-white text-center leading-tight;
+  }
+  .section-sub {
+    @apply text-lg text-slate-600 dark:text-slate-400 text-center max-w-2xl mx-auto mt-3;
+  }
+  .gradient-text {
+    @apply bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent;
+  }
+  .input-field {
+    @apply w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600
+           bg-white dark:bg-slate-700 text-slate-900 dark:text-white
+           placeholder-slate-400 dark:placeholder-slate-500
+           focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+           transition-all duration-200;
+  }
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-bold;
+  }
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { @apply bg-slate-100 dark:bg-slate-900; }
+::-webkit-scrollbar-thumb { @apply bg-blue-400 dark:bg-blue-700 rounded-full; }
+
+/* ─── Glassmorphism utility ─── */
+.glass {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.glass-dark {
+  background: rgba(15,23,42,0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* ─── Hero pattern overlay ─── */
+.hero-pattern {
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.12) 1px, transparent 0);
+  background-size: 28px 28px;
+}
+
+/* ─── Counter animation ─── */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.count-anim { animation: countUp 0.8s ease-out both; }

@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react'
 const RESPONSES = (msg) => {
   const m = msg.toLowerCase()
   if (/demo|free class|trial|book demo|book trial/.test(m))
-    return "You can book a FREE demo class by filling the form on this page, or contact us directly at 📧 info@skillbridgetutors.com or 📞 +44 7980 997368."
+    return "You can book a FREE demo class by filling the form on this page, or contact us directly at 📧 info@skillbridgetutors.com or 📞 +44 7451 295266."
   if (/enroll|enrol|admission|join/.test(m))
     return "To enrol your child, simply submit the enquiry form on this page. Our team will contact you to understand your requirements and schedule classes."
   if (/subject|teach|courses/.test(m))
@@ -29,7 +29,7 @@ const RESPONSES = (msg) => {
   if (/online|mode/.test(m))
     return "All our classes are conducted online using interactive tools for effective learning."
   if (/contact|phone|call|email|whatsapp/.test(m))
-    return "You can contact us at 📞 +44 7980 997368, WhatsApp us, or email 📧 info@skillbridgetutors.com."
+    return "You can contact us at 📞 +44 7451 295266, WhatsApp us, or email 📧 info@skillbridgetutors.com."
   if (/location|address/.test(m))
     return "We are based in Derby, United Kingdom, and provide online tuition across the UK."
   return "I'm happy to help 😊 You can ask about booking a free demo, fees, subjects, class timings, or enrolment."

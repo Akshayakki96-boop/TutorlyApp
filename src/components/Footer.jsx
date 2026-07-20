@@ -121,8 +121,8 @@ export default function Footer() {
                   </a>
                 </li>
                 <li>
-                  <a href="https://wa.me/447980997368" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2">
-                    💬 +44 7980 997368
+                  <a href="https://wa.me/447451295266" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2">
+                    💬 +44 7451 295266
                   </a>
                 </li>
                 <li className="flex items-center gap-2">⏰ Mon–Fri: 9 AM – 6 PM</li>

@@ -3,7 +3,7 @@ import { useState } from 'react'
 const FAQS = [
   {
     q: 'How do I book a free demo class?',
-    a: 'You can book a FREE demo class by filling the form on this page, or contact us directly at 📧 info@skillbridgetutors.com or 📞 +44 7980 997368.',
+    a: 'You can book a FREE demo class by filling the form on this page, or contact us directly at 📧 info@skillbridgetutors.com or 📞 +44 7451 295266.',
   },
   {
     q: 'What subjects do you offer?',

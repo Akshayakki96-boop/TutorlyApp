@@ -59,8 +59,8 @@ const DETAILS = [
   {
     icon: '💬',
     label: 'WhatsApp',
-    value: '+44 7980 997368',
-    link: 'https://wa.me/447980997368',
+    value: '+44 7451 295266',
+    link: 'https://wa.me/447451295266',
     target: '_blank',
   },
   {

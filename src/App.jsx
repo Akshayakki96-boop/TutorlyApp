@@ -10,6 +10,7 @@ const CourseCatalog = lazy(() => import('./pages/CourseCatalog'))
 const StudentDash   = lazy(() => import('./pages/StudentDashboard'))
 const TutorDash     = lazy(() => import('./pages/TutorDashboard'))
 const ParentPortal  = lazy(() => import('./pages/ParentPortal'))
+const Blogs         = lazy(() => import('./pages/Blogs'))
 
 function PageLoader() {
   return (
@@ -34,6 +35,7 @@ export default function App() {
             <Route path="/student-dashboard" element={<StudentDash />} />
             <Route path="/tutor-dashboard"   element={<TutorDash />} />
             <Route path="/parent-portal"     element={<ParentPortal />} />
+            <Route path="/blogs"              element={<Blogs />} />
             <Route path="*"                  element={<Home />} />
           </Routes>
         </Suspense>

@@ -8,6 +8,7 @@ const NAV_LINKS = [
   { label: 'GCSE Board',  href: '#board-info', page: '/' },
   { label: 'Course Fees', href: '#fees',       page: '/' },
   { label: 'Courses',     href: '/courses',    page: null },
+  { label: 'Blogs',       href: '/blogs',      page: null },
   { label: 'Contact Us',  href: '#contact',    page: '/' },
 ]
 

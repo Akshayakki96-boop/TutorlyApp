@@ -17,7 +17,7 @@ import LeadPopup    from '../components/LeadPopup'
 
 export default function Home() {
   useEffect(() => {
-    document.title = 'Online Maths Tuition for Year 1–10 and GCSE | SkillBridge Tutors'
+    document.title = "Maths Tuition | UK's Trusted Online Tuition Platform"
 
     let metaDescription = document.querySelector('meta[name="description"]')
     if (!metaDescription) {
@@ -28,7 +28,7 @@ export default function Home() {
 
     metaDescription.setAttribute(
       'content',
-      'Expert online Maths tuition for Year 1–10 and GCSE students. Flexible lessons, experienced tutors, and affordable support from £8 per session.'
+      "Boost your child's confidence with expert maths tuition from the UK's trusted online tuition platform. Personalised lessons, experienced tutors, and proven results."
     )
   }, [])
 

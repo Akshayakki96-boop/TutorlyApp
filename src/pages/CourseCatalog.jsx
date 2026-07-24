@@ -75,7 +75,7 @@ export default function CourseCatalog() {
   const [activeLevel,   setActiveLevel]   = useState('All')
 
   useEffect(() => {
-    document.title = 'Maths Courses for Year 1–10 and GCSE | SkillBridge Tutors'
+    document.title = 'Mathematics Online Classes | Learn & Study Maths Online Courses'
 
     let metaDescription = document.querySelector('meta[name="description"]')
     if (!metaDescription) {

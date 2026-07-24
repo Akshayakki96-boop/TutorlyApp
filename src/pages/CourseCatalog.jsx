@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Footer from '../components/Footer'
 import Chatbot from '../components/Chatbot'
 import { Link } from 'react-router-dom'
@@ -74,6 +74,22 @@ export default function CourseCatalog() {
   const [activeSubject, setActiveSubject] = useState('All')
   const [activeLevel,   setActiveLevel]   = useState('All')
 
+  useEffect(() => {
+    document.title = 'Maths Courses for Year 1–10 and GCSE | SkillBridge Tutors'
+
+    let metaDescription = document.querySelector('meta[name="description"]')
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta')
+      metaDescription.setAttribute('name', 'description')
+      document.head.appendChild(metaDescription)
+    }
+
+    metaDescription.setAttribute(
+      'content',
+      'Explore expert-led Maths courses for primary, secondary, and GCSE students. Personalised online tuition, exam prep, and flexible lessons from £8 per hour.'
+    )
+  }, [])
+
   const filtered = COURSES.filter(c =>
     (activeSubject === 'All' || c.subject === activeSubject) &&
     (activeLevel   === 'All' || c.level === activeLevel)
@@ -92,10 +108,10 @@ export default function CourseCatalog() {
               📚 Course Catalogue
             </span>
             <h1 className="font-heading text-4xl md:text-5xl font-extrabold mb-4">
-              Explore Our Courses
+              Maths Courses for Year 1–10 and GCSE
             </h1>
             <p className="text-white/80 text-lg max-w-xl mx-auto">
-              Expert-led Maths tuition for Year 1–10 and GCSE. Starting from £8/hr.
+              Expert-led online Maths courses for primary, secondary, and GCSE learners. Starting from £8/hr.
             </p>
           </div>
         </div>

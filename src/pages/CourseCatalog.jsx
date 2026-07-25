@@ -86,7 +86,7 @@ export default function CourseCatalog() {
 
     metaDescription.setAttribute(
       'content',
-      'Explore expert-led Maths courses for primary, secondary, and GCSE students. Personalised online tuition, exam prep, and flexible lessons from £8 per hour.'
+      'Join the UK\'s trusted Mathematics Online Classes and Online Math Courses to learn and study maths online with expert tutors and flexible lessons.'
     )
   }, [])
 
@@ -108,10 +108,10 @@ export default function CourseCatalog() {
               📚 Course Catalogue
             </span>
             <h1 className="font-heading text-4xl md:text-5xl font-extrabold mb-4">
-              Maths Courses for Year 1–10 and GCSE
+              Explore Our Online Maths Courses
             </h1>
             <p className="text-white/80 text-lg max-w-xl mx-auto">
-              Expert-led online Maths courses for primary, secondary, and GCSE learners. Starting from £8/hr.
+              Join the UK's trusted Mathematics Online Classes and Online Math Courses to learn and study maths online with expert tutors and flexible lessons.
             </p>
           </div>
         </div>

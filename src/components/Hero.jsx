@@ -34,10 +34,8 @@ export default function Hero() {
             </div>
 
             <h1 className="font-heading text-4xl sm:text-5xl xl:text-6xl font-extrabold leading-tight mb-6">
-              Online Maths Tuition{' '}
-              <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
-                for Year 1–10 and GCSE
-              </span>
+              Maths Tuition - Learn from Expert Tutors
+              Anytime, Anywhere
             </h1>
 
             <p className="text-lg sm:text-xl text-white/80 leading-relaxed mb-4 max-w-lg">

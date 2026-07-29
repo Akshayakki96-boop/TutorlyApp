@@ -32,10 +32,6 @@ export const BLOGS = [
     content: [
       {
         type: 'heading',
-        text: 'Best Maths Tutors Online for Expert Support'
-      },
-      {
-        type: 'heading',
         text: 'How to Choose the Best Online Maths Tutor'
       },
       {
@@ -183,7 +179,7 @@ export const BLOGS = [
   {
     id: 5,
     slug: 'gcse-maths-online-learning',
-    title: 'GCSE Maths Online Learning: Improve Your Grades from Home',
+    title: 'GCSE Maths Online Learning: How to Improve Your Grades from Home',
     excerpt: 'Improve your grades with GCSE Maths online learning from home. Discover practical study tips, confidence-building strategies, and flexible support for exam success.',
     image: 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=1200&q=80',
     date: 'Jul 2026',
@@ -203,8 +199,12 @@ export const BLOGS = [
         text: 'Why Home Learning Works for Maths'
       },
       {
-        type: 'paragraph',
-        text: "Maths is one of those subjects where repetition and pace matter more than anything else. In a classroom of thirty kids, the teacher can't slow down for one student who's stuck on quadratic equations. Online sessions fix that. You go at your own speed, ask the question three times if you need to, and nobody's waiting on you. That's basically the whole appeal of GCSE maths online learning, it bends around the student instead of the other way round."
+        type: 'richText',
+        segments: [
+          { text: "Maths is one of those subjects where repetition and pace matter more than anything else. In a classroom of thirty kids, the teacher can't slow down for one student who's stuck on quadratic equations. Online sessions fix that. You go at your own speed, ask the question three times if you need to, and nobody's waiting on you. That's basically the whole appeal of " },
+          { text: 'GCSE maths online learning', href: 'https://skillbridgetutors.com/gcse-maths-tutor' },
+          { text: ', it bends around the student instead of the other way round.' },
+        ],
       },
       {
         type: 'heading',
@@ -227,8 +227,12 @@ export const BLOGS = [
         text: 'Making the Most of Study Time'
       },
       {
-        type: 'paragraph',
-        text: "If you're going to study maths online, treat it like a real subject, not a backup plan. Set a regular time each week. Don't skip sessions just because homework feels lighter that week. Ask your tutor to go over past paper questions, since GCSE Maths rewards pattern recognition almost as much as raw understanding."
+        type: 'richText',
+        segments: [
+          { text: "If you're going to " },
+          { text: 'study maths online', href: 'https://skillbridgetutors.com/courses' },
+          { text: ", treat it like a real subject, not a backup plan. Set a regular time each week. Don't skip sessions just because homework feels lighter that week. Ask your tutor to go over past paper questions, since GCSE Maths rewards pattern recognition almost as much as raw understanding." },
+        ],
       },
       {
         type: 'heading',

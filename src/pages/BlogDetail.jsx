@@ -100,6 +100,18 @@ export default function BlogDetail() {
                 )
               }
 
+              if (block.type === 'richText') {
+                return (
+                  <p key={index} className="text-slate-700 dark:text-slate-200 leading-relaxed text-base">
+                    {block.segments.map((seg, i) =>
+                      seg.href
+                        ? <a key={i} href={seg.href} target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">{seg.text}</a>
+                        : <span key={i}>{seg.text}</span>
+                    )}
+                  </p>
+                )
+              }
+
               if (block.type === 'faq') {
                 return <FAQAccordion key={index} faqs={block.faqs} />
               }

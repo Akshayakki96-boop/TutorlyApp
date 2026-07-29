@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
 
@@ -26,6 +26,7 @@ export default function Navigation() {
   const location  = useLocation()
   const navigate  = useNavigate()
   const isHome    = location.pathname === '/'
+  const servicesRef = useRef(null)
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 20)
@@ -34,6 +35,25 @@ export default function Navigation() {
   }, [])
 
   useEffect(() => { setIsOpen(false) }, [location])
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (!servicesRef.current) return
+      if (!servicesRef.current.contains(e.target)) {
+        setShowDropdown(false)
+      }
+    }
+
+    if (showDropdown) {
+      document.addEventListener('mousedown', handleClickOutside)
+      document.addEventListener('touchstart', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('touchstart', handleClickOutside)
+    }
+  }, [showDropdown])
 
   function handleNavClick(link) {
     setIsOpen(false)
@@ -87,19 +107,51 @@ export default function Navigation() {
 
           {/* ── Desktop Nav ── */}
           <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
-            {NAV_LINKS.map(link => (
-              <button
-                key={link.label}
-                onClick={() => handleNavClick(link)}
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-150 ${
-                  isScrolled || !isHome
-                    ? 'text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-slate-800'
-                    : 'text-white/90 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                {link.label}
-              </button>
-            ))}
+            {NAV_LINKS.map(link => {
+              if (link.label === 'Services') {
+                return (
+                  <div
+                    key="services"
+                    className="relative"
+                    ref={servicesRef}
+                    onMouseEnter={() => setShowDropdown(true)}
+                  >
+                    <button
+                      onClick={() => setShowDropdown(s => !s)}
+                      className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-150 ${
+                        isScrolled || !isHome
+                          ? 'text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-slate-800'
+                          : 'text-white/90 hover:text-white hover:bg-white/10'
+                      }`}
+                      aria-haspopup="true"
+                      aria-expanded={showDropdown}
+                    >
+                      Services
+                    </button>
+
+                    <div className={`absolute right-0 mt-2 w-56 rounded-lg shadow-lg ring-1 ring-slate-200 dark:ring-slate-800 bg-white dark:bg-slate-900 overflow-hidden transition-transform duration-150 ${showDropdown ? 'scale-100 opacity-100' : 'scale-95 opacity-0 pointer-events-none'}`}>
+                      <button onClick={() => { setShowDropdown(false); navigate('/gcse-maths-tutor') }} className="w-full text-left block px-4 py-3 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">GCSE Maths Tutor</button>
+                      <button onClick={() => { setShowDropdown(false); navigate('/maths-a-level-tutor') }} className="w-full text-left block px-4 py-3 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">Maths A Level Tutor</button>
+                      <button onClick={() => { setShowDropdown(false); navigate('/maths-tutor') }} className="w-full text-left block px-4 py-3 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">Maths Tutor</button>
+                    </div>
+                  </div>
+                )
+              }
+
+              return (
+                <button
+                  key={link.label}
+                  onClick={() => handleNavClick(link)}
+                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-150 ${
+                    isScrolled || !isHome
+                      ? 'text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-slate-800'
+                      : 'text-white/90 hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  {link.label}
+                </button>
+              )
+            })}
 
           </nav>
 
@@ -174,15 +226,32 @@ export default function Navigation() {
       {/* ── Mobile Menu ── */}
       <div className={`lg:hidden transition-all duration-300 overflow-hidden ${isOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'}`}>
         <div className="bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 px-4 py-3 space-y-1">
-          {NAV_LINKS.map(link => (
-            <button
-              key={link.label}
-              onClick={() => handleNavClick(link)}
-              className="w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-            >
-              {link.label}
-            </button>
-          ))}
+          {NAV_LINKS.map(link => {
+            if (link.label === 'Services') {
+              return (
+                <div key="mobile-services" className="space-y-1">
+                  <button className="w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300" onClick={() => { /* noop - expand in future */ }}>
+                    Services
+                  </button>
+                  <div className="pl-4">
+                    <button onClick={() => handleNavClick({ href: '/gcse-maths-tutor', page: null })} className="w-full text-left block px-4 py-2 rounded-lg text-sm text-slate-700 dark:text-slate-300 hover:bg-blue-50 dark:hover:bg-slate-800">GCSE Maths Tutor</button>
+                    <button onClick={() => handleNavClick({ href: '/maths-a-level-tutor', page: null })} className="w-full text-left block px-4 py-2 rounded-lg text-sm text-slate-700 dark:text-slate-300 hover:bg-blue-50 dark:hover:bg-slate-800">Maths A Level Tutor</button>
+                    <button onClick={() => handleNavClick({ href: '/maths-tutor', page: null })} className="w-full text-left block px-4 py-2 rounded-lg text-sm text-slate-700 dark:text-slate-300 hover:bg-blue-50 dark:hover:bg-slate-800">Maths Tutor</button>
+                  </div>
+                </div>
+              )
+            }
+
+            return (
+              <button
+                key={link.label}
+                onClick={() => handleNavClick(link)}
+                className="w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              >
+                {link.label}
+              </button>
+            )
+          })}
           <button
             onClick={handleBookDemo}
             className="w-full mt-2 btn-primary justify-center"

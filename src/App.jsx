@@ -12,6 +12,9 @@ const TutorDash     = lazy(() => import('./pages/TutorDashboard'))
 const ParentPortal  = lazy(() => import('./pages/ParentPortal'))
 const Blogs         = lazy(() => import('./pages/Blogs'))
 const BlogDetail    = lazy(() => import('./pages/BlogDetail'))
+const GCSEMathsTutor = lazy(() => import('./pages/GCSEMathsTutor'))
+const MathsALevelTutor = lazy(() => import('./pages/MathsALevelTutor'))
+const MathsTutor = lazy(() => import('./pages/MathsTutor'))
 
 function PageLoader() {
   return (
@@ -38,6 +41,9 @@ export default function App() {
             <Route path="/parent-portal"     element={<ParentPortal />} />
             <Route path="/blogs"              element={<Blogs />} />
             <Route path="/blogs/:slug"        element={<BlogDetail />} />
+            <Route path="/gcse-maths-tutor"  element={<GCSEMathsTutor />} />
+            <Route path="/maths-a-level-tutor" element={<MathsALevelTutor />} />
+            <Route path="/maths-tutor"         element={<MathsTutor />} />
             <Route path="*"                  element={<Home />} />
           </Routes>
         </Suspense>

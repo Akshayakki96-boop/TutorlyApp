@@ -4,6 +4,7 @@ import Chatbot from '../components/Chatbot'
 import { BLOGS } from '../data/blogsData'
 
 export default function Blogs() {
+  const sortedPosts = [...BLOGS].sort((a, b) => new Date(b.date) - new Date(a.date))
   return (
     <>
       <main className="pt-20 min-h-screen bg-slate-50 dark:bg-slate-950">
@@ -19,7 +20,7 @@ export default function Blogs() {
 
         <div className="section-wrap py-12">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {BLOGS.map(post => (
+            {sortedPosts.map(post => (
               <article key={post.id} className="card overflow-hidden flex flex-col hover:shadow-lg transition-shadow">
                 <div className="h-48 bg-slate-200 dark:bg-slate-800">
                   <img src={post.image} alt={post.title} className="w-full h-full object-cover" />

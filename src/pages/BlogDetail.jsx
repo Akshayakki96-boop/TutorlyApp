@@ -1,12 +1,29 @@
+import { useEffect } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { BLOGS } from '../data/blogsData'
 import Footer from '../components/Footer'
 import Chatbot from '../components/Chatbot'
+import FAQAccordion from '../components/FAQAccordion'
 
 export default function BlogDetail() {
   const { slug } = useParams()
   const navigate = useNavigate()
   const post = BLOGS.find(item => item.slug === slug)
+
+  useEffect(() => {
+    if (!post) return
+
+    document.title = post.metaTitle || post.title
+
+    let metaDescription = document.querySelector('meta[name="description"]')
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta')
+      metaDescription.setAttribute('name', 'description')
+      document.head.appendChild(metaDescription)
+    }
+
+    metaDescription.setAttribute('content', post.metaDescription || post.excerpt)
+  }, [post])
 
   if (!post) {
     return (
@@ -48,9 +65,51 @@ export default function BlogDetail() {
 
         <div className="section-wrap py-12 grid gap-10 lg:grid-cols-[1.4fr_0.8fr]">
           <article className="space-y-8">
-            {post.content.map((paragraph, index) => (
-              <p key={index} className="text-slate-700 dark:text-slate-200 leading-relaxed text-base">{paragraph}</p>
-            ))}
+            {post.content.map((block, index) => {
+              if (typeof block === 'string') {
+                return (
+                  <p key={index} className="text-slate-700 dark:text-slate-200 leading-relaxed text-base">
+                    {block}
+                  </p>
+                )
+              }
+
+              if (block.type === 'heading') {
+                if (block.text === 'Referrals and Trust') {
+                  return (
+                    <h3 key={index} className="font-heading text-xl md:text-2xl font-semibold text-slate-900 dark:text-white mt-4 mb-3">
+                      {block.text}
+                    </h3>
+                  )
+                }
+
+                return (
+                  <h2 key={index} className="font-heading text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mt-6 mb-4 leading-tight">
+                    {block.text}
+                  </h2>
+                )
+              }
+
+              if (block.type === 'list') {
+                return (
+                  <ul key={index} className="space-y-2 text-slate-700 dark:text-slate-200 leading-relaxed text-base list-disc pl-6">
+                    {block.items.map((item, itemIndex) => (
+                      <li key={itemIndex}>{item}</li>
+                    ))}
+                  </ul>
+                )
+              }
+
+              if (block.type === 'faq') {
+                return <FAQAccordion key={index} faqs={block.faqs} />
+              }
+
+              return (
+                <p key={index} className="text-slate-700 dark:text-slate-200 leading-relaxed text-base">
+                  {block.text}
+                </p>
+              )
+            })}
 
             <div className="rounded-3xl overflow-hidden shadow-lg">
               <img src={post.image} alt={post.title} className="w-full h-72 object-cover" />

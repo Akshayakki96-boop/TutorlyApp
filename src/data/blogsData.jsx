@@ -31,10 +31,6 @@ export const BLOGS = [
     metaDescription: 'Choose the Best Maths Tutors Online at SkillBridge Tutors for personalised Maths Tutoring, expert support, and flexible lessons to build confidence and skills.',
     content: [
       {
-        type: 'heading',
-        text: 'How to Choose the Best Online Maths Tutor'
-      },
-      {
         type: 'paragraph',
         text: "Picking a tutor for your child feels like a bigger decision than it should be. Hundreds of options exist online, everyone claims to be the best, and half the websites look identical. So how do you actually spot the difference between average and genuinely good? The search for best maths tutors online starts with knowing what your child needs, not just scrolling through ads."
       },

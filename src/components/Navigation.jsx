@@ -130,11 +130,29 @@ export default function Navigation() {
                     </button>
 
                     <div className={`absolute right-0 mt-2 w-56 rounded-lg shadow-lg ring-1 ring-slate-200 dark:ring-slate-800 bg-white dark:bg-slate-900 overflow-hidden transition-transform duration-150 ${showDropdown ? 'scale-100 opacity-100' : 'scale-95 opacity-0 pointer-events-none'}`}>
-                      <button onClick={() => { setShowDropdown(false); navigate('/gcse-maths-tutor') }} className="w-full text-left block px-4 py-3 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">GCSE Maths Tutor</button>
-                      <button onClick={() => { setShowDropdown(false); navigate('/maths-a-level-tutor') }} className="w-full text-left block px-4 py-3 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">Maths A Level Tutor</button>
-                      <button onClick={() => { setShowDropdown(false); navigate('/maths-tutor') }} className="w-full text-left block px-4 py-3 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">Maths Tutor</button>
+                      <a href="/gcse-maths-tutor" target="_blank" rel="noopener noreferrer" onClick={() => setShowDropdown(false)} className="block px-4 py-3 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:underline">GCSE Maths Tutor</a>
+                      <a href="/maths-a-level-tutor" target="_blank" rel="noopener noreferrer" onClick={() => setShowDropdown(false)} className="block px-4 py-3 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:underline">Maths A Level Tutor</a>
+                      <a href="/maths-tutor" target="_blank" rel="noopener noreferrer" onClick={() => setShowDropdown(false)} className="block px-4 py-3 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:underline">Maths Tutor</a>
                     </div>
                   </div>
+                )
+              }
+
+              if (link.label === 'Blogs') {
+                return (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-150 hover:underline ${
+                      isScrolled || !isHome
+                        ? 'text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-slate-800'
+                        : 'text-white/90 hover:text-white hover:bg-white/10'
+                    }`}
+                  >
+                    {link.label}
+                  </a>
                 )
               }
 
@@ -234,11 +252,25 @@ export default function Navigation() {
                     Services
                   </button>
                   <div className="pl-4">
-                    <button onClick={() => handleNavClick({ href: '/gcse-maths-tutor', page: null })} className="w-full text-left block px-4 py-2 rounded-lg text-sm text-slate-700 dark:text-slate-300 hover:bg-blue-50 dark:hover:bg-slate-800">GCSE Maths Tutor</button>
-                    <button onClick={() => handleNavClick({ href: '/maths-a-level-tutor', page: null })} className="w-full text-left block px-4 py-2 rounded-lg text-sm text-slate-700 dark:text-slate-300 hover:bg-blue-50 dark:hover:bg-slate-800">Maths A Level Tutor</button>
-                    <button onClick={() => handleNavClick({ href: '/maths-tutor', page: null })} className="w-full text-left block px-4 py-2 rounded-lg text-sm text-slate-700 dark:text-slate-300 hover:bg-blue-50 dark:hover:bg-slate-800">Maths Tutor</button>
+                    <a href="/gcse-maths-tutor" target="_blank" rel="noopener noreferrer" className="block px-4 py-2 rounded-lg text-sm text-slate-700 dark:text-slate-300 hover:bg-blue-50 dark:hover:bg-slate-800 hover:underline">GCSE Maths Tutor</a>
+                    <a href="/maths-a-level-tutor" target="_blank" rel="noopener noreferrer" className="block px-4 py-2 rounded-lg text-sm text-slate-700 dark:text-slate-300 hover:bg-blue-50 dark:hover:bg-slate-800 hover:underline">Maths A Level Tutor</a>
+                    <a href="/maths-tutor" target="_blank" rel="noopener noreferrer" className="block px-4 py-2 rounded-lg text-sm text-slate-700 dark:text-slate-300 hover:bg-blue-50 dark:hover:bg-slate-800 hover:underline">Maths Tutor</a>
                   </div>
                 </div>
+              )
+            }
+
+            if (link.label === 'Blogs') {
+              return (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full text-left block px-4 py-2.5 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 hover:underline transition-colors"
+                >
+                  {link.label}
+                </a>
               )
             }
 

@@ -138,7 +138,7 @@ export default function Navigation() {
                 )
               }
 
-              if (link.label === 'Blogs') {
+              if (link.label === 'Courses' || link.label === 'Blogs') {
                 return (
                   <a
                     key={link.label}
@@ -260,7 +260,7 @@ export default function Navigation() {
               )
             }
 
-            if (link.label === 'Blogs') {
+            if (link.label === 'Courses' || link.label === 'Blogs') {
               return (
                 <a
                   key={link.label}

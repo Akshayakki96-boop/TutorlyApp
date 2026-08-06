@@ -7,7 +7,7 @@
     "start": "vite",
     "dev": "vite",
     "build": "vite build",
-    "postbuild": "node scripts/inject-meta.js",
+    "postbuild": "node scripts/prerender-ssr.mjs",
     "preview": "vite preview"
   },
   "engines": {

@@ -1,9 +1,21 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
 import Chatbot from '../components/Chatbot'
 import { BLOGS } from '../data/blogsData'
 
 export default function Blogs() {
+  useEffect(() => {
+    document.title = 'Latest GCSE Blogs and Study Tips | SkillBridge Tutors'
+    let metaDescription = document.querySelector('meta[name="description"]')
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta')
+      metaDescription.setAttribute('name', 'description')
+      document.head.appendChild(metaDescription)
+    }
+    metaDescription.setAttribute('content', 'Practical advice, subject guides and exam strategies to help students prepare confidently for their GCSEs.')
+  }, [])
+
   const sortedPosts = [...BLOGS].sort((a, b) => new Date(b.date) - new Date(a.date))
   return (
     <>

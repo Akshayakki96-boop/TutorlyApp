@@ -7,7 +7,7 @@
  * Run automatically via the `postbuild` npm script.
  */
 
-import { readFileSync, writeFileSync, mkdirSync } from 'fs'
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
@@ -23,7 +23,7 @@ const ROUTES = [
   {
     route: '/',
     title: "Maths Tuition | UK's Trusted Online Tuition Platform",
-    description: "Find the best tutor for Maths & English Online Tuition in UK. Achieve success with our Online Maths & English Tutoring Service in UK. Learn from Experts",
+    description: "Boost your child's confidence with expert maths tuition from the UK's trusted online tuition platform. Personalised lessons, experienced tutors, and proven results.",
     canonical: `${BASE}/`,
   },
   {
@@ -138,7 +138,7 @@ function injectMeta(html, { title, description, canonical }) {
 
 // ── Generate files ────────────────────────────────────────────────────────────
 
-const baseHtml = readFileSync(join(distDir, 'index.html'), 'utf-8')
+const fallbackHtml = readFileSync(join(distDir, 'index.html'), 'utf-8')
 
 let generated = 0
 
@@ -150,8 +150,15 @@ for (const page of ROUTES) {
 
   mkdirSync(outputDir, { recursive: true })
 
-  const html = injectMeta(baseHtml, page)
-  writeFileSync(join(outputDir, 'index.html'), html, 'utf-8')
+  // Use the pre-rendered file for this route if it already exists (from
+  // vite-plugin-prerender), otherwise fall back to the base dist/index.html.
+  const routeFile = join(outputDir, 'index.html')
+  const sourceHtml = existsSync(routeFile)
+    ? readFileSync(routeFile, 'utf-8')
+    : fallbackHtml
+
+  const html = injectMeta(sourceHtml, page)
+  writeFileSync(routeFile, html, 'utf-8')
   console.log(`  ✓  ${page.route}`)
   generated++
 }

@@ -15,6 +15,7 @@ const BlogDetail    = lazy(() => import('./pages/BlogDetail'))
 const GCSEMathsTutor = lazy(() => import('./pages/GCSEMathsTutor'))
 const MathsALevelTutor = lazy(() => import('./pages/MathsALevelTutor'))
 const MathsTutor = lazy(() => import('./pages/MathsTutor'))
+const NotFound = lazy(() => import('./pages/NotFound'))
 
 function PageLoader() {
   return (
@@ -44,7 +45,7 @@ export default function App() {
             <Route path="/gcse-maths-tutor"  element={<GCSEMathsTutor />} />
             <Route path="/maths-a-level-tutor" element={<MathsALevelTutor />} />
             <Route path="/maths-tutor"         element={<MathsTutor />} />
-            <Route path="*"                  element={<Home />} />
+            <Route path="*"                  element={<NotFound />} />
           </Routes>
         </Suspense>
         <ScrollToTop />

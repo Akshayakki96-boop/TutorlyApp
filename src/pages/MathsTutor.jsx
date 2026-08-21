@@ -2,6 +2,27 @@ import { useEffect } from 'react'
 import Footer from '../components/Footer'
 import Chatbot from '../components/Chatbot'
 import FAQAccordion from '../components/FAQAccordion'
+import SchemaMarkup from '../components/SchemaMarkup'
+
+const MATHS_TUTOR_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Online Mathematics Tutors',
+  serviceType: 'Private Maths Tutor and Online Maths Tutoring',
+  description: 'Expert online mathematics tutors providing personalised maths tuition, flexible scheduling, targeted revision and support for school and exam success.',
+  provider: {
+    '@type': 'Organization',
+    name: 'SkillBridge Tutors',
+    url: 'https://skillbridgetutors.com/'
+  },
+  areaServed: 'United Kingdom',
+  audience: {
+    '@type': 'EducationalAudience',
+    audienceType: 'Primary, secondary and GCSE mathematics learners'
+  },
+  url: 'https://skillbridgetutors.com/maths-tutor',
+  keywords: ['online mathematics tutors', 'maths tuition online', 'private maths tutor', 'online maths tutoring']
+}
 
 const WHY_FEATURES = [
   { icon: '🎯', title: 'One-to-one live lessons',        desc: 'Full individual attention in every session.' },
@@ -56,7 +77,9 @@ export default function MathsTutor() {
   }, [])
 
   return (
-    <main className="min-h-screen bg-white dark:bg-slate-950">
+    <>
+      <SchemaMarkup data={MATHS_TUTOR_SCHEMA} />
+      <main className="min-h-screen bg-white dark:bg-slate-950">
 
       {/* ── Hero ── */}
       <section className="bg-gradient-to-br from-blue-800 via-blue-700 to-purple-700 pt-28 pb-20">
@@ -263,5 +286,6 @@ export default function MathsTutor() {
       <Footer />
       <Chatbot />
     </main>
+    </>
   )
 }

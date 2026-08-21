@@ -14,6 +14,18 @@ import Contact      from '../components/Contact'
 import Footer       from '../components/Footer'
 import Chatbot      from '../components/Chatbot'
 import LeadPopup    from '../components/LeadPopup'
+import SchemaMarkup from '../components/SchemaMarkup'
+
+const HOME_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'EducationalOrganization',
+  name: 'SkillBridge Tutors',
+  url: 'https://skillbridgetutors.com/',
+  description: 'Online maths tuition, GCSE maths tutor support, A-Level maths tutoring and personalised educational guidance for students across the UK.',
+  areaServed: ['United Kingdom', 'England', 'Scotland', 'Wales', 'Northern Ireland'],
+  knowsAbout: ['Maths Tutoring', 'GCSE Maths', 'A Level Maths', 'Online Learning', 'Exam Preparation'],
+  sameAs: ['https://skillbridgetutors.com/']
+}
 
 export default function Home() {
   useEffect(() => {
@@ -34,6 +46,7 @@ export default function Home() {
 
   return (
     <>
+      <SchemaMarkup data={HOME_SCHEMA} />
       <LeadPopup />
       <main>
         <Hero />

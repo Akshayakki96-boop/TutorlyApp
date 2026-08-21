@@ -4,6 +4,7 @@ import { BLOGS } from '../data/blogsData'
 import Footer from '../components/Footer'
 import Chatbot from '../components/Chatbot'
 import FAQAccordion from '../components/FAQAccordion'
+import SchemaMarkup from '../components/SchemaMarkup'
 
 export default function BlogDetail() {
   const { slug } = useParams()
@@ -38,8 +39,35 @@ export default function BlogDetail() {
     )
   }
 
+  const blogSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://skillbridgetutors.com/blogs/${post.slug}/`
+    },
+    headline: post.title,
+    description: post.metaDescription || post.excerpt,
+    image: post.image,
+    author: {
+      '@type': 'Organization',
+      name: post.author
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'SkillBridge Tutors',
+      url: 'https://skillbridgetutors.com/'
+    },
+    datePublished: '2026-07-01',
+    dateModified: '2026-07-01',
+    articleSection: post.category,
+    keywords: post.tags || [],
+    inLanguage: 'en-GB'
+  }
+
   return (
     <>
+      <SchemaMarkup data={blogSchema} />
       <main className="pt-20 min-h-screen bg-slate-50 dark:bg-slate-950">
         <div className="relative overflow-hidden bg-slate-900 text-white">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-slate-900 to-slate-800 opacity-90" />

@@ -2,6 +2,27 @@ import { useEffect } from 'react'
 import Footer from '../components/Footer'
 import Chatbot from '../components/Chatbot'
 import FAQAccordion from '../components/FAQAccordion'
+import SchemaMarkup from '../components/SchemaMarkup'
+
+const GCSE_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'GCSE Maths Tutor Online',
+  serviceType: 'GCSE Maths Tuition and Online Maths Tutor Support',
+  description: 'Personalised GCSE maths tuition online with expert tutors, structured lessons, exam preparation and confidence-building support for students across the UK.',
+  provider: {
+    '@type': 'Organization',
+    name: 'SkillBridge Tutors',
+    url: 'https://skillbridgetutors.com/'
+  },
+  areaServed: 'United Kingdom',
+  audience: {
+    '@type': 'EducationalAudience',
+    audienceType: 'GCSE maths students'
+  },
+  url: 'https://skillbridgetutors.com/gcse-maths-tutor',
+  keywords: ['GCSE Maths Tutor', 'GCSE Maths Tuition', 'Online GCSE Maths Tutor', 'GCSE maths course online']
+}
 
 const COURSE_TOPICS = [
   {
@@ -62,7 +83,9 @@ export default function GCSEMathsTutor() {
   }, [])
 
   return (
-    <main className="min-h-screen bg-white dark:bg-slate-950">
+    <>
+      <SchemaMarkup data={GCSE_SCHEMA} />
+      <main className="min-h-screen bg-white dark:bg-slate-950">
 
       {/* ── Hero ── */}
       <section className="bg-gradient-to-br from-blue-800 via-blue-700 to-purple-700 pt-28 pb-20">
@@ -267,5 +290,6 @@ export default function GCSEMathsTutor() {
       <Footer />
       <Chatbot />
     </main>
+    </>
   )
 }

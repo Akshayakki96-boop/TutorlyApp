@@ -5,7 +5,7 @@ const navItems = [
   { label: 'Dashboard', to: '/admin' },
   { label: 'Leads', to: '/admin/leads' },
   { label: 'Teachers', to: '/admin/teachers' },
-  { label: 'Demo Bookings', to: '/admin/demo' },
+  { label: 'Demo Admin', to: '/admin/demo' },
   { label: 'Retell Webhook', to: '/admin/retell-webhook' },
 ]
 

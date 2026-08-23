@@ -15,6 +15,12 @@ export default function AdminDemo() {
   const [checkingTeacher, setCheckingTeacher] = useState(false)
   const [teacherResult, setTeacherResult] = useState(null)
   const [processingBookingAction, setProcessingBookingAction] = useState(null)
+  const [slotSort, setSlotSort] = useState({ key: 'slotId', direction: 'asc' })
+  const [bookingSort, setBookingSort] = useState({ key: 'startTime', direction: 'asc' })
+  const [slotPage, setSlotPage] = useState(1)
+  const [bookingPage, setBookingPage] = useState(1)
+  const [slotRowsPerPage, setSlotRowsPerPage] = useState(10)
+  const [bookingRowsPerPage, setBookingRowsPerPage] = useState(10)
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
 
@@ -108,18 +114,19 @@ export default function AdminDemo() {
       return
     }
 
-    const headers = ['bookingId', 'studentName', 'email', 'status', 'slot', 'teacher', 'meetingLink']
+    const headers = ['bookingId', 'studentName', 'studentEmail', 'status', 'startTime', 'endTime', 'teacherName', 'meetingLink']
     const csvRows = [headers].concat(
       rows.map((booking) => {
         const bookingId = getValue(booking, ['bookingId', 'id', 'BookingId', 'Id'], '')
         const studentName = getValue(booking, ['studentName', 'fullName', 'StudentName', 'FullName'], '')
-        const email = getValue(booking, ['email', 'Email'], '')
+        const email = getValue(booking, ['studentEmail', 'email', 'Email'], '')
         const status = getValue(booking, ['status', 'Status'], '')
-        const slot = getValue(booking, ['slot', 'slotTime', 'Slot', 'SlotTime'], '')
+        const startTime = getValue(booking, ['startTime', 'StartTime'], '')
+        const endTime = getValue(booking, ['endTime', 'EndTime'], '')
         const teacher = getValue(booking, ['teacherName', 'teacher', 'TeacherName', 'Teacher'], '')
         const meetingLink = getValue(booking, ['meetingLink', 'meetingUrl', 'MeetingLink', 'MeetingUrl'], '')
 
-        return [bookingId, studentName, email, status, slot, teacher, meetingLink]
+        return [bookingId, studentName, email, status, startTime, endTime, teacher, meetingLink]
           .map((value) => `"${String(value ?? '').replace(/"/g, '""')}"`)
           .join(',')
       })
@@ -164,6 +171,54 @@ export default function AdminDemo() {
   function clearMessages() {
     setError('')
     setMessage('')
+  }
+
+  function getComparableValue(entity, key) {
+    if (!entity) return ''
+
+    const value = entity[key]
+    if (value === undefined || value === null || value === '') return ''
+
+    if (typeof value === 'number') return value
+    if (value instanceof Date) return value.getTime()
+
+    const date = new Date(value)
+    if (!Number.isNaN(date.getTime())) return date.getTime()
+
+    return String(value).toLowerCase()
+  }
+
+  function changeSlotSort(key) {
+    setSlotSort((prev) => ({
+      key,
+      direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc',
+    }))
+    setSlotPage(1)
+  }
+
+  function changeBookingSort(key) {
+    setBookingSort((prev) => ({
+      key,
+      direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc',
+    }))
+    setBookingPage(1)
+  }
+
+  function getPageNumbers(currentPage, totalPages) {
+    const pages = []
+    const maxVisible = 5
+    let startPage = Math.max(1, currentPage - 2)
+    let endPage = Math.min(totalPages, startPage + maxVisible - 1)
+
+    if (endPage - startPage + 1 < maxVisible) {
+      startPage = Math.max(1, endPage - maxVisible + 1)
+    }
+
+    for (let page = startPage; page <= endPage; page += 1) {
+      pages.push(page)
+    }
+
+    return pages
   }
 
   async function createSlot(e) {
@@ -338,6 +393,52 @@ export default function AdminDemo() {
     return status === bookingStatus
   })
 
+  const sortedSlots = [...slots].sort((a, b) => {
+    const aValue = getComparableValue(a, slotSort.key === 'slotId' ? 'id' : slotSort.key)
+    const bValue = getComparableValue(b, slotSort.key === 'slotId' ? 'id' : slotSort.key)
+
+    if (aValue === '' && bValue === '') return 0
+    if (aValue === '') return 1
+    if (bValue === '') return -1
+
+    const direction = slotSort.direction === 'asc' ? 1 : -1
+    if (typeof aValue === 'string' && typeof bValue === 'string') {
+      return aValue.localeCompare(bValue) * direction
+    }
+
+    return (Number(aValue) - Number(bValue)) * direction
+  })
+
+  const slotTotalPages = Math.max(1, Math.ceil(sortedSlots.length / slotRowsPerPage))
+  const effectiveSlotPage = Math.min(slotPage, slotTotalPages)
+  const pagedSlots = sortedSlots.slice((effectiveSlotPage - 1) * slotRowsPerPage, effectiveSlotPage * slotRowsPerPage)
+
+  const sortedBookings = [...filteredBookings].sort((a, b) => {
+    const isNumericKey = ['bookingId', 'id', 'slotId'].includes(bookingSort.key)
+    const aValue = getComparableValue(a, bookingSort.key === 'bookingId' ? 'bookingId' : bookingSort.key)
+    const bValue = getComparableValue(b, bookingSort.key === 'bookingId' ? 'bookingId' : bookingSort.key)
+
+    if (aValue === '' && bValue === '') return 0
+    if (aValue === '') return 1
+    if (bValue === '') return -1
+
+    const direction = bookingSort.direction === 'asc' ? 1 : -1
+
+    if (isNumericKey) {
+      return (Number(aValue) - Number(bValue)) * direction
+    }
+
+    if (typeof aValue === 'string' && typeof bValue === 'string') {
+      return aValue.localeCompare(bValue) * direction
+    }
+
+    return (Number(aValue) - Number(bValue)) * direction
+  })
+
+  const bookingTotalPages = Math.max(1, Math.ceil(sortedBookings.length / bookingRowsPerPage))
+  const effectiveBookingPage = Math.min(bookingPage, bookingTotalPages)
+  const pagedBookings = sortedBookings.slice((effectiveBookingPage - 1) * bookingRowsPerPage, effectiveBookingPage * bookingRowsPerPage)
+
   return (
     <section>
       <h1 className="text-3xl font-black text-slate-900">Demo Management</h1>
@@ -383,9 +484,36 @@ export default function AdminDemo() {
             <table className="min-w-full text-sm">
               <thead className="bg-slate-100 text-left text-slate-700">
                 <tr>
-                  <th className="px-4 py-2.5">Slot ID</th>
-                  <th className="px-4 py-2.5">Start</th>
-                  <th className="px-4 py-2.5">End</th>
+                  <th className="px-4 py-2.5">
+                    <button
+                      type="button"
+                      onClick={() => changeSlotSort('slotId')}
+                      className={`inline-flex items-center gap-2 rounded-md border px-2 py-1 text-xs font-bold transition ${slotSort.key === 'slotId' ? 'border-blue-200 bg-blue-50 text-blue-700' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}`}
+                    >
+                      <span>Slot ID</span>
+                      <span className="text-[10px] leading-none">{slotSort.key === 'slotId' ? (slotSort.direction === 'asc' ? '↑' : '↓') : '↕'}</span>
+                    </button>
+                  </th>
+                  <th className="px-4 py-2.5">
+                    <button
+                      type="button"
+                      onClick={() => changeSlotSort('startTime')}
+                      className={`inline-flex items-center gap-2 rounded-md border px-2 py-1 text-xs font-bold transition ${slotSort.key === 'startTime' ? 'border-blue-200 bg-blue-50 text-blue-700' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}`}
+                    >
+                      <span>Start</span>
+                      <span className="text-[10px] leading-none">{slotSort.key === 'startTime' ? (slotSort.direction === 'asc' ? '↑' : '↓') : '↕'}</span>
+                    </button>
+                  </th>
+                  <th className="px-4 py-2.5">
+                    <button
+                      type="button"
+                      onClick={() => changeSlotSort('endTime')}
+                      className={`inline-flex items-center gap-2 rounded-md border px-2 py-1 text-xs font-bold transition ${slotSort.key === 'endTime' ? 'border-blue-200 bg-blue-50 text-blue-700' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}`}
+                    >
+                      <span>End</span>
+                      <span className="text-[10px] leading-none">{slotSort.key === 'endTime' ? (slotSort.direction === 'asc' ? '↑' : '↓') : '↕'}</span>
+                    </button>
+                  </th>
                   <th className="px-4 py-2.5">Availability</th>
                   <th className="px-4 py-2.5">Action</th>
                 </tr>
@@ -396,12 +524,12 @@ export default function AdminDemo() {
                     <td className="px-4 py-3 text-slate-500" colSpan={5}>Loading slots...</td>
                   </tr>
                 )}
-                {!loadingSlots && slots.length === 0 && (
+                {!loadingSlots && sortedSlots.length === 0 && (
                   <tr>
                     <td className="px-4 py-3 text-slate-500" colSpan={5}>No slots found for this filter.</td>
                   </tr>
                 )}
-                {!loadingSlots && slots.map((slot, index) => {
+                {!loadingSlots && pagedSlots.map((slot, index) => {
                   const slotId = getId(slot) ?? `row-${index}`
                   const isAvailable = Boolean(getValue(slot, ['isAvailable', 'available', 'IsAvailable'], false))
                   const startValue = getValue(slot, ['startTime', 'startUtc', 'StartTime', 'StartUtc'])
@@ -442,6 +570,56 @@ export default function AdminDemo() {
                 })}
               </tbody>
             </table>
+          </div>
+
+          <div className="flex flex-col gap-3 border-t border-slate-200 px-4 py-3 text-sm text-slate-600 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-2">
+              <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Rows</label>
+              <select
+                value={slotRowsPerPage}
+                onChange={(e) => {
+                  setSlotRowsPerPage(Number(e.target.value))
+                  setSlotPage(1)
+                }}
+                className="rounded-lg border border-slate-300 px-2 py-1.5 text-sm"
+              >
+                <option value={5}>5</option>
+                <option value={10}>10</option>
+                <option value={20}>20</option>
+                <option value={50}>50</option>
+              </select>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setSlotPage((p) => Math.max(1, p - 1))}
+                disabled={effectiveSlotPage === 1}
+                className="rounded-lg border border-slate-300 px-2.5 py-1.5 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                Prev
+              </button>
+
+              {getPageNumbers(effectiveSlotPage, slotTotalPages).map((pageNumber) => (
+                <button
+                  key={pageNumber}
+                  type="button"
+                  onClick={() => setSlotPage(pageNumber)}
+                  className={`h-8 min-w-8 rounded-lg border px-2 text-sm font-semibold ${pageNumber === effectiveSlotPage ? 'border-blue-600 bg-blue-600 text-white' : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-50'}`}
+                >
+                  {pageNumber}
+                </button>
+              ))}
+
+              <button
+                type="button"
+                onClick={() => setSlotPage((p) => Math.min(slotTotalPages, p + 1))}
+                disabled={effectiveSlotPage >= slotTotalPages}
+                className="rounded-lg border border-slate-300 px-2.5 py-1.5 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                Next
+              </button>
+            </div>
           </div>
         </div>
 
@@ -547,7 +725,7 @@ export default function AdminDemo() {
             </button>
             <button
               type="button"
-              onClick={() => downloadCsv(filteredBookings, `demo-bookings-${bookingStatus.toLowerCase()}.csv`)}
+              onClick={() => downloadCsv(sortedBookings, `demo-bookings-${bookingStatus.toLowerCase()}.csv`)}
               className="rounded-lg bg-slate-800 px-3 py-1.5 text-sm font-semibold text-white hover:bg-slate-900"
             >
               Export CSV
@@ -559,10 +737,37 @@ export default function AdminDemo() {
           <table className="min-w-full text-sm">
             <thead className="bg-slate-100 text-left text-slate-700">
               <tr>
-                <th className="px-4 py-2.5">Booking ID</th>
+                <th className="px-4 py-2.5">
+                  <button
+                    type="button"
+                    onClick={() => changeBookingSort('bookingId')}
+                    className={`inline-flex items-center gap-2 rounded-md border px-2 py-1 text-xs font-bold transition ${bookingSort.key === 'bookingId' ? 'border-blue-200 bg-blue-50 text-blue-700' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}`}
+                  >
+                    <span>Booking ID</span>
+                    <span className="text-[10px] leading-none">{bookingSort.key === 'bookingId' ? (bookingSort.direction === 'asc' ? '↑' : '↓') : '↕'}</span>
+                  </button>
+                </th>
                 <th className="px-4 py-2.5">Student</th>
-                <th className="px-4 py-2.5">Status</th>
-                <th className="px-4 py-2.5">Slot</th>
+                <th className="px-4 py-2.5">
+                  <button
+                    type="button"
+                    onClick={() => changeBookingSort('status')}
+                    className={`inline-flex items-center gap-2 rounded-md border px-2 py-1 text-xs font-bold transition ${bookingSort.key === 'status' ? 'border-blue-200 bg-blue-50 text-blue-700' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}`}
+                  >
+                    <span>Status</span>
+                    <span className="text-[10px] leading-none">{bookingSort.key === 'status' ? (bookingSort.direction === 'asc' ? '↑' : '↓') : '↕'}</span>
+                  </button>
+                </th>
+                <th className="px-4 py-2.5">
+                  <button
+                    type="button"
+                    onClick={() => changeBookingSort('startTime')}
+                    className={`inline-flex items-center gap-2 rounded-md border px-2 py-1 text-xs font-bold transition ${bookingSort.key === 'startTime' ? 'border-blue-200 bg-blue-50 text-blue-700' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}`}
+                  >
+                    <span>Slot</span>
+                    <span className="text-[10px] leading-none">{bookingSort.key === 'startTime' ? (bookingSort.direction === 'asc' ? '↑' : '↓') : '↕'}</span>
+                  </button>
+                </th>
                 <th className="px-4 py-2.5">Teacher</th>
                 <th className="px-4 py-2.5">Meeting Link</th>
                 <th className="px-4 py-2.5">Actions</th>
@@ -574,20 +779,19 @@ export default function AdminDemo() {
                   <td className="px-4 py-3 text-slate-500" colSpan={7}>Loading bookings...</td>
                 </tr>
               )}
-              {!loadingBookings && filteredBookings.length === 0 && (
+              {!loadingBookings && sortedBookings.length === 0 && (
                 <tr>
                   <td className="px-4 py-3 text-slate-500" colSpan={7}>No bookings found for selected status.</td>
                 </tr>
               )}
-              {!loadingBookings && filteredBookings.map((booking, index) => {
+              {!loadingBookings && pagedBookings.map((booking, index) => {
                 const bookingId = getValue(booking, ['bookingId', 'id', 'BookingId', 'Id'], `row-${index}`)
                 const studentName = getValue(booking, ['studentName', 'fullName', 'StudentName', 'FullName'])
-                const email = getValue(booking, ['email', 'Email'], '')
+                const email = getValue(booking, ['studentEmail', 'email', 'Email'], '')
                 const status = getValue(booking, ['status', 'Status'])
-                const slot = getValue(booking, ['slot', 'slotTime', 'Slot', 'SlotTime'], '')
-                const slotText = slot === ''
-                  ? `${getValue(booking, ['slotStart', 'slotStartTime', 'SlotStart', 'SlotStartTime'], '')} - ${getValue(booking, ['slotEnd', 'slotEndTime', 'SlotEnd', 'SlotEndTime'], '')}`.trim()
-                  : String(slot)
+                const startTime = getValue(booking, ['startTime', 'StartTime'], '')
+                const endTime = getValue(booking, ['endTime', 'EndTime'], '')
+                const slotText = [startTime, endTime].filter(Boolean).join(' - ')
                 const teacher = getValue(booking, ['teacherName', 'teacher', 'TeacherName', 'Teacher'])
                 const meetingLink = getValue(booking, ['meetingLink', 'meetingUrl', 'MeetingLink', 'MeetingUrl'], '')
 
@@ -600,8 +804,8 @@ export default function AdminDemo() {
                     </td>
                     <td className="px-4 py-2.5">{formatStatus(status)}</td>
                     <td className="px-4 py-2.5">
-                      <div>{formatDateTime(slotText)}</div>
-                      {slotText && <div className="text-xs text-slate-500">Local / UTC</div>}
+                      <div>{formatDateTime(startTime)}</div>
+                      {endTime && <div className="text-xs text-slate-500">to {formatDateTime(endTime)}</div>}
                     </td>
                     <td className="px-4 py-2.5">{String(teacher)}</td>
                     <td className="px-4 py-2.5">
@@ -645,6 +849,56 @@ export default function AdminDemo() {
               })}
             </tbody>
           </table>
+        </div>
+
+        <div className="flex flex-col gap-3 border-t border-slate-200 px-4 py-3 text-sm text-slate-600 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-2">
+            <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Rows</label>
+            <select
+              value={bookingRowsPerPage}
+              onChange={(e) => {
+                setBookingRowsPerPage(Number(e.target.value))
+                setBookingPage(1)
+              }}
+              className="rounded-lg border border-slate-300 px-2 py-1.5 text-sm"
+            >
+              <option value={5}>5</option>
+              <option value={10}>10</option>
+              <option value={20}>20</option>
+              <option value={50}>50</option>
+            </select>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setBookingPage((p) => Math.max(1, p - 1))}
+              disabled={effectiveBookingPage === 1}
+              className="rounded-lg border border-slate-300 px-2.5 py-1.5 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              Prev
+            </button>
+
+            {getPageNumbers(effectiveBookingPage, bookingTotalPages).map((pageNumber) => (
+              <button
+                key={pageNumber}
+                type="button"
+                onClick={() => setBookingPage(pageNumber)}
+                className={`h-8 min-w-8 rounded-lg border px-2 text-sm font-semibold ${pageNumber === effectiveBookingPage ? 'border-blue-600 bg-blue-600 text-white' : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-50'}`}
+              >
+                {pageNumber}
+              </button>
+            ))}
+
+            <button
+              type="button"
+              onClick={() => setBookingPage((p) => Math.min(bookingTotalPages, p + 1))}
+              disabled={effectiveBookingPage >= bookingTotalPages}
+              className="rounded-lg border border-slate-300 px-2.5 py-1.5 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
     </section>

@@ -1,7 +1,13 @@
 import { getToken } from './authStorage'
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, '') || 'http://localhost:5000'
+const envApiBaseUrl = import.meta.env.VITE_API_BASE_URL?.trim()
+
+const API_BASE_URL = (envApiBaseUrl
+  ? envApiBaseUrl
+  : import.meta.env.PROD
+    ? 'https://api.skillbridgetutors.com'
+    : 'http://localhost:5000'
+).replace(/\/$/, '')
 
 export async function apiRequest(path, options = {}) {
   const token = getToken()

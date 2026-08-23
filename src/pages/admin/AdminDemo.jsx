@@ -141,7 +141,14 @@ export default function AdminDemo() {
 
     try {
       const result = await apiRequest(`/api/demo/admin/slots${buildQuery(slotFilter)}`)
-      setSlots(Array.isArray(result) ? result : [])
+      const sorted = Array.isArray(result)
+        ? [...result].sort((a, b) => {
+            const left = Number(getId(a) ?? 0)
+            const right = Number(getId(b) ?? 0)
+            return left - right
+          })
+        : []
+      setSlots(sorted)
     } catch (err) {
       setError(err.message || 'Unable to load demo slots.')
     } finally {

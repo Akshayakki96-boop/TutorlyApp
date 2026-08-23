@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { DataGrid } from '@mui/x-data-grid'
 import { apiRequest } from '../../lib/apiClient'
 
 export default function AdminDemo() {
@@ -15,12 +16,12 @@ export default function AdminDemo() {
   const [checkingTeacher, setCheckingTeacher] = useState(false)
   const [teacherResult, setTeacherResult] = useState(null)
   const [processingBookingAction, setProcessingBookingAction] = useState(null)
-  const [slotSort, setSlotSort] = useState({ key: 'slotId', direction: 'asc' })
-  const [bookingSort, setBookingSort] = useState({ key: 'startTime', direction: 'asc' })
-  const [slotPage, setSlotPage] = useState(1)
-  const [bookingPage, setBookingPage] = useState(1)
-  const [slotRowsPerPage, setSlotRowsPerPage] = useState(10)
-  const [bookingRowsPerPage, setBookingRowsPerPage] = useState(10)
+  const [slotSearch, setSlotSearch] = useState('')
+  const [bookingSearch, setBookingSearch] = useState('')
+  const [slotPaginationModel, setSlotPaginationModel] = useState({ page: 0, pageSize: 10 })
+  const [bookingPaginationModel, setBookingPaginationModel] = useState({ page: 0, pageSize: 10 })
+  const [slotSortModel, setSlotSortModel] = useState([{ field: 'slotId', sort: 'asc' }])
+  const [bookingSortModel, setBookingSortModel] = useState([{ field: 'startTime', sort: 'asc' }])
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
 
@@ -186,39 +187,6 @@ export default function AdminDemo() {
     if (!Number.isNaN(date.getTime())) return date.getTime()
 
     return String(value).toLowerCase()
-  }
-
-  function changeSlotSort(key) {
-    setSlotSort((prev) => ({
-      key,
-      direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc',
-    }))
-    setSlotPage(1)
-  }
-
-  function changeBookingSort(key) {
-    setBookingSort((prev) => ({
-      key,
-      direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc',
-    }))
-    setBookingPage(1)
-  }
-
-  function getPageNumbers(currentPage, totalPages) {
-    const pages = []
-    const maxVisible = 5
-    let startPage = Math.max(1, currentPage - 2)
-    let endPage = Math.min(totalPages, startPage + maxVisible - 1)
-
-    if (endPage - startPage + 1 < maxVisible) {
-      startPage = Math.max(1, endPage - maxVisible + 1)
-    }
-
-    for (let page = startPage; page <= endPage; page += 1) {
-      pages.push(page)
-    }
-
-    return pages
   }
 
   async function createSlot(e) {
@@ -393,51 +361,181 @@ export default function AdminDemo() {
     return status === bookingStatus
   })
 
-  const sortedSlots = [...slots].sort((a, b) => {
-    const aValue = getComparableValue(a, slotSort.key === 'slotId' ? 'id' : slotSort.key)
-    const bValue = getComparableValue(b, slotSort.key === 'slotId' ? 'id' : slotSort.key)
+  const slotRows = useMemo(() => {
+    return slots.map((slot, index) => {
+      const slotId = getId(slot) ?? index + 1
+      const isAvailable = Boolean(getValue(slot, ['isAvailable', 'available', 'IsAvailable'], false))
+      const startValue = getValue(slot, ['startTime', 'startUtc', 'StartTime', 'StartUtc'])
+      const endValue = getValue(slot, ['endTime', 'endUtc', 'EndTime', 'EndUtc'])
 
-    if (aValue === '' && bValue === '') return 0
-    if (aValue === '') return 1
-    if (bValue === '') return -1
+      return {
+        id: slotId,
+        slotId,
+        startTime: startValue,
+        endTime: endValue,
+        availability: isAvailable ? 'Available' : 'Unavailable',
+        isAvailable,
+      }
+    })
+  }, [slots])
 
-    const direction = slotSort.direction === 'asc' ? 1 : -1
-    if (typeof aValue === 'string' && typeof bValue === 'string') {
-      return aValue.localeCompare(bValue) * direction
-    }
+  const filteredSlotRows = useMemo(() => {
+    const query = slotSearch.trim().toLowerCase()
+    if (!query) return slotRows
 
-    return (Number(aValue) - Number(bValue)) * direction
-  })
+    return slotRows.filter((row) => {
+      return [row.slotId, row.startTime, row.endTime, row.availability].some((value) =>
+        String(value).toLowerCase().includes(query)
+      )
+    })
+  }, [slotRows, slotSearch])
 
-  const slotTotalPages = Math.max(1, Math.ceil(sortedSlots.length / slotRowsPerPage))
-  const effectiveSlotPage = Math.min(slotPage, slotTotalPages)
-  const pagedSlots = sortedSlots.slice((effectiveSlotPage - 1) * slotRowsPerPage, effectiveSlotPage * slotRowsPerPage)
+  const bookingRows = useMemo(() => {
+    return filteredBookings.map((booking, index) => {
+      const bookingId = getValue(booking, ['bookingId', 'id', 'BookingId', 'Id'], `row-${index}`)
+      const studentName = getValue(booking, ['studentName', 'fullName', 'StudentName', 'FullName'])
+      const email = getValue(booking, ['studentEmail', 'email', 'Email'], '')
+      const status = getValue(booking, ['status', 'Status'])
+      const startTime = getValue(booking, ['startTime', 'StartTime'], '')
+      const endTime = getValue(booking, ['endTime', 'EndTime'], '')
+      const teacher = getValue(booking, ['teacherName', 'teacher', 'TeacherName', 'Teacher'])
+      const meetingLink = getValue(booking, ['meetingLink', 'meetingUrl', 'MeetingLink', 'MeetingUrl'], '')
 
-  const sortedBookings = [...filteredBookings].sort((a, b) => {
-    const isNumericKey = ['bookingId', 'id', 'slotId'].includes(bookingSort.key)
-    const aValue = getComparableValue(a, bookingSort.key === 'bookingId' ? 'bookingId' : bookingSort.key)
-    const bValue = getComparableValue(b, bookingSort.key === 'bookingId' ? 'bookingId' : bookingSort.key)
+      return {
+        id: String(bookingId),
+        bookingId: String(bookingId),
+        studentName: String(studentName),
+        studentEmail: String(email),
+        status: String(status),
+        startTime,
+        endTime,
+        teacher: String(teacher),
+        meetingLink: String(meetingLink),
+      }
+    })
+  }, [filteredBookings])
 
-    if (aValue === '' && bValue === '') return 0
-    if (aValue === '') return 1
-    if (bValue === '') return -1
+  const filteredBookingRows = useMemo(() => {
+    const query = bookingSearch.trim().toLowerCase()
+    if (!query) return bookingRows
 
-    const direction = bookingSort.direction === 'asc' ? 1 : -1
+    return bookingRows.filter((row) => {
+      return [row.bookingId, row.studentName, row.studentEmail, row.status, row.teacher, row.startTime, row.endTime].some((value) =>
+        String(value).toLowerCase().includes(query)
+      )
+    })
+  }, [bookingRows, bookingSearch])
 
-    if (isNumericKey) {
-      return (Number(aValue) - Number(bValue)) * direction
-    }
+  const slotColumns = [
+    { field: 'slotId', headerName: 'Slot ID', flex: 1, minWidth: 110, type: 'number' },
+    { field: 'startTime', headerName: 'Start', flex: 1.3, minWidth: 200, valueGetter: (_, row) => row.startTime ? new Date(row.startTime).toISOString() : '', renderCell: (params) => <span>{formatDateTime(params.row.startTime)}</span> },
+    { field: 'endTime', headerName: 'End', flex: 1.3, minWidth: 200, valueGetter: (_, row) => row.endTime ? new Date(row.endTime).toISOString() : '', renderCell: (params) => <span>{formatDateTime(params.row.endTime)}</span> },
+    { field: 'availability', headerName: 'Availability', flex: 1, minWidth: 150, renderCell: (params) => (
+      <span className={`rounded-full px-2.5 py-1 text-xs font-bold ${params.row.isAvailable ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-200 text-slate-700'}`}>
+        {params.row.availability}
+      </span>
+    ) },
+    {
+      field: 'action',
+      headerName: 'Action',
+      sortable: false,
+      filterable: false,
+      width: 160,
+      renderCell: (params) => (
+        <button
+          type="button"
+          onClick={() => setSlotAvailability(params.row.slotId, !params.row.isAvailable)}
+          disabled={updatingSlotId === params.row.slotId}
+          className="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-100 disabled:opacity-70"
+        >
+          {updatingSlotId === params.row.slotId ? 'Updating...' : params.row.isAvailable ? 'Set Unavailable' : 'Set Available'}
+        </button>
+      ),
+    },
+  ]
 
-    if (typeof aValue === 'string' && typeof bValue === 'string') {
-      return aValue.localeCompare(bValue) * direction
-    }
-
-    return (Number(aValue) - Number(bValue)) * direction
-  })
-
-  const bookingTotalPages = Math.max(1, Math.ceil(sortedBookings.length / bookingRowsPerPage))
-  const effectiveBookingPage = Math.min(bookingPage, bookingTotalPages)
-  const pagedBookings = sortedBookings.slice((effectiveBookingPage - 1) * bookingRowsPerPage, effectiveBookingPage * bookingRowsPerPage)
+  const bookingColumns = [
+    { field: 'bookingId', headerName: 'Booking ID', flex: 1, minWidth: 120 },
+    {
+      field: 'studentName',
+      headerName: 'Student',
+      flex: 1.5,
+      minWidth: 180,
+      renderCell: (params) => (
+        <div>
+          <div>{params.row.studentName || '—'}</div>
+          {params.row.studentEmail && <div className="text-xs text-slate-500">{params.row.studentEmail}</div>}
+        </div>
+      ),
+    },
+    {
+      field: 'status',
+      headerName: 'Status',
+      flex: 1,
+      minWidth: 130,
+      renderCell: (params) => formatStatus(params.row.status),
+    },
+    {
+      field: 'slot',
+      headerName: 'Slot',
+      flex: 1.5,
+      minWidth: 220,
+      valueGetter: (_, row) => row.startTime || row.endTime ? `${row.startTime || ''}${row.endTime ? ' - ' + row.endTime : ''}` : '',
+      renderCell: (params) => (
+        <div>
+          <div>{formatDateTime(params.row.startTime)}</div>
+          {params.row.endTime && <div className="text-xs text-slate-500">to {formatDateTime(params.row.endTime)}</div>}
+        </div>
+      ),
+    },
+    { field: 'teacher', headerName: 'Teacher', flex: 1, minWidth: 150 },
+    {
+      field: 'meetingLink',
+      headerName: 'Meeting Link',
+      flex: 1,
+      minWidth: 120,
+      sortable: false,
+      renderCell: (params) => params.row.meetingLink ? (
+        <a href={String(params.row.meetingLink)} target="_blank" rel="noreferrer" className="font-semibold text-blue-700 underline">
+          Open
+        </a>
+      ) : '-',
+    },
+    {
+      field: 'actions',
+      headerName: 'Actions',
+      sortable: false,
+      filterable: false,
+      width: 200,
+      renderCell: (params) => (
+        <div className="flex flex-col gap-2 py-2">
+          <button
+            type="button"
+            onClick={() => openBookingProfile(params.row)}
+            className="rounded-lg border border-slate-300 px-2.5 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-100"
+          >
+            Open Profile
+          </button>
+          <button
+            type="button"
+            onClick={() => quickRescheduleBooking({ bookingId: params.row.bookingId, ...params.row })}
+            disabled={processingBookingAction === `reschedule-${params.row.bookingId}`}
+            className="rounded-lg border border-amber-300 bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-700 hover:bg-amber-100 disabled:opacity-70"
+          >
+            {processingBookingAction === `reschedule-${params.row.bookingId}` ? 'Rescheduling...' : 'Quick Reschedule'}
+          </button>
+          <button
+            type="button"
+            onClick={() => quickCancelBooking({ bookingId: params.row.bookingId, ...params.row })}
+            disabled={processingBookingAction === `cancel-${params.row.bookingId}`}
+            className="rounded-lg border border-rose-300 bg-rose-50 px-2.5 py-1 text-xs font-semibold text-rose-700 hover:bg-rose-100 disabled:opacity-70"
+          >
+            {processingBookingAction === `cancel-${params.row.bookingId}` ? 'Cancelling...' : 'Quick Cancel'}
+          </button>
+        </div>
+      ),
+    },
+  ]
 
   return (
     <section>
@@ -480,146 +578,35 @@ export default function AdminDemo() {
             </div>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="min-w-full text-sm">
-              <thead className="bg-slate-100 text-left text-slate-700">
-                <tr>
-                  <th className="px-4 py-2.5">
-                    <button
-                      type="button"
-                      onClick={() => changeSlotSort('slotId')}
-                      className={`inline-flex items-center gap-2 rounded-md border px-2 py-1 text-xs font-bold transition ${slotSort.key === 'slotId' ? 'border-blue-200 bg-blue-50 text-blue-700' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}`}
-                    >
-                      <span>Slot ID</span>
-                      <span className="text-[10px] leading-none">{slotSort.key === 'slotId' ? (slotSort.direction === 'asc' ? '↑' : '↓') : '↕'}</span>
-                    </button>
-                  </th>
-                  <th className="px-4 py-2.5">
-                    <button
-                      type="button"
-                      onClick={() => changeSlotSort('startTime')}
-                      className={`inline-flex items-center gap-2 rounded-md border px-2 py-1 text-xs font-bold transition ${slotSort.key === 'startTime' ? 'border-blue-200 bg-blue-50 text-blue-700' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}`}
-                    >
-                      <span>Start</span>
-                      <span className="text-[10px] leading-none">{slotSort.key === 'startTime' ? (slotSort.direction === 'asc' ? '↑' : '↓') : '↕'}</span>
-                    </button>
-                  </th>
-                  <th className="px-4 py-2.5">
-                    <button
-                      type="button"
-                      onClick={() => changeSlotSort('endTime')}
-                      className={`inline-flex items-center gap-2 rounded-md border px-2 py-1 text-xs font-bold transition ${slotSort.key === 'endTime' ? 'border-blue-200 bg-blue-50 text-blue-700' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}`}
-                    >
-                      <span>End</span>
-                      <span className="text-[10px] leading-none">{slotSort.key === 'endTime' ? (slotSort.direction === 'asc' ? '↑' : '↓') : '↕'}</span>
-                    </button>
-                  </th>
-                  <th className="px-4 py-2.5">Availability</th>
-                  <th className="px-4 py-2.5">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {loadingSlots && (
-                  <tr>
-                    <td className="px-4 py-3 text-slate-500" colSpan={5}>Loading slots...</td>
-                  </tr>
-                )}
-                {!loadingSlots && sortedSlots.length === 0 && (
-                  <tr>
-                    <td className="px-4 py-3 text-slate-500" colSpan={5}>No slots found for this filter.</td>
-                  </tr>
-                )}
-                {!loadingSlots && pagedSlots.map((slot, index) => {
-                  const slotId = getId(slot) ?? `row-${index}`
-                  const isAvailable = Boolean(getValue(slot, ['isAvailable', 'available', 'IsAvailable'], false))
-                  const startValue = getValue(slot, ['startTime', 'startUtc', 'StartTime', 'StartUtc'])
-                  const endValue = getValue(slot, ['endTime', 'endUtc', 'EndTime', 'EndUtc'])
-
-                  return (
-                    <tr key={slotId} className="border-t border-slate-200">
-                      <td className="px-4 py-2.5 font-semibold text-slate-800">{slotId}</td>
-                      <td className="px-4 py-2.5">
-                        <div>{formatDateTime(startValue)}</div>
-                        <div className="text-xs text-slate-500">{startValue ? 'UTC' : ''}</div>
-                      </td>
-                      <td className="px-4 py-2.5">
-                        <div>{formatDateTime(endValue)}</div>
-                        <div className="text-xs text-slate-500">{endValue ? 'UTC' : ''}</div>
-                      </td>
-                      <td className="px-4 py-2.5">
-                        <span className={`rounded-full px-2.5 py-1 text-xs font-bold ${isAvailable ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-200 text-slate-700'}`}>
-                          {isAvailable ? 'Available' : 'Unavailable'}
-                        </span>
-                      </td>
-                      <td className="px-4 py-2.5">
-                        {typeof slotId === 'number' || (typeof slotId === 'string' && slotId !== '') ? (
-                          <button
-                            type="button"
-                            onClick={() => setSlotAvailability(slotId, !isAvailable)}
-                            disabled={updatingSlotId === slotId}
-                            className="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-100 disabled:opacity-70"
-                          >
-                            {updatingSlotId === slotId ? 'Updating...' : isAvailable ? 'Set Unavailable' : 'Set Available'}
-                          </button>
-                        ) : (
-                          '-'
-                        )}
-                      </td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table>
+          <div className="border-b border-slate-200 bg-slate-50 px-4 py-3">
+            <input
+              value={slotSearch}
+              onChange={(e) => setSlotSearch(e.target.value)}
+              placeholder="Search slots..."
+              className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+            />
           </div>
 
-          <div className="flex flex-col gap-3 border-t border-slate-200 px-4 py-3 text-sm text-slate-600 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-2">
-              <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Rows</label>
-              <select
-                value={slotRowsPerPage}
-                onChange={(e) => {
-                  setSlotRowsPerPage(Number(e.target.value))
-                  setSlotPage(1)
-                }}
-                className="rounded-lg border border-slate-300 px-2 py-1.5 text-sm"
-              >
-                <option value={5}>5</option>
-                <option value={10}>10</option>
-                <option value={20}>20</option>
-                <option value={50}>50</option>
-              </select>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setSlotPage((p) => Math.max(1, p - 1))}
-                disabled={effectiveSlotPage === 1}
-                className="rounded-lg border border-slate-300 px-2.5 py-1.5 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                Prev
-              </button>
-
-              {getPageNumbers(effectiveSlotPage, slotTotalPages).map((pageNumber) => (
-                <button
-                  key={pageNumber}
-                  type="button"
-                  onClick={() => setSlotPage(pageNumber)}
-                  className={`h-8 min-w-8 rounded-lg border px-2 text-sm font-semibold ${pageNumber === effectiveSlotPage ? 'border-blue-600 bg-blue-600 text-white' : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-50'}`}
-                >
-                  {pageNumber}
-                </button>
-              ))}
-
-              <button
-                type="button"
-                onClick={() => setSlotPage((p) => Math.min(slotTotalPages, p + 1))}
-                disabled={effectiveSlotPage >= slotTotalPages}
-                className="rounded-lg border border-slate-300 px-2.5 py-1.5 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                Next
-              </button>
-            </div>
+          <div style={{ height: 420, width: '100%' }}>
+            <DataGrid
+              rows={filteredSlotRows}
+              columns={slotColumns}
+              loading={loadingSlots}
+              pagination
+              paginationModel={slotPaginationModel}
+              onPaginationModelChange={setSlotPaginationModel}
+              pageSizeOptions={[5, 10, 20, 50]}
+              sortingMode="client"
+              sortModel={slotSortModel}
+              onSortModelChange={setSlotSortModel}
+              disableRowSelectionOnClick
+              sx={{
+                border: 0,
+                '& .MuiDataGrid-columnHeaders': { backgroundColor: '#f8fafc', color: '#0f172a', fontWeight: 700 },
+                '& .MuiDataGrid-row:hover': { backgroundColor: '#f8fafc' },
+                '& .MuiDataGrid-footerContainer': { borderTop: '1px solid #e2e8f0' },
+              }}
+            />
           </div>
         </div>
 
@@ -725,7 +712,7 @@ export default function AdminDemo() {
             </button>
             <button
               type="button"
-              onClick={() => downloadCsv(sortedBookings, `demo-bookings-${bookingStatus.toLowerCase()}.csv`)}
+              onClick={() => downloadCsv(filteredBookingRows, `demo-bookings-${bookingStatus.toLowerCase()}.csv`)}
               className="rounded-lg bg-slate-800 px-3 py-1.5 text-sm font-semibold text-white hover:bg-slate-900"
             >
               Export CSV
@@ -733,172 +720,35 @@ export default function AdminDemo() {
           </div>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-sm">
-            <thead className="bg-slate-100 text-left text-slate-700">
-              <tr>
-                <th className="px-4 py-2.5">
-                  <button
-                    type="button"
-                    onClick={() => changeBookingSort('bookingId')}
-                    className={`inline-flex items-center gap-2 rounded-md border px-2 py-1 text-xs font-bold transition ${bookingSort.key === 'bookingId' ? 'border-blue-200 bg-blue-50 text-blue-700' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}`}
-                  >
-                    <span>Booking ID</span>
-                    <span className="text-[10px] leading-none">{bookingSort.key === 'bookingId' ? (bookingSort.direction === 'asc' ? '↑' : '↓') : '↕'}</span>
-                  </button>
-                </th>
-                <th className="px-4 py-2.5">Student</th>
-                <th className="px-4 py-2.5">
-                  <button
-                    type="button"
-                    onClick={() => changeBookingSort('status')}
-                    className={`inline-flex items-center gap-2 rounded-md border px-2 py-1 text-xs font-bold transition ${bookingSort.key === 'status' ? 'border-blue-200 bg-blue-50 text-blue-700' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}`}
-                  >
-                    <span>Status</span>
-                    <span className="text-[10px] leading-none">{bookingSort.key === 'status' ? (bookingSort.direction === 'asc' ? '↑' : '↓') : '↕'}</span>
-                  </button>
-                </th>
-                <th className="px-4 py-2.5">
-                  <button
-                    type="button"
-                    onClick={() => changeBookingSort('startTime')}
-                    className={`inline-flex items-center gap-2 rounded-md border px-2 py-1 text-xs font-bold transition ${bookingSort.key === 'startTime' ? 'border-blue-200 bg-blue-50 text-blue-700' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}`}
-                  >
-                    <span>Slot</span>
-                    <span className="text-[10px] leading-none">{bookingSort.key === 'startTime' ? (bookingSort.direction === 'asc' ? '↑' : '↓') : '↕'}</span>
-                  </button>
-                </th>
-                <th className="px-4 py-2.5">Teacher</th>
-                <th className="px-4 py-2.5">Meeting Link</th>
-                <th className="px-4 py-2.5">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {loadingBookings && (
-                <tr>
-                  <td className="px-4 py-3 text-slate-500" colSpan={7}>Loading bookings...</td>
-                </tr>
-              )}
-              {!loadingBookings && sortedBookings.length === 0 && (
-                <tr>
-                  <td className="px-4 py-3 text-slate-500" colSpan={7}>No bookings found for selected status.</td>
-                </tr>
-              )}
-              {!loadingBookings && pagedBookings.map((booking, index) => {
-                const bookingId = getValue(booking, ['bookingId', 'id', 'BookingId', 'Id'], `row-${index}`)
-                const studentName = getValue(booking, ['studentName', 'fullName', 'StudentName', 'FullName'])
-                const email = getValue(booking, ['studentEmail', 'email', 'Email'], '')
-                const status = getValue(booking, ['status', 'Status'])
-                const startTime = getValue(booking, ['startTime', 'StartTime'], '')
-                const endTime = getValue(booking, ['endTime', 'EndTime'], '')
-                const slotText = [startTime, endTime].filter(Boolean).join(' - ')
-                const teacher = getValue(booking, ['teacherName', 'teacher', 'TeacherName', 'Teacher'])
-                const meetingLink = getValue(booking, ['meetingLink', 'meetingUrl', 'MeetingLink', 'MeetingUrl'], '')
-
-                return (
-                  <tr key={String(bookingId)} className="border-t border-slate-200 align-top">
-                    <td className="px-4 py-2.5 font-semibold text-slate-800">{String(bookingId)}</td>
-                    <td className="px-4 py-2.5">
-                      <div>{String(studentName)}</div>
-                      {email && <div className="text-xs text-slate-500">{String(email)}</div>}
-                    </td>
-                    <td className="px-4 py-2.5">{formatStatus(status)}</td>
-                    <td className="px-4 py-2.5">
-                      <div>{formatDateTime(startTime)}</div>
-                      {endTime && <div className="text-xs text-slate-500">to {formatDateTime(endTime)}</div>}
-                    </td>
-                    <td className="px-4 py-2.5">{String(teacher)}</td>
-                    <td className="px-4 py-2.5">
-                      {meetingLink ? (
-                        <a href={String(meetingLink)} target="_blank" rel="noreferrer" className="font-semibold text-blue-700 underline">
-                          Open
-                        </a>
-                      ) : (
-                        '-'
-                      )}
-                    </td>
-                    <td className="px-4 py-2.5">
-                      <div className="flex flex-col gap-2">
-                        <button
-                          type="button"
-                          onClick={() => openBookingProfile(booking)}
-                          className="rounded-lg border border-slate-300 px-2.5 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-100"
-                        >
-                          Open Profile
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => quickRescheduleBooking(booking)}
-                          disabled={processingBookingAction === `reschedule-${bookingId}`}
-                          className="rounded-lg border border-amber-300 bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-700 hover:bg-amber-100 disabled:opacity-70"
-                        >
-                          {processingBookingAction === `reschedule-${bookingId}` ? 'Rescheduling...' : 'Quick Reschedule'}
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => quickCancelBooking(booking)}
-                          disabled={processingBookingAction === `cancel-${bookingId}`}
-                          className="rounded-lg border border-rose-300 bg-rose-50 px-2.5 py-1 text-xs font-semibold text-rose-700 hover:bg-rose-100 disabled:opacity-70"
-                        >
-                          {processingBookingAction === `cancel-${bookingId}` ? 'Cancelling...' : 'Quick Cancel'}
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
+        <div className="border-b border-slate-200 bg-slate-50 px-4 py-3">
+          <input
+            value={bookingSearch}
+            onChange={(e) => setBookingSearch(e.target.value)}
+            placeholder="Search bookings..."
+            className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+          />
         </div>
 
-        <div className="flex flex-col gap-3 border-t border-slate-200 px-4 py-3 text-sm text-slate-600 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-2">
-            <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Rows</label>
-            <select
-              value={bookingRowsPerPage}
-              onChange={(e) => {
-                setBookingRowsPerPage(Number(e.target.value))
-                setBookingPage(1)
-              }}
-              className="rounded-lg border border-slate-300 px-2 py-1.5 text-sm"
-            >
-              <option value={5}>5</option>
-              <option value={10}>10</option>
-              <option value={20}>20</option>
-              <option value={50}>50</option>
-            </select>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => setBookingPage((p) => Math.max(1, p - 1))}
-              disabled={effectiveBookingPage === 1}
-              className="rounded-lg border border-slate-300 px-2.5 py-1.5 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              Prev
-            </button>
-
-            {getPageNumbers(effectiveBookingPage, bookingTotalPages).map((pageNumber) => (
-              <button
-                key={pageNumber}
-                type="button"
-                onClick={() => setBookingPage(pageNumber)}
-                className={`h-8 min-w-8 rounded-lg border px-2 text-sm font-semibold ${pageNumber === effectiveBookingPage ? 'border-blue-600 bg-blue-600 text-white' : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-50'}`}
-              >
-                {pageNumber}
-              </button>
-            ))}
-
-            <button
-              type="button"
-              onClick={() => setBookingPage((p) => Math.min(bookingTotalPages, p + 1))}
-              disabled={effectiveBookingPage >= bookingTotalPages}
-              className="rounded-lg border border-slate-300 px-2.5 py-1.5 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              Next
-            </button>
-          </div>
+        <div style={{ height: 470, width: '100%' }}>
+          <DataGrid
+            rows={filteredBookingRows}
+            columns={bookingColumns}
+            loading={loadingBookings}
+            pagination
+            paginationModel={bookingPaginationModel}
+            onPaginationModelChange={setBookingPaginationModel}
+            pageSizeOptions={[5, 10, 20, 50]}
+            sortingMode="client"
+            sortModel={bookingSortModel}
+            onSortModelChange={setBookingSortModel}
+            disableRowSelectionOnClick
+            sx={{
+              border: 0,
+              '& .MuiDataGrid-columnHeaders': { backgroundColor: '#f8fafc', color: '#0f172a', fontWeight: 700 },
+              '& .MuiDataGrid-row:hover': { backgroundColor: '#f8fafc' },
+              '& .MuiDataGrid-footerContainer': { borderTop: '1px solid #e2e8f0' },
+            }}
+          />
         </div>
       </div>
     </section>

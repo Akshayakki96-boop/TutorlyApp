@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import emailjs from '@emailjs/browser'
 import Swal from 'sweetalert2'
+import { apiRequest } from '../lib/apiClient'
 
 const YEARS    = ['Year 1','Year 2','Year 3','Year 4','Year 5','Year 6','Year 7','Year 8','Year 9','Year 10']
 const SUBJECTS = ['Maths']
@@ -22,25 +23,54 @@ export default function BookingTeam() {
     setCanSubmit(required.every(el => el.value.trim() !== ''))
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    Swal.fire({ title: 'Processing…', text: 'Your request is in progress', allowOutsideClick: false, didOpen: () => Swal.showLoading() })
 
-    // Notify admin
-    emailjs.sendForm('service_9g63c7d', 'template_yzrpqsb', formRef.current, 'qCaCx47HrSPJ9YwIO')
-      .then(() => console.log('Admin notified'))
-      .catch(err => console.error('Admin notify failed', err))
+    if (!formRef.current) return
 
-    // Auto-reply to user
-    emailjs.sendForm('service_9g63c7d', 'template_w5u46de', formRef.current, 'qCaCx47HrSPJ9YwIO')
-      .then(() => {
-        Swal.fire({ icon: 'success', title: 'Thank you!', text: 'Your request has been submitted. A confirmation has been sent to your email.' })
-        formRef.current.reset()
-        setCanSubmit(false)
+    const formData = new FormData(formRef.current)
+    const payload = {
+      parentFirstName: (formData.get('firstName') || '').toString().trim(),
+      parentLastName: (formData.get('lastName') || '').toString().trim(),
+      email: (formData.get('email') || '').toString().trim(),
+      phone: (formData.get('phone') || '').toString().trim(),
+      studentName: (formData.get('studentName') || '').toString().trim(),
+      classYear: (formData.get('childYear') || '').toString().trim(),
+      subject: (formData.get('subject') || '').toString().trim(),
+      query: (formData.get('description') || '').toString().trim(),
+    }
+
+    Swal.fire({ title: 'Processing…', text: 'Saving your enquiry and sending confirmation', allowOutsideClick: false, didOpen: () => Swal.showLoading() })
+
+    try {
+      await apiRequest('/api/leads', {
+        method: 'POST',
+        body: JSON.stringify(payload),
       })
-      .catch(err => {
-        Swal.fire({ icon: 'error', title: 'Oops…', text: 'Failed to send auto-reply.\n' + JSON.stringify(err) })
+
+      // Notify admin
+      emailjs.sendForm('service_9g63c7d', 'template_yzrpqsb', formRef.current, 'qCaCx47HrSPJ9YwIO')
+        .then(() => console.log('Admin notified'))
+        .catch(err => console.error('Admin notify failed', err))
+
+      // Auto-reply to user
+      emailjs.sendForm('service_9g63c7d', 'template_w5u46de', formRef.current, 'qCaCx47HrSPJ9YwIO')
+        .then(() => {
+          Swal.fire({ icon: 'success', title: 'Thank you!', text: 'Your enquiry has been saved and a confirmation has been sent to your email.' })
+          formRef.current.reset()
+          setCanSubmit(false)
+        })
+        .catch(err => {
+          Swal.fire({ icon: 'error', title: 'Oops…', text: 'Your enquiry was saved, but the auto-reply failed.\n' + JSON.stringify(err) })
+        })
+    } catch (error) {
+      console.error('Lead creation failed', error)
+      Swal.fire({
+        icon: 'error',
+        title: 'Unable to save enquiry',
+        text: error?.message || 'Please try again later.',
       })
+    }
   }
 
   return (
@@ -87,17 +117,25 @@ export default function BookingTeam() {
 
             <div className="card p-7">
               <form ref={formRef} onSubmit={handleSubmit} noValidate>
-                <div className="grid sm:grid-cols-2 gap-4">
+                <div className="mt-0">
+                  <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5" htmlFor="studentName">
+                    Student Name <span className="text-rose-500">*</span>
+                  </label>
+                  <input id="studentName" type="text" name="studentName" required
+                    className="input-field" placeholder="Alex Smith" onChange={checkValidity}/>
+                </div>
+
+                <div className="grid sm:grid-cols-2 gap-4 mt-4">
                   <div>
                     <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5" htmlFor="firstName">
-                      First Name <span className="text-rose-500">*</span>
+                      Parent First Name <span className="text-rose-500">*</span>
                     </label>
                     <input id="firstName" type="text" name="firstName" required
                       className="input-field" placeholder="Jane" onChange={checkValidity}/>
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5" htmlFor="lastName">
-                      Last Name <span className="text-rose-500">*</span>
+                      Parent Last Name <span className="text-rose-500">*</span>
                     </label>
                     <input id="lastName" type="text" name="lastName" required
                       className="input-field" placeholder="Smith" onChange={checkValidity}/>

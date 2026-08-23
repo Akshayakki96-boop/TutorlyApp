@@ -742,10 +742,13 @@ export default function AdminDemo() {
             sortModel={bookingSortModel}
             onSortModelChange={setBookingSortModel}
             disableRowSelectionOnClick
+            getRowHeight={() => 'auto'}
+            getEstimatedRowHeight={() => 130}
             sx={{
               border: 0,
               '& .MuiDataGrid-columnHeaders': { backgroundColor: '#f8fafc', color: '#0f172a', fontWeight: 700 },
               '& .MuiDataGrid-row:hover': { backgroundColor: '#f8fafc' },
+              '& .MuiDataGrid-cell': { alignItems: 'flex-start', paddingTop: '8px', paddingBottom: '8px' },
               '& .MuiDataGrid-footerContainer': { borderTop: '1px solid #e2e8f0' },
             }}
           />

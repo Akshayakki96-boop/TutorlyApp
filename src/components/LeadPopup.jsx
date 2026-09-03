@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import emailjs from '@emailjs/browser'
 import Swal from 'sweetalert2'
+import { apiRequest } from '../lib/apiClient'
 
 const YEARS    = ['Year 1','Year 2','Year 3','Year 4','Year 5','Year 6','Year 7','Year 8','Year 9','Year 10']
 const SUBJECTS = ['Maths']
@@ -29,19 +30,55 @@ export default function LeadPopup() {
     setCanSubmit(required.every(el => el.value.trim() !== ''))
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    Swal.fire({ title: 'Processing…', allowOutsideClick: false, didOpen: () => Swal.showLoading() })
-    emailjs.sendForm('service_9g63c7d', 'template_yzrpqsb', formRef.current, 'qCaCx47HrSPJ9YwIO')
-      .then(() => {
-        Swal.fire({ icon: 'success', title: 'Thank you!', text: 'Your request has been submitted.' })
-        formRef.current.reset()
-        setCanSubmit(false)
-        close()
+
+    if (!formRef.current) return
+
+    const formData = new FormData(formRef.current)
+    const payload = {
+      parentFirstName: (formData.get('firstName') || '').toString().trim(),
+      parentLastName: (formData.get('lastName') || '').toString().trim(),
+      email: (formData.get('email') || '').toString().trim(),
+      phone: (formData.get('phone') || '').toString().trim(),
+      studentName: (formData.get('studentName') || '').toString().trim(),
+      classYear: (formData.get('childYear') || '').toString().trim(),
+      subject: (formData.get('subject') || '').toString().trim(),
+      query: (formData.get('description') || '').toString().trim(),
+    }
+
+    Swal.fire({ title: 'Processing…', text: 'Saving your enquiry and sending confirmation', allowOutsideClick: false, didOpen: () => Swal.showLoading() })
+
+    try {
+      await apiRequest('/api/leads', {
+        method: 'POST',
+        body: JSON.stringify(payload),
       })
-      .catch(() => {
-        Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to submit form. Please try again.' })
+
+      // Notify admin
+      emailjs.sendForm('service_9g63c7d', 'template_yzrpqsb', formRef.current, 'qCaCx47HrSPJ9YwIO')
+        .then(() => console.log('Admin notified'))
+        .catch(err => console.error('Admin notify failed', err))
+
+      // Auto-reply to user
+      emailjs.sendForm('service_9g63c7d', 'template_w5u46de', formRef.current, 'qCaCx47HrSPJ9YwIO')
+        .then(() => {
+          Swal.fire({ icon: 'success', title: 'Thank you!', text: 'Your enquiry has been saved and a confirmation has been sent to your email.' })
+          formRef.current.reset()
+          setCanSubmit(false)
+          close()
+        })
+        .catch(err => {
+          Swal.fire({ icon: 'error', title: 'Oops…', text: 'Your enquiry was saved, but the auto-reply failed.\n' + JSON.stringify(err) })
+        })
+    } catch (error) {
+      console.error('Lead creation failed', error)
+      Swal.fire({
+        icon: 'error',
+        title: 'Unable to save enquiry',
+        text: error?.message || 'Please try again later.',
       })
+    }
   }
 
   if (!isOpen) return null
@@ -72,46 +109,67 @@ export default function LeadPopup() {
         <div className="p-6">
           <form ref={formRef} onSubmit={handleSubmit} noValidate>
             <div className="space-y-3">
+              <div>
+                <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1" htmlFor="popup-studentName">
+                  Student Name <span className="text-rose-500">*</span>
+                </label>
+                <input id="popup-studentName" type="text" name="studentName" required placeholder="Alex Smith" className="input-field text-sm py-2.5" onChange={checkValidity}/>
+              </div>
+
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">First Name *</label>
-                  <input type="text" name="firstName" required placeholder="Jane" className="input-field text-sm py-2.5" onChange={checkValidity}/>
+                  <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1" htmlFor="popup-firstName">
+                    Parent First Name <span className="text-rose-500">*</span>
+                  </label>
+                  <input id="popup-firstName" type="text" name="firstName" required placeholder="Jane" className="input-field text-sm py-2.5" onChange={checkValidity}/>
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Last Name *</label>
-                  <input type="text" name="lastName" required placeholder="Smith" className="input-field text-sm py-2.5" onChange={checkValidity}/>
+                  <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1" htmlFor="popup-lastName">
+                    Parent Last Name <span className="text-rose-500">*</span>
+                  </label>
+                  <input id="popup-lastName" type="text" name="lastName" required placeholder="Smith" className="input-field text-sm py-2.5" onChange={checkValidity}/>
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Class Year *</label>
-                <select name="childYear" required className="input-field text-sm py-2.5" onChange={checkValidity} defaultValue="">
+                <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1" htmlFor="popup-childYear">
+                  Class Year <span className="text-rose-500">*</span>
+                </label>
+                <select id="popup-childYear" name="childYear" required className="input-field text-sm py-2.5" onChange={checkValidity} defaultValue="">
                   <option value="" disabled>Select Year</option>
                   {YEARS.map(y => <option key={y}>{y}</option>)}
                 </select>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Subject *</label>
-                <select name="subject" required className="input-field text-sm py-2.5" onChange={checkValidity} defaultValue="Maths">
+                <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1" htmlFor="popup-subject">
+                  Subject <span className="text-rose-500">*</span>
+                </label>
+                <select id="popup-subject" name="subject" required className="input-field text-sm py-2.5" onChange={checkValidity} defaultValue="Maths">
                   <option value="" disabled>Select Subject</option>
                   {SUBJECTS.map(s => <option key={s} value={s}>{s}</option>)}
                 </select>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Phone Number *</label>
-                <input type="tel" name="phone" required placeholder="+44 7000 000000" className="input-field text-sm py-2.5" onChange={checkValidity}/>
+                <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1" htmlFor="popup-phone">
+                  Phone Number (e.g., +44 7000 000000) <span className="text-rose-500">*</span>
+                </label>
+                <input id="popup-phone" type="tel" name="phone" required placeholder="+44 7000 000000" className="input-field text-sm py-2.5" onChange={checkValidity}/>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Email *</label>
-                <input type="email" name="email" required placeholder="jane@example.com" className="input-field text-sm py-2.5" onChange={checkValidity}/>
+                <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1" htmlFor="popup-email">
+                  Email <span className="text-rose-500">*</span>
+                </label>
+                <input id="popup-email" type="email" name="email" required placeholder="jane@example.com" className="input-field text-sm py-2.5" onChange={checkValidity}/>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Description</label>
-                <textarea name="description" rows={2} placeholder="Any additional details…" className="input-field text-sm py-2.5 resize-none"/>
+                <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1" htmlFor="popup-description">
+                  Additional Info <span className="text-slate-400 font-normal">(optional)</span>
+                </label>
+                <textarea id="popup-description" name="description" rows={2} placeholder="Tell us about your child's learning needs…" className="input-field text-sm py-2.5 resize-none"/>
               </div>
             </div>
 
@@ -120,9 +178,9 @@ export default function LeadPopup() {
               disabled={!canSubmit}
               className="btn-primary w-full justify-center mt-4 disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none"
             >
-              Submit
+              Submit Enquiry
             </button>
-            <p className="text-center text-xs text-slate-400 mt-2">🔒 We'll never share your info</p>
+            <p className="text-center text-xs text-slate-400 mt-2">🔒 Your data is safe. We never share your information.</p>
           </form>
         </div>
       </div>

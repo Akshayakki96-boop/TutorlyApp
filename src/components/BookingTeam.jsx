@@ -166,7 +166,7 @@ export default function BookingTeam() {
                 <div className="grid sm:grid-cols-2 gap-4 mt-4">
                   <div>
                     <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5" htmlFor="phone">
-                      Phone Number <span className="text-rose-500">*</span>
+                      Phone Number (e.g., +44 7000 000000) <span className="text-rose-500">*</span>
                     </label>
                     <input id="phone" type="tel" name="phone" required
                       className="input-field" placeholder="+44 7000 000000" onChange={checkValidity}/>

@@ -762,7 +762,11 @@ function Input({ label, ...props }) {
   return (
     <div>
       <label className="mb-1 block text-sm font-semibold text-slate-700" htmlFor={props.name}>{label}</label>
-      <input {...props} id={props.name} className="w-full rounded-xl border border-slate-300 px-3 py-2" />
+      <input
+        {...props}
+        id={props.name}
+        className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none [color-scheme:light]"
+      />
     </div>
   )
 }

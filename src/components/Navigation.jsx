@@ -88,17 +88,17 @@ export default function Navigation() {
   return (
     <header className={navBase} role="banner">
       <div className="section-wrap">
-        <div className="flex items-center justify-between h-16 md:h-18">
+        <div className="flex items-center justify-between h-14 md:h-16">
 
           {/* ── Logo ── */}
-          <Link to="/" className="flex items-center gap-2.5 shrink-0" aria-label="SkillBridge Tutors home">
+          <Link to="/" className="flex items-center gap-2 shrink-0" aria-label="SkillBridge Tutors home">
             <img
               src="/Images/skillbridge_logo_only.png"
               alt="SkillBridge logo"
-              className="h-9 w-auto"
+              className="h-8 w-auto"
               loading="eager"
             />
-            <span className={`font-heading font-bold text-lg tracking-wide hidden sm:block ${
+            <span className={`font-heading font-bold text-base tracking-wide hidden sm:block ${
               isScrolled || !isHome ? 'text-brand-600 dark:text-white' : 'text-white'
             }`}>
               SkillBridge Tutors
@@ -106,7 +106,7 @@ export default function Navigation() {
           </Link>
 
           {/* ── Desktop Nav ── */}
-          <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
+          <nav className="hidden lg:flex items-center gap-0.5" aria-label="Main navigation">
             {NAV_LINKS.map(link => {
               if (link.label === 'Services') {
                 return (
@@ -118,7 +118,7 @@ export default function Navigation() {
                   >
                     <button
                       onClick={() => setShowDropdown(s => !s)}
-                      className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-150 ${
+                      className={`px-2.5 py-1.5 rounded-lg text-[13px] font-medium transition-colors duration-150 ${
                         isScrolled || !isHome
                           ? 'text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-slate-800'
                           : 'text-white/90 hover:text-white hover:bg-white/10'
@@ -145,7 +145,7 @@ export default function Navigation() {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-150 hover:underline ${
+                    className={`px-2.5 py-1.5 rounded-lg text-[13px] font-medium transition-colors duration-150 hover:underline ${
                       isScrolled || !isHome
                         ? 'text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-slate-800'
                         : 'text-white/90 hover:text-white hover:bg-white/10'
@@ -160,7 +160,7 @@ export default function Navigation() {
                 <button
                   key={link.label}
                   onClick={() => handleNavClick(link)}
-                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-150 ${
+                  className={`px-2.5 py-1.5 rounded-lg text-[13px] font-medium transition-colors duration-150 ${
                     isScrolled || !isHome
                       ? 'text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-slate-800'
                       : 'text-white/90 hover:text-white hover:bg-white/10'
@@ -196,9 +196,16 @@ export default function Navigation() {
               )}
             </button>
 
+            <Link
+              to="/student/login"
+              aria-label="Open the student portal"
+              className="inline-flex items-center justify-center rounded-full border border-white/80 bg-white px-3.5 py-2 text-sm font-bold text-slate-900 shadow-[0_10px_24px_rgba(15,23,42,0.2)] transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-blue-700 dark:border-slate-600 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700"
+            >
+              Student Portal
+            </Link>
             <button
               onClick={handleBookDemo}
-              className="btn-primary text-sm py-2.5 px-5 animate-blink"
+              className="btn-primary text-sm py-2 px-4 animate-blink"
             >
               Book Free Demo
             </button>
@@ -206,6 +213,13 @@ export default function Navigation() {
 
           {/* ── Mobile Controls ── */}
           <div className="flex lg:hidden items-center gap-2">
+            <Link
+              to="/student/login"
+              aria-label="Open the student portal"
+              className={`rounded-full border px-3 py-2 text-xs font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 ${isScrolled || !isHome ? 'border-slate-200 bg-white text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white' : 'border-white/80 bg-white text-slate-900 shadow-[0_10px_20px_rgba(15,23,42,0.18)]'}`}
+            >
+              Portal
+            </Link>
             <button
               onClick={toggle}
               aria-label="Toggle theme"

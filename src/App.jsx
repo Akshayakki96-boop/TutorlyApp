@@ -5,15 +5,18 @@ import Navigation from './components/Navigation'
 import ScrollToTop from './components/ScrollToTop'
 import CookieBanner from './components/CookieBanner'
 import ProtectedRoute from './components/admin/ProtectedRoute'
+import StudentProtectedRoute from './components/student/StudentProtectedRoute'
 import AdminLayout from './components/admin/AdminLayout'
 
-const Home          = lazy(() => import('./pages/Home'))
+const Home = lazy(() => import('./pages/Home'))
 const CourseCatalog = lazy(() => import('./pages/CourseCatalog'))
-const StudentDash   = lazy(() => import('./pages/StudentDashboard'))
-const TutorDash     = lazy(() => import('./pages/TutorDashboard'))
-const ParentPortal  = lazy(() => import('./pages/ParentPortal'))
-const Blogs         = lazy(() => import('./pages/Blogs'))
-const BlogDetail    = lazy(() => import('./pages/BlogDetail'))
+const StudentDash = lazy(() => import('./pages/StudentDashboard'))
+const StudentLogin = lazy(() => import('./pages/StudentLogin'))
+const StudentRegister = lazy(() => import('./pages/StudentRegister'))
+const TutorDash = lazy(() => import('./pages/TutorDashboard'))
+const ParentPortal = lazy(() => import('./pages/ParentPortal'))
+const Blogs = lazy(() => import('./pages/Blogs'))
+const BlogDetail = lazy(() => import('./pages/BlogDetail'))
 const GCSEMathsTutor = lazy(() => import('./pages/GCSEMathsTutor'))
 const MathsALevelTutor = lazy(() => import('./pages/MathsALevelTutor'))
 const MathsTutor = lazy(() => import('./pages/MathsTutor'))
@@ -51,22 +54,29 @@ export default function App() {
 function AppShell() {
   const location = useLocation()
   const isAdminPath = location.pathname.startsWith('/admin')
+  const isStudentAuthPath = ['/student/login', '/student/register'].includes(location.pathname)
 
   return (
     <>
-      {!isAdminPath && <Navigation />}
+      {!isAdminPath && !isStudentAuthPath && <Navigation />}
       <Suspense fallback={<PageLoader />}>
         <Routes>
-          <Route path="/"                  element={<Home />} />
-          <Route path="/courses"           element={<CourseCatalog />} />
-          <Route path="/student-dashboard" element={<StudentDash />} />
-          <Route path="/tutor-dashboard"   element={<TutorDash />} />
-          <Route path="/parent-portal"     element={<ParentPortal />} />
-          <Route path="/blogs"             element={<Blogs />} />
-          <Route path="/blogs/:slug"       element={<BlogDetail />} />
-          <Route path="/gcse-maths-tutor"  element={<GCSEMathsTutor />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/courses" element={<CourseCatalog />} />
+
+          <Route path="/student/login" element={<StudentLogin />} />
+          <Route path="/student/register" element={<StudentRegister />} />
+          <Route element={<StudentProtectedRoute />}>
+            <Route path="/student-dashboard" element={<StudentDash />} />
+          </Route>
+
+          <Route path="/tutor-dashboard" element={<TutorDash />} />
+          <Route path="/parent-portal" element={<ParentPortal />} />
+          <Route path="/blogs" element={<Blogs />} />
+          <Route path="/blogs/:slug" element={<BlogDetail />} />
+          <Route path="/gcse-maths-tutor" element={<GCSEMathsTutor />} />
           <Route path="/maths-a-level-tutor" element={<MathsALevelTutor />} />
-          <Route path="/maths-tutor"       element={<MathsTutor />} />
+          <Route path="/maths-tutor" element={<MathsTutor />} />
 
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/register" element={<AdminRegister />} />
@@ -86,8 +96,8 @@ function AppShell() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
-      {!isAdminPath && <ScrollToTop />}
-      {!isAdminPath && <CookieBanner />}
+      {!isAdminPath && !isStudentAuthPath && <ScrollToTop />}
+      {!isAdminPath && !isStudentAuthPath && <CookieBanner />}
     </>
   )
 }

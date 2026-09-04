@@ -21,9 +21,9 @@ const HOME_SCHEMA = {
   '@type': 'EducationalOrganization',
   name: 'SkillBridge Tutors',
   url: 'https://skillbridgetutors.com/',
-  description: 'Online maths tuition, GCSE maths tutor support, A-Level maths tutoring and personalised educational guidance for students across the UK.',
+  description: 'Online maths tuition for Year 1 to GCSE, with personalised support, exam preparation, flexible scheduling and affordable lessons from £8 per hour.',
   areaServed: ['United Kingdom', 'England', 'Scotland', 'Wales', 'Northern Ireland'],
-  knowsAbout: ['Maths Tutoring', 'GCSE Maths', 'A Level Maths', 'Online Learning', 'Exam Preparation'],
+  knowsAbout: ['Maths Tutoring', 'GCSE Maths', 'Online Learning', 'Exam Preparation', 'Personalised Learning'],
   sameAs: ['https://skillbridgetutors.com/']
 }
 
@@ -40,7 +40,7 @@ export default function Home() {
 
     metaDescription.setAttribute(
       'content',
-      "Boost your child's confidence with expert maths tuition from the UK's trusted online tuition platform. Personalised lessons, experienced tutors, and proven results."
+      "Expert online maths tuition for Year 1 to GCSE with personalised support, affordable lessons from £8 per hour and a free trial class."
     )
   }, [])
 

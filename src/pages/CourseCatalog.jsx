@@ -7,7 +7,7 @@ const COURSES = [
   {
     id: 1,
     title: 'Maths Tuition – Year 1 to 6',
-    description: 'Foundational Maths from counting and number bonds to fractions, geometry, and statistics. Personalised support for every child.',
+    description: 'Foundational support in number work, fractions, geometry and problem-solving, designed to build confidence and strong core skills from the start.',
     subject: 'Maths',
     grades: 'Year 1–6',
     level: 'Primary',
@@ -18,12 +18,12 @@ const COURSES = [
     reviews: 48,
     icon: '📐',
     gradient: 'from-blue-500 to-cyan-500',
-    tags: ['Number', 'Geometry', 'Fractions', 'Statistics'],
+    tags: ['Number', 'Geometry', 'Fractions', 'Problem Solving'],
   },
   {
     id: 2,
     title: 'Maths Tuition – Year 7 to 10',
-    description: 'Advanced Maths covering algebra, trigonometry, calculus foundations, and data handling aligned with the GCSE curriculum.',
+    description: 'Structured support for algebra, trigonometry, data handling and stronger exam readiness, with clear progression at a pace that suits the student.',
     subject: 'Maths',
     grades: 'Year 7–10',
     level: 'Secondary',
@@ -39,7 +39,7 @@ const COURSES = [
   {
     id: 3,
     title: 'GCSE Exam Preparation',
-    description: 'Intensive GCSE preparation for Maths with past papers, exam technique coaching, and timed practice sessions.',
+    description: 'Focused GCSE support with past papers, timed practice and exam technique coaching to help students improve accuracy, confidence and results.',
     subject: 'Maths',
     grades: 'Year 10',
     level: 'GCSE',
@@ -50,7 +50,7 @@ const COURSES = [
     reviews: 53,
     icon: '🏆',
     gradient: 'from-amber-500 to-orange-500',
-    tags: ['GCSE', 'Past Papers', 'Exam Technique', 'Intensive'],
+    tags: ['GCSE', 'Past Papers', 'Exam Technique', 'Intensive Revision'],
   },
 ]
 
@@ -75,7 +75,7 @@ export default function CourseCatalog() {
   const [activeLevel,   setActiveLevel]   = useState('All')
 
   useEffect(() => {
-    document.title = 'Mathematics Online Classes | Learn & Study Maths Online Courses'
+    document.title = 'Online Mathematics Tutors and Courses | Smarter Maths Learning'
 
     let metaDescription = document.querySelector('meta[name="description"]')
     if (!metaDescription) {
@@ -86,7 +86,7 @@ export default function CourseCatalog() {
 
     metaDescription.setAttribute(
       'content',
-      'Join the UK\'s trusted Mathematics Online Classes and Online Math Courses to learn and study maths online with expert tutors and flexible lessons.'
+      'Discover online mathematics tutors, flexible online math courses, and the best maths tutors online to build confidence, strengthen skills, and improve grades.'
     )
   }, [])
 
@@ -108,10 +108,10 @@ export default function CourseCatalog() {
               📚 Course Catalogue
             </span>
             <h1 className="font-heading text-4xl md:text-5xl font-extrabold mb-4">
-              Explore Our Online Maths Courses
+              Online Mathematics Tutors and Courses: A Smarter Way to Learn Maths
             </h1>
             <p className="text-white/80 text-lg max-w-xl mx-auto">
-              Join the UK's trusted Mathematics Online Classes and Online Math Courses to learn and study maths online with expert tutors and flexible lessons.
+              Maths can feel hard when a child is one of thirty students in one classroom. That is why more parents turn to online mathematics tutors for extra support, giving their child one-to-one attention and a real chance to enjoy the subject again.
             </p>
           </div>
         </div>

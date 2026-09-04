@@ -1,18 +1,18 @@
 const SUBJECTS = [
   {
     icon: '📐',
-    title: 'Maths',
+    title: 'Maths Tuition',
     years: 'Year 1 – 10 & GCSE',
     color: 'from-blue-500 to-cyan-500',
     bgLight: 'bg-blue-50 dark:bg-blue-900/20',
     borderColor: 'border-blue-200 dark:border-blue-800',
     accentColor: 'text-blue-700 dark:text-blue-300',
     features: [
-      'Foundational skills & concept clarity',
-      'Problem-solving techniques',
-      'Exam preparation & practice',
-      'GCSE Maths curriculum aligned',
-      'Building confidence & resilience',
+      'One-to-one and small group support',
+      'Personalised learning plans for every student',
+      'GCSE maths tuition and exam preparation',
+      'Progress tracking and regular parent feedback',
+      'Flexible sessions for school, evenings and weekends',
     ],
   },
 ]
@@ -22,10 +22,10 @@ export default function Services() {
     <section id="services" className="py-20 bg-slate-50 dark:bg-slate-900">
       <div className="section-wrap">
         <div className="text-center mb-14">
-          <span className="section-tag">✏️ Our Subjects</span>
-          <h2 className="section-heading">Our Services</h2>
+          <span className="section-tag">✏️ Our Services</span>
+          <h2 className="section-heading">One-to-One and Small Group Support</h2>
           <p className="section-sub">
-            Expert-led, curriculum-aligned tutoring designed to build real academic confidence
+            Flexible maths tuition designed around how each student learns best.
           </p>
         </div>
 
@@ -35,7 +35,6 @@ export default function Services() {
               key={s.title}
               className={`card card-hover border ${s.borderColor} ${s.bgLight} overflow-hidden`}
             >
-              {/* Header gradient bar */}
               <div className={`h-1.5 w-full bg-gradient-to-r ${s.color}`} />
 
               <div className="p-7">

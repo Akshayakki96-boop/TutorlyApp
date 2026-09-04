@@ -34,18 +34,17 @@ export default function Hero() {
             </div>
 
             <h1 className="font-heading text-4xl sm:text-5xl xl:text-6xl font-extrabold leading-tight mb-6">
-              Maths Tuition - Learn from Expert Tutors
-              Anytime, Anywhere
+              Maths Tuition That Builds Confidence,
+              One Step at a Time
             </h1>
 
             <p className="text-lg sm:text-xl text-white/80 leading-relaxed mb-4 max-w-lg">
-              One-to-one and group tutoring in Maths for Year 1–10 and GCSE.
-              Flexible schedules, proven results.
+              Every child learns differently. That’s why maths tuition at SkillBridge Tutors starts with the student, not a fixed lesson plan.
             </p>
 
             {/* Price badge */}
             <div className="inline-flex items-center gap-2 bg-green-500/20 border border-green-400/30 backdrop-blur-sm px-5 py-2.5 rounded-full mb-8">
-              <span className="text-green-300 text-lg font-bold">💷 From £8.00 Per Session</span>
+              <span className="text-green-300 text-lg font-bold">💷 Sessions starting from £8.00 per hour</span>
             </div>
 
             {/* CTAs */}

@@ -2,36 +2,28 @@ import { useState } from 'react'
 
 const FAQS = [
   {
-    q: 'How do I book a free demo class?',
-    a: 'You can book a FREE demo class by filling the form on this page, or contact us directly at 📧 info@skillbridgetutors.com or 📞 +44 7451 295266.',
+    q: 'How can online maths tuition improve a student’s confidence?',
+    a: 'When a child gets one-to-one attention and works at their own pace, mistakes feel less daunting. Regular praise and steady progress through online maths tuition help students trust their own ability over time.',
   },
   {
-    q: 'What subjects do you offer?',
-    a: 'We offer online tutoring in 📐 Maths for students from Year 1 to Year 10, including GCSE preparation.',
+    q: 'Can online maths tuition support students with difficult maths topics?',
+    a: 'Yes. Tutors break down tricky topics into smaller, manageable steps, revisiting concepts until the student feels secure before moving on.',
   },
   {
-    q: 'Do you offer one-to-one and group classes?',
-    a: 'Yes! We offer both one-to-one and small group classes, depending on your child\'s learning needs. Our classes are kept small to ensure personalised attention.',
+    q: 'How does personalised maths tuition help different learning needs?',
+    a: 'Personalised maths tuition adapts to how each child learns best, whether that means more visual examples, extra practice, or a slower pace through new material.',
   },
   {
-    q: 'What are your fees?',
-    a: 'Our tuition starts from £8 per hour. We also offer discounted bundles for multiple sessions. Check our Course Fees section for detailed pricing.',
+    q: 'Can online maths tuition help students prepare for school maths exams?',
+    a: 'Definitely. Structured revision, past papers and focused practice sessions help students walk into exams feeling prepared rather than anxious.',
   },
   {
-    q: 'Do you provide GCSE exam preparation?',
-    a: 'Yes, we specialise in GCSE exam preparation. We follow the UK curriculum and provide specialised GCSE tutoring in Maths with exam techniques and practice papers.',
+    q: 'How does online maths tuition develop problem-solving skills?',
+    a: 'Tutors encourage students to work through problems step by step, building reasoning skills that carry over into other subjects too.',
   },
   {
-    q: 'How do I enrol my child?',
-    a: 'To enrol your child, simply submit the enquiry form on this page. Our team will contact you to understand your requirements, discuss your child\'s learning needs, and schedule classes accordingly.',
-  },
-  {
-    q: "What's included in the tutoring service?",
-    a: 'Our tutoring includes personalised learning plans, regular progress tracking, detailed feedback, one-on-one or small group sessions, and flexible scheduling to suit your family\'s needs.',
-  },
-  {
-    q: 'Are the tutors qualified and experienced?',
-    a: 'All our tutors are experienced, background-verified, and trained to teach according to UK curriculum standards. They bring expertise from classroom and one-to-one online teaching across Year 1 to Year 10.',
+    q: 'Can online maths tuition help students improve their maths grades?',
+    a: 'With consistent sessions, tracked progress and targeted support on weak areas, many students see noticeable grade improvement within a few months.',
   },
 ]
 

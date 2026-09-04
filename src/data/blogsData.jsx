@@ -248,4 +248,227 @@ export const BLOGS = [
       }
     ],
   },
+  {
+    id: 7,
+    slug: 'gcse-maths-tuition-turn-common-mistakes-into-better-grades',
+    title: 'GCSE Maths Tuition: Turn Common Mistakes into Better Grades',
+    excerpt: 'Every GCSE maths student makes mistakes. Learn how one-to-one support, error analysis and exam-focused tuition can fix recurring errors and turn them into stronger results.',
+    image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1200&q=80',
+    date: 'Sep 2026',
+    readingTime: '5 min read',
+    author: 'SkillBridge Tutor Team',
+    category: 'Maths',
+    tags: ['GCSE Maths', 'Maths Tuition', 'Online Courses'],
+    metaTitle: 'GCSE Maths Tuition: Turn Common Mistakes into Better Grades | SkillBridge Tutors',
+    metaDescription: 'Improve GCSE Maths results with GCSE maths tuition and online math courses that fix common mistakes, strengthen weak areas, build confidence, and boost exam skills.',
+    content: [
+      {
+        type: 'paragraph',
+        text: 'Every GCSE maths student makes mistakes. That is normal. The real question is what happens next: does the student just move on, or do they get support that explains exactly where it went wrong? This is where GCSE maths tuition makes a difference, and it is exactly what SkillBridge Tutors focuses on.'
+      },
+      {
+        type: 'heading',
+        text: 'Why Small Mistakes Cost Big Marks'
+      },
+      {
+        type: 'paragraph',
+        text: 'Most students lose marks not because they do not understand maths, but because of small, repeated errors. Maybe they rush through algebra steps, mix up a formula for area and volume, or panic during a timed paper and forget everything they revised the night before. A classroom teacher with thirty students in front of them cannot catch every single slip. That is the gap tuition fills.'
+      },
+      {
+        type: 'heading',
+        text: 'One-to-One Attention Catches What Classrooms Miss'
+      },
+      {
+        type: 'paragraph',
+        text: 'SkillBridge Tutors runs one-to-one and small group sessions for students from Year 1 through Year 10, including full GCSE preparation. Tutors do not just teach a topic and move on. They watch how a student solves a problem, spot the exact point where the mistake happens, and correct it immediately. If a student always drops a negative sign in equations, the tutor catches that pattern within a few sessions rather than a whole term.'
+      },
+      {
+        type: 'heading',
+        text: 'Curriculum Built Around Real Weak Spots'
+      },
+      {
+        type: 'paragraph',
+        text: 'Lessons cover number skills, algebra, geometry, measures, statistics and probability, all mapped to the Foundation and Higher Tier syllabus. Nothing random, nothing off-curriculum. This structure matters because mistakes usually cluster in specific areas, and once a tutor knows the weak spot, the whole plan can shift around it.'
+      },
+      {
+        type: 'heading',
+        text: 'Fees and What You Actually Get'
+      },
+      {
+        type: 'paragraph',
+        text: 'For families comparing options, online maths courses through SkillBridge start from £8 per hour for a 12-session bundle, with a slightly higher rate of £14 per hour for the GCSE Intensive package, which includes past papers and timed practice. There is also one free trial class before anyone commits, so families can assess whether the teaching style suits the student without pressure.'
+      },
+      {
+        type: 'heading',
+        text: 'Exam Technique Matters As Much As Topics'
+      },
+      {
+        type: 'paragraph',
+        text: 'What stands out is the exam-focused side of things. Error analysis is part of every GCSE session, alongside timed practice papers and confidence-building exercises. In plain terms, tutors look at what went wrong last time and fix it before the real exam.'
+      },
+      {
+        type: 'heading',
+        text: 'What Parents Have Noticed'
+      },
+      {
+        type: 'paragraph',
+        text: 'Parents describe noticeable progress within weeks, not months. One mother said her son gained confidence in just a few weeks. A GCSE student from Manchester said the personalised approach made a real difference going into exams. Whether that holds true for every family is something each parent must judge for themselves, but the pattern of feedback is fairly consistent.'
+      },
+      {
+        type: 'heading',
+        text: 'The Bottom Line'
+      },
+      {
+        type: 'paragraph',
+        text: 'If a student keeps losing marks on the same type of question, that is rarely bad luck. It is usually a fixable habit. Good GCSE maths tuition turns that habit into a strength instead of letting it repeat exam after exam. With flexible scheduling, small group or one-to-one formats, and online maths courses built specifically around GCSE requirements, SkillBridge Tutors offers a direct route from common mistakes to noticeably better grades.'
+      },
+      {
+        type: 'faq',
+        faqs: [
+          {
+            q: 'How can GCSE maths tuition help with recurring mistakes?',
+            a: 'Tuition identifies the exact point where a mistake is happening and corrects the pattern before it becomes a habit. This is especially useful for algebra, formula recall and exam-time errors.'
+          },
+          {
+            q: 'Are online maths courses effective for GCSE revision?',
+            a: 'Yes. Online maths courses are effective when they are structured around the GCSE syllabus, focus on weak areas and include regular timed practice and feedback.'
+          },
+          {
+            q: 'What should parents look for in a GCSE maths tutor?',
+            a: 'Look for a tutor who provides personalised support, tracks progress carefully, offers a free trial and uses exam-focused methods that target the student’s exact gaps.'
+          }
+        ]
+      }
+    ],
+  },
+  {
+    id: 8,
+    slug: 'online-mathematics-tutors-and-courses-smarter-way-to-learn-maths',
+    title: 'Online Mathematics Tutors and Courses: A Smarter Way to Learn Maths',
+    excerpt: 'Discover online mathematics tutors, flexible online math courses, and the best maths tutors online to build confidence, strengthen skills, and improve grades.',
+    image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80',
+    date: 'Sep 2026',
+    readingTime: '6 min read',
+    author: 'SkillBridge Tutor Team',
+    category: 'Maths',
+    tags: ['Online Maths Tutors', 'Online Math Courses', 'Best Maths Tutors Online'],
+    metaTitle: 'Online Mathematics Tutors and Courses | Smarter Maths Learning',
+    metaDescription: 'Discover online mathematics tutors, flexible online math courses, and the best maths tutors online to build confidence, strengthen skills, and improve grades.',
+    content: [
+      {
+        type: 'paragraph',
+        text: 'Maths can feel hard when a child is one of thirty students in a classroom. That is why more parents turn to online mathematics tutors for extra support, giving their child one-to-one attention and a real chance to enjoy the subject again. Families want flexible, affordable help, and that is exactly what online math courses and private tutoring offer today.'
+      },
+      {
+        type: 'heading',
+        text: 'Why Families Are Choosing Online Maths Support'
+      },
+      {
+        type: 'paragraph',
+        text: 'Traditional tuition centres come with fixed timings, travel time, and often a higher cost. Online learning removes all of that, letting a student join a session from home after school or on a weekend.'
+      },
+      {
+        type: 'paragraph',
+        text: 'Online mathematics tutors bring something a large classroom cannot: full attention. A tutor can slow down on a topic a child finds difficult, or move faster through concepts they already know. This personal pacing is why online tuition works so well, and it is also why online mathematics tutors are in growing demand across the UK.'
+      },
+      {
+        type: 'heading',
+        text: 'SkillBridge Tutors: A Trusted Name in Online Maths Tuition'
+      },
+      {
+        type: 'paragraph',
+        text: 'SkillBridge Tutors is a UK platform built around one goal: helping students from Year 1 to Year 10 build real confidence in Maths through online mathematics tutors and structured online math courses. It connects families with background-verified, experienced tutors for one-to-one and small group sessions.'
+      },
+      {
+        type: 'paragraph',
+        text: 'Their tutors cover foundational skills for younger learners, including number work, fractions and geometry, plus advanced topics like algebra, trigonometry and calculus foundations for students preparing for GCSE. Every lesson is aligned with the UK national curriculum and GCSE board requirements.'
+      },
+      {
+        type: 'paragraph',
+        text: 'Sessions start from £8 per hour, based on pricing listed on the SkillBridge Tutors site, with discounted bundles for multiple sessions and a free trial class before enrollment. This combination of qualified tutors, fair pricing and flexible scheduling is why many parents describe SkillBridge Tutors as home to some of the best maths tutors online.'
+      },
+      {
+        type: 'heading',
+        text: 'What Makes SkillBridge Tutors Different'
+      },
+      {
+        type: 'list',
+        items: [
+          'Personalised learning plans built around each child’s year group and level.',
+          'Progress tracking so parents know exactly how their child is improving.',
+          'One-to-one or small group options chosen to suit the child and budget.',
+          'GCSE-focused preparation with past papers and exam technique coaching.'
+        ]
+      },
+      {
+        type: 'paragraph',
+        text: 'This is what parents actually look for when searching for the best maths tutors online. Not just a qualified tutor, but someone consistent, patient and genuinely invested in a child’s progress.'
+      },
+      {
+        type: 'heading',
+        text: 'How Online Math Courses Work'
+      },
+      {
+        type: 'paragraph',
+        text: 'Structured online math courses give students a clear path to follow instead of random one-off lessons. SkillBridge Tutors offers three main online math courses: Maths Tuition for Year 1 to 6, Maths Tuition for Year 7 to 10, and GCSE Exam Preparation.'
+      },
+      {
+        type: 'paragraph',
+        text: 'Each course is built around the year group’s needs. Younger students focus on number sense, fractions and basic geometry. Older students move into algebra, trigonometry and data handling, mapped to the GCSE curriculum. This step-by-step structure helps students avoid gaps in understanding, which is often where maths struggles begin.'
+      },
+      {
+        type: 'paragraph',
+        text: 'Most sessions run for about an hour, once or twice a week, depending on the course and the student’s goals. These online math courses build a routine, and routine is what actually improves grades over time.'
+      },
+      {
+        type: 'heading',
+        text: 'The Real Benefits of Learning Maths Online'
+      },
+      {
+        type: 'paragraph',
+        text: 'Learning through online mathematics tutors and structured courses offers clear advantages over classroom-only learning. First, there is flexibility. Sessions can be scheduled around school and family time, including weekends. Second, there is personal attention. A private tutor notices exactly where a student is struggling, something hard to achieve in a classroom of many students. Third, there is confidence. When a child understands a topic properly, instead of just memorising it, their confidence grows and carries into exams and other subjects too.'
+      },
+      {
+        type: 'heading',
+        text: 'Choosing the Right Support for Your Child'
+      },
+      {
+        type: 'paragraph',
+        text: 'Not every child needs the same kind of help. Some do well with a single online mathematics tutor guiding them through tricky topics. Others benefit more from a structured, multi-week course that builds skills step by step.'
+      },
+      {
+        type: 'paragraph',
+        text: 'If your child needs steady, topic-by-topic progress, an online math course with a clear curriculum path may work best. If they need focused help on specific problem areas, a private tutor might fit better. Many families use both together, starting with a course and adding one-to-one sessions closer to exam time.'
+      },
+      {
+        type: 'paragraph',
+        text: 'Whatever you choose, look for tutors and courses that are curriculum-aligned, verified and transparent about pricing. That one step can make a real difference in your child’s progress.'
+      },
+      {
+        type: 'faq',
+        faqs: [
+          {
+            q: 'Are online mathematics tutors effective for students?',
+            a: 'Yes. One-to-one attention helps tutors spot exactly where a student struggles and adjust their pace accordingly, which often leads to faster improvement than a shared classroom setting.'
+          },
+          {
+            q: 'How do online math courses work?',
+            a: 'Most courses follow a structured curriculum broken down by year group or topic. Students join scheduled sessions, work through lessons step by step and receive feedback as they progress.'
+          },
+          {
+            q: 'How can I find the best maths tutors online?',
+            a: 'Look for verified, experienced tutors, curriculum-aligned lessons, transparent pricing and a free trial class before committing.'
+          },
+          {
+            q: 'What are the benefits of learning maths online?',
+            a: 'The main benefits are flexibility, personal attention, no travel time and the ability to learn at a pace that suits the student.'
+          },
+          {
+            q: 'Should I choose an online maths tutor or an online math course?',
+            a: 'It depends on the child’s needs. A tutor is ideal for targeted help, while a course suits steady, long-term learning. Many families use both together for the best results.'
+          }
+        ]
+      }
+    ],
+  },
 ]

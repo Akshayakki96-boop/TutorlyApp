@@ -4,7 +4,7 @@ export default function Intro() {
       <div className="section-wrap">
         <div className="text-center mb-10">
           <span className="section-tag">🇬🇧 Trusted UK Tuition</span>
-          <h2 className="section-heading">Expert Online Maths Tutors<br />for Year 1–10 and GCSE</h2>
+          <h2 className="section-heading">Why Choose SkillBridge Tutors for Maths Tuition?</h2>
         </div>
 
         <div className="grid md:grid-cols-2 gap-5 max-w-4xl mx-auto">
@@ -20,13 +20,11 @@ export default function Intro() {
           ))}
         </div>
 
-        {/* CTA strip */}
         <div className="mt-10 text-center">
           <div className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl px-8 py-5 shadow-glow-blue max-w-2xl w-full">
             <span className="text-3xl">🌟</span>
             <p className="text-base font-medium leading-snug text-left">
-              Start your journey today with a <strong>trusted platform</strong> for online tuition in the UK. Expert tutors, structured learning, and proven success — your child will build{' '}
-              <em>long-term skills</em> for academic and personal success.
+              Finding the right tutor can make all the difference to how a child feels about maths. SkillBridge Tutors connects families with experienced, background-verified tutors who focus on clear explanations and steady progress.
             </p>
           </div>
         </div>
@@ -38,26 +36,26 @@ export default function Intro() {
 const POINTS = [
   {
     icon: '🔍',
-    text: 'Looking for the best Maths tutor? SkillBridge Tutors connects students with highly qualified tutors who make learning simple, effective, and engaging.',
+    text: 'SkillBridge Tutors supports children from Year 1 through to Year 10 and GCSE, with lessons built around the full UK curriculum and each student’s learning needs.',
   },
   {
     icon: '📅',
-    text: 'With trusted online tuition UK, we offer flexible, affordable lessons that fit around your schedule – whether preparing for exams, improving grades, or building confidence in key subjects.',
+    text: 'Every lesson comes with progress tracking and regular feedback, so parents always know how their child is doing and what to focus on next.',
   },
   {
     icon: '📐',
-    text: 'Our Maths tutors specialise in both foundational skills and advanced problem-solving, helping students build confidence, master key concepts, and prepare for exams.',
+    text: 'Our tutors cover foundational skills and advanced problem-solving, helping students build confidence, master key concepts, and prepare for exams with greater clarity.',
   },
   {
     icon: '🎯',
-    text: 'We provide a personalised approach – tailored learning plans, progress tracking, and regular feedback to ensure measurable results.',
+    text: 'Unlike generic online classes, SkillBridge Tutors builds a personalised learning plan for each student so progress feels steady and achievable.',
   },
   {
     icon: '🤝',
-    text: "Unlike other tutoring services, SkillBridge Tutors creates a supportive environment where learning feels motivating rather than stressful.",
+    text: 'Students can choose between one-to-one sessions and small group classes, depending on the learning style that helps them feel most supported.',
   },
   {
     icon: '💡',
-    text: 'As one of the best online tutoring sites in the UK, we combine quality, reliability, and results with affordable hourly rates, flexible packages, and discounted bundles.',
+    text: 'With affordable pricing, flexible scheduling and a free trial class, SkillBridge Tutors makes quality maths support accessible for busy families.',
   },
 ]

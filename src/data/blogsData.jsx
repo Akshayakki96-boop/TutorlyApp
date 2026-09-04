@@ -263,8 +263,12 @@ export const BLOGS = [
     metaDescription: 'Improve GCSE Maths results with GCSE maths tuition and online math courses that fix common mistakes, strengthen weak areas, build confidence, and boost exam skills.',
     content: [
       {
-        type: 'paragraph',
-        text: 'Every GCSE maths student makes mistakes. That is normal. The real question is what happens next: does the student just move on, or do they get support that explains exactly where it went wrong? This is where GCSE maths tuition makes a difference, and it is exactly what SkillBridge Tutors focuses on.'
+        type: 'richText',
+        segments: [
+          { text: 'Every GCSE maths student makes mistakes. That is normal. The real question is what happens next: does the student just move on, or do they get support that explains exactly where it went wrong? This is where ' },
+          { text: 'GCSE maths tuition', href: 'https://skillbridgetutors.com/gcse-maths-tutor' },
+          { text: ' makes a difference, and it is exactly what SkillBridge Tutors focuses on.' },
+        ],
       },
       {
         type: 'heading',
@@ -295,8 +299,12 @@ export const BLOGS = [
         text: 'Fees and What You Actually Get'
       },
       {
-        type: 'paragraph',
-        text: 'For families comparing options, online maths courses through SkillBridge start from £8 per hour for a 12-session bundle, with a slightly higher rate of £14 per hour for the GCSE Intensive package, which includes past papers and timed practice. There is also one free trial class before anyone commits, so families can assess whether the teaching style suits the student without pressure.'
+        type: 'richText',
+        segments: [
+          { text: 'For families comparing options, ' },
+          { text: 'online maths courses', href: 'https://skillbridgetutors.com/courses' },
+          { text: ' through SkillBridge start from £8 per hour for a 12-session bundle, with a slightly higher rate of £14 per hour for the GCSE Intensive package, which includes past papers and timed practice. There is also one free trial class before anyone commits, so families can assess whether the teaching style suits the student without pressure.' },
+        ],
       },
       {
         type: 'heading',
@@ -319,8 +327,12 @@ export const BLOGS = [
         text: 'The Bottom Line'
       },
       {
-        type: 'paragraph',
-        text: 'If a student keeps losing marks on the same type of question, that is rarely bad luck. It is usually a fixable habit. Good GCSE maths tuition turns that habit into a strength instead of letting it repeat exam after exam. With flexible scheduling, small group or one-to-one formats, and online maths courses built specifically around GCSE requirements, SkillBridge Tutors offers a direct route from common mistakes to noticeably better grades.'
+        type: 'richText',
+        segments: [
+          { text: 'If a student keeps losing marks on the same type of question, that is rarely bad luck. It is usually a fixable habit. Good ' },
+          { text: 'GCSE maths tuition', href: 'https://skillbridgetutors.com/gcse-maths-tutor' },
+          { text: ' turns that habit into a strength instead of letting it repeat exam after exam. With flexible scheduling, small group or one-to-one formats, and online maths courses built specifically around GCSE requirements, SkillBridge Tutors offers a direct route from common mistakes to noticeably better grades.' },
+        ],
       },
       {
         type: 'faq',
@@ -368,8 +380,11 @@ export const BLOGS = [
         text: 'Traditional tuition centres come with fixed timings, travel time, and often a higher cost. Online learning removes all of that, letting a student join a session from home after school or on a weekend.'
       },
       {
-        type: 'paragraph',
-        text: 'Online mathematics tutors bring something a large classroom cannot: full attention. A tutor can slow down on a topic a child finds difficult, or move faster through concepts they already know. This personal pacing is why online tuition works so well, and it is also why online mathematics tutors are in growing demand across the UK.'
+        type: 'richText',
+        segments: [
+          { text: 'Online mathematics tutors', href: 'https://skillbridgetutors.com/maths-tutor' },
+          { text: ' bring something a large classroom cannot: full attention. A tutor can slow down on a topic a child finds difficult, or move faster through concepts they already know. This personal pacing is why online tuition works so well, and it is also why online mathematics tutors are in growing demand across the UK.' },
+        ],
       },
       {
         type: 'heading',
@@ -384,8 +399,12 @@ export const BLOGS = [
         text: 'Their tutors cover foundational skills for younger learners, including number work, fractions and geometry, plus advanced topics like algebra, trigonometry and calculus foundations for students preparing for GCSE. Every lesson is aligned with the UK national curriculum and GCSE board requirements.'
       },
       {
-        type: 'paragraph',
-        text: 'Sessions start from £8 per hour, based on pricing listed on the SkillBridge Tutors site, with discounted bundles for multiple sessions and a free trial class before enrollment. This combination of qualified tutors, fair pricing and flexible scheduling is why many parents describe SkillBridge Tutors as home to some of the best maths tutors online.'
+        type: 'richText',
+        segments: [
+          { text: 'Sessions start from £8 per hour, based on pricing listed on the SkillBridge Tutors site, with discounted bundles for multiple sessions and a free trial class before enrollment. This combination of qualified tutors, fair pricing and flexible scheduling is why many parents describe SkillBridge Tutors as home to some of the ' },
+          { text: 'best maths tutors online', href: 'https://skillbridgetutors.com/maths-tutor' },
+          { text: '.' },
+        ],
       },
       {
         type: 'heading',
@@ -409,8 +428,12 @@ export const BLOGS = [
         text: 'How Online Math Courses Work'
       },
       {
-        type: 'paragraph',
-        text: 'Structured online math courses give students a clear path to follow instead of random one-off lessons. SkillBridge Tutors offers three main online math courses: Maths Tuition for Year 1 to 6, Maths Tuition for Year 7 to 10, and GCSE Exam Preparation.'
+        type: 'richText',
+        segments: [
+          { text: 'Structured ' },
+          { text: 'online math courses', href: 'https://skillbridgetutors.com/courses' },
+          { text: ' give students a clear path to follow instead of random one-off lessons. SkillBridge Tutors offers three main online math courses: Maths Tuition for Year 1 to 6, Maths Tuition for Year 7 to 10, and GCSE Exam Preparation.' },
+        ],
       },
       {
         type: 'paragraph',

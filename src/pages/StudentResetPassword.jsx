@@ -110,7 +110,7 @@ export default function StudentResetPassword() {
                 <p className="text-xs font-bold uppercase tracking-[0.24em] text-cyan-300">Account recovery</p>
                 <h2 className="mt-2 text-3xl font-black text-white">Reset password</h2>
                 <p className="mt-2 text-sm text-slate-400">
-                  {step === 1 ? 'Enter your email to request a password reset token.' : 'Enter the token from your email and choose a new password.'}
+                  {step === 1 ? 'Enter your email to request a password reset token.' : 'Choose a new password for your account.'}
                 </p>
               </div>
 
@@ -128,10 +128,6 @@ export default function StudentResetPassword() {
               ) : (
                 <form onSubmit={resetPassword} className="mt-8 space-y-5">
                   <div>
-                    <label className="mb-2 block text-sm font-semibold text-slate-200" htmlFor="token">Reset token</label>
-                    <input id="token" name="token" type="text" required value={form.token} onChange={onChange} placeholder="Paste your reset token" className="w-full rounded-2xl border border-slate-700 bg-slate-900/80 px-4 py-3 text-white placeholder:text-slate-400 focus:border-cyan-400 focus:outline-none" />
-                  </div>
-                  <div>
                     <label className="mb-2 block text-sm font-semibold text-slate-200" htmlFor="newPassword">New password</label>
                     <input id="newPassword" name="newPassword" type="password" required minLength={6} value={form.newPassword} onChange={onChange} placeholder="At least 6 characters" className="w-full rounded-2xl border border-slate-700 bg-slate-900/80 px-4 py-3 text-white placeholder:text-slate-400 focus:border-cyan-400 focus:outline-none" />
                   </div>
@@ -144,7 +140,7 @@ export default function StudentResetPassword() {
                     {loading ? 'Resetting password...' : 'Reset password'}
                   </button>
                   <button type="button" onClick={() => { setStep(1); setError(''); setMessage('') }} className="w-full text-sm font-semibold text-cyan-300 hover:text-cyan-200">
-                    Request a new token
+                    Request a new reset email
                   </button>
                 </form>
               )}

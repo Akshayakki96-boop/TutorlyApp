@@ -23,10 +23,13 @@ export default function Navigation() {
   const [isOpen,      setIsOpen]      = useState(false)
   const [isScrolled,  setIsScrolled]  = useState(false)
   const [showDropdown, setShowDropdown] = useState(false)
+  const [showPortalDropdown, setShowPortalDropdown] = useState(false)
   const location  = useLocation()
   const navigate  = useNavigate()
   const isHome    = location.pathname === '/'
   const servicesRef = useRef(null)
+  const portalRef = useRef(null)
+  const desktopPortalRef = useRef(null)
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 20)
@@ -34,7 +37,7 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  useEffect(() => { setIsOpen(false) }, [location])
+  useEffect(() => { setIsOpen(false); setShowPortalDropdown(false) }, [location])
 
   useEffect(() => {
     function handleClickOutside(e) {
@@ -54,6 +57,26 @@ export default function Navigation() {
       document.removeEventListener('touchstart', handleClickOutside)
     }
   }, [showDropdown])
+
+  useEffect(() => {
+    function handlePortalClickOutside(e) {
+      const insideMobile = portalRef.current?.contains(e.target)
+      const insideDesktop = desktopPortalRef.current?.contains(e.target)
+      if (!insideMobile && !insideDesktop) {
+        setShowPortalDropdown(false)
+      }
+    }
+
+    if (showPortalDropdown) {
+      document.addEventListener('mousedown', handlePortalClickOutside)
+      document.addEventListener('touchstart', handlePortalClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handlePortalClickOutside)
+      document.removeEventListener('touchstart', handlePortalClickOutside)
+    }
+  }, [showPortalDropdown])
 
   function handleNavClick(link) {
     setIsOpen(false)
@@ -196,13 +219,22 @@ export default function Navigation() {
               )}
             </button>
 
-            <Link
-              to="/student/login"
-              aria-label="Open the student portal"
-              className="inline-flex items-center justify-center rounded-full border border-white/80 bg-white px-3.5 py-2 text-sm font-bold text-slate-900 shadow-[0_10px_24px_rgba(15,23,42,0.2)] transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-blue-700 dark:border-slate-600 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700"
-            >
-              Student Portal
-            </Link>
+            <div className="relative" ref={desktopPortalRef}>
+              <button
+                onClick={() => setShowPortalDropdown(p => !p)}
+                aria-label="Open the portal menu"
+                aria-haspopup="true"
+                aria-expanded={showPortalDropdown}
+                className="inline-flex items-center justify-center rounded-full border border-white/80 bg-white px-3.5 py-2 text-sm font-bold text-slate-900 shadow-[0_10px_24px_rgba(15,23,42,0.2)] transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-blue-700 dark:border-slate-600 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700"
+              >
+                Login
+              </button>
+
+              <div className={`absolute right-0 z-50 mt-2 w-36 overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-slate-200 transition-transform duration-150 dark:bg-slate-900 dark:ring-slate-800 ${showPortalDropdown ? 'scale-100 opacity-100' : 'pointer-events-none scale-95 opacity-0'}`}>
+                <Link to="/student/login" onClick={() => setShowPortalDropdown(false)} className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800">Student</Link>
+                <Link to="/tutor-dashboard" onClick={() => setShowPortalDropdown(false)} className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800">Teacher</Link>
+              </div>
+            </div>
             <button
               onClick={handleBookDemo}
               className="btn-primary text-sm py-2 px-4 animate-blink"
@@ -213,13 +245,22 @@ export default function Navigation() {
 
           {/* ── Mobile Controls ── */}
           <div className="flex lg:hidden items-center gap-2">
-            <Link
-              to="/student/login"
-              aria-label="Open the student portal"
-              className={`rounded-full border px-3 py-2 text-xs font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 ${isScrolled || !isHome ? 'border-slate-200 bg-white text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white' : 'border-white/80 bg-white text-slate-900 shadow-[0_10px_20px_rgba(15,23,42,0.18)]'}`}
-            >
-              Portal
-            </Link>
+            <div className="relative" ref={portalRef}>
+              <button
+                onClick={() => setShowPortalDropdown(p => !p)}
+                aria-label="Open the portal menu"
+                aria-haspopup="true"
+                aria-expanded={showPortalDropdown}
+                className={`rounded-full border px-3 py-2 text-xs font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 ${isScrolled || !isHome ? 'border-slate-200 bg-white text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white' : 'border-white/80 bg-white text-slate-900 shadow-[0_10px_20px_rgba(15,23,42,0.18)]'}`}
+              >
+                Portal
+              </button>
+
+              <div className={`absolute right-0 z-50 mt-2 w-36 overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-slate-200 transition-transform duration-150 dark:bg-slate-900 dark:ring-slate-800 ${showPortalDropdown ? 'scale-100 opacity-100' : 'pointer-events-none scale-95 opacity-0'}`}>
+                <Link to="/student/login" onClick={() => setShowPortalDropdown(false)} className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800">Student</Link>
+                <Link to="/tutor-dashboard" onClick={() => setShowPortalDropdown(false)} className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800">Teacher</Link>
+              </div>
+            </div>
             <button
               onClick={toggle}
               aria-label="Toggle theme"

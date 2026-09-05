@@ -146,6 +146,11 @@ export default function StudentLogin() {
                     placeholder="Enter your password"
                     className="w-full rounded-2xl border border-slate-700 bg-slate-900/80 px-4 py-3 text-white placeholder:text-slate-400 focus:border-cyan-400 focus:outline-none"
                   />
+                  <div className="mt-2 text-right">
+                    <Link to="/student/reset-password" className="text-sm font-semibold text-cyan-300 hover:text-cyan-200">
+                      Forgot password?
+                    </Link>
+                  </div>
                 </div>
 
                 {error && (

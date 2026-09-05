@@ -10,14 +10,13 @@ const initialForm = {
   parentFirstName: '',
   parentLastName: '',
   classYear: '',
-  subject: '',
-  address: '',
+  subject: 'Mathematics',
 }
 
 const STEPS = [
   { id: 1, title: 'Account', description: 'Your login details', fields: ['fullName', 'email', 'password', 'phone'] },
   { id: 2, title: 'Student', description: 'Learning preferences', fields: ['classYear', 'subject'] },
-  { id: 3, title: 'Guardian', description: 'Parent & address', fields: ['parentFirstName', 'parentLastName', 'address'] },
+  { id: 3, title: 'Guardian', description: 'Parent details', fields: ['parentFirstName', 'parentLastName'] },
 ]
 
 export default function StudentRegister() {
@@ -76,7 +75,6 @@ export default function StudentRegister() {
           parentLastName: form.parentLastName.trim(),
           classYear: form.classYear.trim(),
           subject: form.subject.trim(),
-          address: form.address.trim(),
         }),
       })
 
@@ -227,7 +225,7 @@ export default function StudentRegister() {
 
                     <div>
                       <label className="mb-2 block text-sm font-semibold text-slate-200" htmlFor="subject">Preferred subject</label>
-                      <input id="subject" name="subject" type="text" required value={form.subject} onChange={onChange} className="input-field" placeholder="Mathematics" />
+                      <input id="subject" name="subject" type="text" required value={form.subject} readOnly className="input-field cursor-not-allowed opacity-75" />
                     </div>
                   </>
                 )}
@@ -244,10 +242,6 @@ export default function StudentRegister() {
                       <input id="parentLastName" name="parentLastName" type="text" required value={form.parentLastName} onChange={onChange} className="input-field" placeholder="Parent last name" />
                     </div>
 
-                    <div className="md:col-span-2">
-                      <label className="mb-2 block text-sm font-semibold text-slate-200" htmlFor="address">Address</label>
-                      <textarea id="address" name="address" rows={3} required value={form.address} onChange={onChange} className="input-field" placeholder="Your address" />
-                    </div>
                   </>
                 )}
 

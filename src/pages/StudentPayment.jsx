@@ -64,7 +64,7 @@ export default function StudentPayment() {
       onApprove: async (data) => {
         await apiRequest('/api/payments/capture', {
           method: 'POST',
-          body: JSON.stringify({ orderId: data.orderID, studentId }),
+          body: JSON.stringify({ orderId: data.orderID }),
         })
         setSuccess(true)
       },

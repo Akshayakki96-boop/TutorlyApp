@@ -12,8 +12,11 @@ const Home = lazy(() => import('./pages/Home'))
 const CourseCatalog = lazy(() => import('./pages/CourseCatalog'))
 const StudentDash = lazy(() => import('./pages/StudentDashboard'))
 const StudentLogin = lazy(() => import('./pages/StudentLogin'))
+const StudentResetPassword = lazy(() => import('./pages/StudentResetPassword'))
 const StudentRegister = lazy(() => import('./pages/StudentRegister'))
 const StudentPayment = lazy(() => import('./pages/StudentPayment'))
+const PaymentSuccess = lazy(() => import('./pages/PaymentSuccess'))
+const PaymentCancel = lazy(() => import('./pages/PaymentCancel'))
 const TutorDash = lazy(() => import('./pages/TutorDashboard'))
 const ParentPortal = lazy(() => import('./pages/ParentPortal'))
 const Blogs = lazy(() => import('./pages/Blogs'))
@@ -55,7 +58,7 @@ export default function App() {
 function AppShell() {
   const location = useLocation()
   const isAdminPath = location.pathname.startsWith('/admin')
-  const isStudentAuthPath = ['/student/login', '/student/register', '/student/payment'].includes(location.pathname)
+  const isStudentAuthPath = ['/student/login', '/student/reset-password', '/student/register', '/student/payment', '/payment/success', '/payment/cancel'].includes(location.pathname)
 
   return (
     <>
@@ -66,8 +69,11 @@ function AppShell() {
           <Route path="/courses" element={<CourseCatalog />} />
 
           <Route path="/student/login" element={<StudentLogin />} />
+          <Route path="/student/reset-password" element={<StudentResetPassword />} />
           <Route path="/student/register" element={<StudentRegister />} />
           <Route path="/student/payment" element={<StudentPayment />} />
+          <Route path="/payment/success" element={<PaymentSuccess />} />
+          <Route path="/payment/cancel" element={<PaymentCancel />} />
           <Route element={<StudentProtectedRoute />}>
             <Route path="/student-dashboard" element={<StudentDash />} />
           </Route>

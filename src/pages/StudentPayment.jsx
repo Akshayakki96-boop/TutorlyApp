@@ -22,8 +22,7 @@ export default function StudentPayment() {
 
     const existingScript = document.getElementById('paypal-sdk')
     if (existingScript) {
-      setSdkReady(true)
-      return
+      existingScript.remove()
     }
 
     const script = document.createElement('script')
@@ -33,6 +32,13 @@ export default function StudentPayment() {
     script.onload = () => setSdkReady(true)
     script.onerror = () => setError('Unable to load PayPal. Please refresh and try again.')
     document.body.appendChild(script)
+
+    setSdkReady(false)
+
+    return () => {
+      const currentScript = document.getElementById('paypal-sdk')
+      if (currentScript) currentScript.remove()
+    }
   }, [currency, success])
 
   useEffect(() => {

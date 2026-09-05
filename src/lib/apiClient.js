@@ -10,7 +10,12 @@ const API_BASE_URL = (envApiBaseUrl
 ).replace(/\/$/, '')
 
 export async function apiRequest(path, options = {}) {
-  const token = getToken() || getStudentToken()
+  // Student/payment routes must prefer the student token so a stale admin
+  // session in the same browser doesn't get sent instead.
+  const isStudentRoute = path.startsWith('/api/student') || path.startsWith('/api/payments')
+  const token = isStudentRoute
+    ? getStudentToken() || getToken()
+    : getToken() || getStudentToken()
   const headers = {
     ...(options.headers || {}),
   }

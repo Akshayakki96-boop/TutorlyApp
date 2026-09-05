@@ -266,7 +266,7 @@ export const BLOGS = [
         type: 'richText',
         segments: [
           { text: 'Every GCSE maths student makes mistakes. That is normal. The real question is what happens next: does the student just move on, or do they get support that explains exactly where it went wrong? This is where ' },
-          { text: 'GCSE maths tuition', href: 'https://skillbridgetutors.com/gcse-maths-tutor' },
+          { text: 'GCSE maths tuition' },
           { text: ' makes a difference, and it is exactly what SkillBridge Tutors focuses on.' },
         ],
       },

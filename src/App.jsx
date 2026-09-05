@@ -13,6 +13,7 @@ const CourseCatalog = lazy(() => import('./pages/CourseCatalog'))
 const StudentDash = lazy(() => import('./pages/StudentDashboard'))
 const StudentLogin = lazy(() => import('./pages/StudentLogin'))
 const StudentRegister = lazy(() => import('./pages/StudentRegister'))
+const StudentPayment = lazy(() => import('./pages/StudentPayment'))
 const TutorDash = lazy(() => import('./pages/TutorDashboard'))
 const ParentPortal = lazy(() => import('./pages/ParentPortal'))
 const Blogs = lazy(() => import('./pages/Blogs'))
@@ -54,7 +55,7 @@ export default function App() {
 function AppShell() {
   const location = useLocation()
   const isAdminPath = location.pathname.startsWith('/admin')
-  const isStudentAuthPath = ['/student/login', '/student/register'].includes(location.pathname)
+  const isStudentAuthPath = ['/student/login', '/student/register', '/student/payment'].includes(location.pathname)
 
   return (
     <>
@@ -66,6 +67,7 @@ function AppShell() {
 
           <Route path="/student/login" element={<StudentLogin />} />
           <Route path="/student/register" element={<StudentRegister />} />
+          <Route path="/student/payment" element={<StudentPayment />} />
           <Route element={<StudentProtectedRoute />}>
             <Route path="/student-dashboard" element={<StudentDash />} />
           </Route>

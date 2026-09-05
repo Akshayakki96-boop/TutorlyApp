@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { apiRequest } from '../lib/apiClient'
+import { saveStudentAuth } from '../lib/authStorage'
 
 const initialForm = {
   fullName: '',
@@ -79,6 +80,10 @@ export default function StudentRegister() {
       })
 
       const studentId = result?.id ?? result?.studentId ?? result?.user?.id ?? null
+      const token = result?.token || result?.jwt || result?.accessToken
+      if (token) {
+        saveStudentAuth(token, result?.user || { email: form.email.trim() })
+      }
 
       navigate('/student/payment', {
         state: {

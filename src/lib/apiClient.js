@@ -1,4 +1,4 @@
-import { getToken } from './authStorage'
+import { getToken, getStudentToken } from './authStorage'
 
 const envApiBaseUrl = import.meta.env.VITE_API_BASE_URL?.trim()
 
@@ -10,7 +10,7 @@ const API_BASE_URL = (envApiBaseUrl
 ).replace(/\/$/, '')
 
 export async function apiRequest(path, options = {}) {
-  const token = getToken()
+  const token = getToken() || getStudentToken()
   const headers = {
     ...(options.headers || {}),
   }

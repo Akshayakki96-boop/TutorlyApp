@@ -91,21 +91,15 @@ export default function StudentDashboard() {
         }),
       })
 
-      const orderId = orderResult?.orderId || orderResult?.id || orderResult?.paymentOrderId
-      if (!orderId) {
-        throw new Error('Payment order was created without a valid reference ID.')
+      const approvalUrl = orderResult?.approvalUrl
+      if (!approvalUrl) {
+        throw new Error('Payment order was created without a redirect URL.')
       }
 
-      await apiRequest('/api/payments/capture', {
-        method: 'POST',
-        body: JSON.stringify({ orderId: String(orderId) }),
-      })
-
-      setSuccess('Payment completed successfully. Your receipt has been updated.')
-      await loadPayments(student.id)
+      // Hand off to PayPal; it redirects back to /payment/success or /payment/cancel.
+      window.location.href = approvalUrl
     } catch (err) {
       setError(err.message || 'Unable to process the payment right now.')
-    } finally {
       setPaying(false)
     }
   }

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import emailjs from '@emailjs/browser'
 import Swal from 'sweetalert2'
 import { apiRequest } from '../lib/apiClient'
+import Turnstile from './Turnstile'
 
 const YEARS    = ['Year 1','Year 2','Year 3','Year 4','Year 5','Year 6','Year 7','Year 8','Year 9','Year 10']
 const SUBJECTS = ['Maths']
@@ -9,6 +10,7 @@ const SUBJECTS = ['Maths']
 export default function LeadPopup() {
   const [isOpen, setIsOpen] = useState(false)
   const [canSubmit, setCanSubmit] = useState(false)
+  const [turnstileToken, setTurnstileToken] = useState('')
   const formRef = useRef()
 
   useEffect(() => {
@@ -34,6 +36,10 @@ export default function LeadPopup() {
     e.preventDefault()
 
     if (!formRef.current) return
+    if (!turnstileToken) {
+      Swal.fire({ icon: 'warning', title: 'Verification required', text: 'Please complete the security verification before submitting.' })
+      return
+    }
 
     const formData = new FormData(formRef.current)
     const payload = {
@@ -45,6 +51,7 @@ export default function LeadPopup() {
       classYear: (formData.get('childYear') || '').toString().trim(),
       subject: (formData.get('subject') || '').toString().trim(),
       query: (formData.get('description') || '').toString().trim(),
+      turnstileToken,
     }
 
     Swal.fire({ title: 'Processing…', text: 'Saving your enquiry and sending confirmation', allowOutsideClick: false, didOpen: () => Swal.showLoading() })
@@ -173,9 +180,13 @@ export default function LeadPopup() {
               </div>
             </div>
 
+            <div className="mt-4">
+              <Turnstile onTokenChange={setTurnstileToken} />
+            </div>
+
             <button
               type="submit"
-              disabled={!canSubmit}
+              disabled={!canSubmit || !turnstileToken}
               className="btn-primary w-full justify-center mt-4 disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none"
             >
               Submit Enquiry

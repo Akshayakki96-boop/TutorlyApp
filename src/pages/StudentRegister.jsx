@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { apiRequest } from '../lib/apiClient'
-import { saveStudentAuth } from '../lib/authStorage'
 
 const initialForm = {
   fullName: '',
@@ -26,6 +25,7 @@ export default function StudentRegister() {
   const [form, setForm] = useState(initialForm)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [registeredStudent, setRegisteredStudent] = useState(null)
 
   function onChange(e) {
     const { name, value } = e.target
@@ -80,23 +80,22 @@ export default function StudentRegister() {
       })
 
       const studentId = result?.id ?? result?.studentId ?? result?.user?.id ?? null
-      const token = result?.token || result?.jwt || result?.accessToken
-      if (token) {
-        saveStudentAuth(token, result?.user || { email: form.email.trim() })
-      }
 
-      navigate('/student/payment', {
-        state: {
-          studentId,
-          email: form.email.trim(),
-          fullName: form.fullName.trim(),
-        },
+      // Registration only creates an inactive account; no login token is issued until payment completes.
+      setRegisteredStudent({
+        studentId,
+        email: form.email.trim(),
+        fullName: form.fullName.trim(),
       })
     } catch (err) {
       setError(err.message || 'Unable to register. Please try again.')
     } finally {
       setLoading(false)
     }
+  }
+
+  function goToPayment() {
+    navigate('/student/payment', { state: registeredStudent })
   }
 
   return (
@@ -160,6 +159,25 @@ export default function StudentRegister() {
                 <h2 className="mt-2 text-3xl font-black text-white">Sign up</h2>
               </div>
 
+              {registeredStudent ? (
+                <div className="mt-10 text-center">
+                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-300">
+                    <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <h3 className="mt-4 text-2xl font-black text-white">Registration successful</h3>
+                  <p className="mt-2 text-sm text-slate-300">Please complete payment to activate your account.</p>
+                  <button
+                    type="button"
+                    onClick={goToPayment}
+                    className="mt-6 w-full rounded-2xl bg-gradient-to-r from-emerald-400 to-cyan-500 px-4 py-3.5 text-sm font-bold text-slate-950 shadow-lg shadow-emerald-500/25 transition hover:brightness-110"
+                  >
+                    Pay now
+                  </button>
+                </div>
+              ) : (
+                <>
               <ol className="mt-8 grid grid-cols-3 gap-2">
                 {STEPS.map((s) => {
                   const isComplete = step > s.id
@@ -288,6 +306,8 @@ export default function StudentRegister() {
                   Log in
                 </Link>
               </p>
+                </>
+              )}
             </div>
           </div>
         </div>

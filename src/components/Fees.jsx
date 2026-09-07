@@ -82,9 +82,15 @@ export default function Fees() {
           ))}
         </div>
 
-        <p className="text-center text-sm text-slate-500 dark:text-slate-400 mt-8">
-          🎁 <strong>One FREE trial class</strong> available before enrollment — no commitment required
-        </p>
+<div className="mt-8">
+          <p className="text-center text-sm text-slate-600 dark:text-slate-300 mb-6">
+            SkillBridge Tutors offers flexible, affordable maths tuition aligned with the UK curriculum and GCSE board requirements. 
+            Sessions can be scheduled around school hours, evenings, or weekends to fit busy family routines.
+          </p>
+          <p className="text-center text-sm text-slate-500 dark:text-slate-400">
+            🎁 <strong>One FREE trial class</strong> available before enrollment — no commitment required
+          </p>
+        </div>
       </div>
     </section>
   )

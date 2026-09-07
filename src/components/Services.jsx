@@ -48,7 +48,14 @@ export default function Services() {
                   </div>
                 </div>
 
-                <ul className="space-y-2.5 mt-4">
+                <div className="mt-5 pt-5 border-t border-slate-200 dark:border-slate-700 mb-3">
+                  <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-3">Available Format Options:</p>
+                  <div className="flex gap-2 mb-3">
+                    <span className="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-3 py-1 rounded-full font-medium">One-to-One Sessions</span>
+                    <span className="text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 px-3 py-1 rounded-full font-medium">Small Group Classes</span>
+                  </div>
+                </div>
+                <ul className="space-y-2.5">
                   {s.features.map(f => (
                     <li key={f} className="flex items-start gap-2.5 text-sm text-slate-700 dark:text-slate-300">
                       <svg className="w-4 h-4 mt-0.5 text-green-500 shrink-0" fill="currentColor" viewBox="0 0 20 20">

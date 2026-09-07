@@ -39,7 +39,7 @@ export default function Hero() {
             </h1>
 
             <p className="text-lg sm:text-xl text-white/80 leading-relaxed mb-4 max-w-lg">
-              Every child learns differently. That’s why maths tuition at SkillBridge Tutors starts with the student, not a fixed lesson plan.
+              Every child learns differently. That's why maths tuition at SkillBridge Tutors starts with the student, not a fixed lesson plan. SkillBridge Tutors is a UK-based online tuition platform supporting children from Year 1 through to Year 10 and GCSE.
             </p>
 
             {/* Price badge */}

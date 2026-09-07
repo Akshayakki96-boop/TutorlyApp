@@ -16,7 +16,8 @@ export default function About() {
               We are a team of passionate and highly qualified tutors dedicated to providing{' '}
               <strong>high-quality online tuition</strong> in <strong>Maths</strong>.
               Our programs are designed for students from <strong>Year 1 to Year 10</strong>, helping them build
-              strong academic foundations and the confidence to succeed.
+              strong academic foundations and the confidence to succeed. With <strong>over 10 years of teaching experience</strong>,
+              our team covers the full UK curriculum from Year 1 right through to GCSE.
             </p>
           </div>
 

@@ -162,7 +162,7 @@ export default function CourseCatalog() {
               Mathematics Online Classes with SkillBridge Tutors
             </h1>
             <p className="text-white/80 text-lg max-w-xl mx-auto">
-              Finding the right maths support can feel like a puzzle. SkillBridge Tutors makes it simple. As a trusted UK tuition platform, we run mathematics online classes for students from Year 1 right through to GCSE, helping them build real confidence one session at a time.
+              Finding the right maths support can feel like a puzzle. SkillBridge Tutors makes it simple. As a trusted UK tuition platform, we run mathematics online classes for students from Year 1 right through to GCSE, helping them build real confidence one session at a time. If you have been searching for a reliable way to learn maths online, this is worth a read.
             </p>
           </div>
         </div>

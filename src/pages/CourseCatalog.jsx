@@ -7,13 +7,13 @@ const COURSES = [
   {
     id: 1,
     title: 'Maths Tuition – Year 1 to 6',
-    description: 'Foundational support in number work, fractions, geometry and problem-solving, designed to build confidence and strong core skills from the start.',
+    description: 'Building strong foundations and clear understanding of core concepts. Younger students focus on number confidence and problem-solving habits early.',
     subject: 'Maths',
     grades: 'Year 1–6',
     level: 'Primary',
     duration: '1 hr / session',
-    price: '£8 / hr',
-    originalPrice: '£9 / hr',
+    price: 'From £8 / session',
+    originalPrice: '£9 / session',
     rating: 4.9,
     reviews: 48,
     icon: '📐',
@@ -23,13 +23,13 @@ const COURSES = [
   {
     id: 2,
     title: 'Maths Tuition – Year 7 to 10',
-    description: 'Structured support for algebra, trigonometry, data handling and stronger exam readiness, with clear progression at a pace that suits the student.',
+    description: 'Strengthen topics before they become harder to catch up on later. Practising problem-solving techniques through guided practice with one-to-one attention.',
     subject: 'Maths',
     grades: 'Year 7–10',
     level: 'Secondary',
     duration: '1 hr / session',
-    price: '£8 / hr',
-    originalPrice: '£9 / hr',
+    price: 'From £8 / session',
+    originalPrice: '£9 / session',
     rating: 4.9,
     reviews: 62,
     icon: '📐',
@@ -38,24 +38,75 @@ const COURSES = [
   },
   {
     id: 3,
-    title: 'GCSE Exam Preparation',
-    description: 'Focused GCSE support with past papers, timed practice and exam technique coaching to help students improve accuracy, confidence and results.',
+    title: 'GCSE Maths Intensive',
+    description: 'Intensive, exam-focused support including past papers and revision techniques designed to boost grades. Preparing for exams with timed practice.',
     subject: 'Maths',
     grades: 'Year 10',
     level: 'GCSE',
     duration: '1–2 hrs / session',
-    price: '£8 / hr',
-    originalPrice: '£9 / hr',
+    price: 'From £14 / hour',
+    originalPrice: 'From £16 / hour',
     rating: 4.9,
     reviews: 53,
     icon: '🏆',
     gradient: 'from-amber-500 to-orange-500',
     tags: ['GCSE', 'Past Papers', 'Exam Technique', 'Intensive Revision'],
+    bestValue: true,
   },
 ]
 
 const SUBJECTS = ['All', 'Maths']
 const LEVELS   = ['All', 'Primary', 'Secondary', 'GCSE']
+
+const WHY_CHOOSE = [
+  {
+    title: 'One-to-one attention',
+    description: 'Each student gets a tutor\'s full focus. There is no getting lost in a large classroom.',
+    icon: '👤',
+  },
+  {
+    title: 'Personalised learning plans',
+    description: 'Every child is different. Tutors build a plan around the student\'s strengths and weak spots, then track progress with regular feedback.',
+    icon: '📋',
+  },
+  {
+    title: 'Flexible scheduling',
+    description: 'Sessions fit around school, clubs, and family life, including evenings and weekends.',
+    icon: '⏰',
+  },
+  {
+    title: 'Affordable pricing',
+    description: 'Lessons start from £8 per session, with bundle discounts for families who book multiple sessions.',
+    icon: '💷',
+  },
+]
+
+const FAQS = [
+  {
+    q: 'What types of online math courses are available for UK students?',
+    a: 'SkillBridge Tutors offers maths courses for Year 1 to Year 10, plus dedicated GCSE preparation aligned with UK exam boards.',
+  },
+  {
+    q: 'How can students learn maths online according to their year group?',
+    a: 'Tutors build lessons around each student\'s current year group and ability, covering foundational topics for younger students and exam-focused content for older ones.',
+  },
+  {
+    q: 'What can students expect from mathematics online classes?',
+    a: 'Students get one-to-one or small group sessions, a personalised study plan, regular progress tracking, and clear feedback after each lesson.',
+  },
+  {
+    q: 'Can students study maths online to strengthen their core concepts?',
+    a: 'Yes. Tutors focus on concept clarity and problem-solving skills before moving on to more advanced or exam-style work.',
+  },
+  {
+    q: 'How do online math courses support different levels of maths ability?',
+    a: 'Courses are tailored to each student, so a struggling learner and a high achiever both receive a plan matched to their pace and goals.',
+  },
+  {
+    q: 'Can students learn maths online with a personalised learning plan?',
+    a: 'Yes. Every student receives an individual study plan, along with ongoing feedback so parents can track improvement over time.',
+  },
+]
 
 function StarRating({ rating }) {
   return (
@@ -75,7 +126,7 @@ export default function CourseCatalog() {
   const [activeLevel,   setActiveLevel]   = useState('All')
 
   useEffect(() => {
-    document.title = 'Online Mathematics Tutors and Courses | Smarter Maths Learning'
+    document.title = 'Mathematics Online Classes with SkillBridge Tutors'
 
     let metaDescription = document.querySelector('meta[name="description"]')
     if (!metaDescription) {
@@ -86,7 +137,7 @@ export default function CourseCatalog() {
 
     metaDescription.setAttribute(
       'content',
-      'Discover online mathematics tutors, flexible online math courses, and the best maths tutors online to build confidence, strengthen skills, and improve grades.'
+      'Explore mathematics online classes for UK students Years 1–10 and GCSE. One-to-one maths tuition with personalised learning plans, flexible scheduling from £8/session, and a free trial class. Qualified UK tutors with 10+ years experience.'
     )
   }, [])
 
@@ -108,10 +159,10 @@ export default function CourseCatalog() {
               📚 Course Catalogue
             </span>
             <h1 className="font-heading text-4xl md:text-5xl font-extrabold mb-4">
-              Online Mathematics Tutors and Courses: A Smarter Way to Learn Maths
+              Mathematics Online Classes with SkillBridge Tutors
             </h1>
             <p className="text-white/80 text-lg max-w-xl mx-auto">
-              Maths can feel hard when a child is one of thirty students in one classroom. That is why more parents turn to online mathematics tutors for extra support, giving their child one-to-one attention and a real chance to enjoy the subject again.
+              Finding the right maths support can feel like a puzzle. SkillBridge Tutors makes it simple. As a trusted UK tuition platform, we run mathematics online classes for students from Year 1 right through to GCSE, helping them build real confidence one session at a time.
             </p>
           </div>
         </div>
@@ -157,6 +208,9 @@ export default function CourseCatalog() {
                 </div>
               </div>
             </div>
+            <p className="mt-4 text-sm text-slate-500 dark:text-slate-400">
+              Lessons start from £8 per session, bundle discounts are available, and every family can begin with a free trial class before enrolling.
+            </p>
           </div>
 
           {/* Results */}
@@ -226,12 +280,141 @@ export default function CourseCatalog() {
             </div>
           )}
 
+          {/* Who Are SkillBridge Tutors Section */}
+          <div className="mt-16 bg-white dark:bg-slate-800 rounded-2xl p-8 md:p-12 border border-slate-200 dark:border-slate-700">
+            <h2 className="font-heading text-3xl font-bold text-slate-900 dark:text-white mb-4">
+              Who Are SkillBridge Tutors?
+            </h2>
+            <p className="text-slate-700 dark:text-slate-300 text-lg leading-relaxed mb-4">
+              SkillBridge Tutors is a team of qualified, experienced tutors based in the UK. We focus only on maths, which means every lesson is planned with real subject expertise. Our tutors have over ten years of teaching experience, and each one is background-verified before they ever meet a student.
+            </p>
+            <p className="text-slate-700 dark:text-slate-300 text-lg leading-relaxed">
+              The platform covers every year group from Year 1 to Year 10, along with dedicated GCSE preparation. Whether a child needs help with basic number skills or is preparing for exam papers, SkillBridge Tutors offers online math courses built around where the student actually is.
+            </p>
+          </div>
+
+          {/* Why Learn Maths Online Section */}
+          <div className="mt-16">
+            <h2 className="font-heading text-3xl font-bold text-slate-900 dark:text-white mb-4 text-center">
+              Why Learn Maths Online with SkillBridge Tutors
+            </h2>
+            <p className="text-slate-600 dark:text-slate-400 text-center mb-10 max-w-2xl mx-auto">
+              Many parents wonder if online lessons can really match in-person tuition. With the right structure, they can work even better. Families who want to learn maths online choose SkillBridge Tutors for a few clear reasons.
+            </p>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {WHY_CHOOSE.map((item, idx) => (
+                <div key={idx} className="card p-6 text-center">
+                  <div className="text-4xl mb-3">{item.icon}</div>
+                  <h3 className="font-heading font-bold text-slate-900 dark:text-white mb-2">{item.title}</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{item.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* What Happens Section */}
+          <div className="mt-16 bg-gradient-to-r from-slate-50 to-blue-50 dark:from-slate-800 dark:to-blue-900/20 rounded-2xl p-8 md:p-12">
+            <h2 className="font-heading text-3xl font-bold text-slate-900 dark:text-white mb-4">
+              What Happens When You Study Maths Online
+            </h2>
+            <p className="text-slate-700 dark:text-slate-300 text-lg leading-relaxed mb-6">
+              Parents often ask what a typical lesson looks like. When a student decides to study maths online with SkillBridge Tutors, the process starts with a <span className="font-semibold">free trial class</span>. This gives families a chance to meet a tutor and see how the platform works, with no commitment needed.
+            </p>
+            <p className="text-slate-700 dark:text-slate-300 text-lg leading-relaxed mb-6">
+              After the trial, tutors build a study plan based on the student's year group and current level. Lessons in these mathematics online classes focus on three areas:
+            </p>
+            <ul className="space-y-3 mb-6">
+              <li className="flex items-start gap-3">
+                <span className="text-blue-600 dark:text-blue-400 font-bold">•</span>
+                <span className="text-slate-700 dark:text-slate-300"><strong>Building strong foundations</strong> and clear understanding of core concepts</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-blue-600 dark:text-blue-400 font-bold">•</span>
+                <span className="text-slate-700 dark:text-slate-300"><strong>Practising problem-solving techniques</strong> through guided practice</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-blue-600 dark:text-blue-400 font-bold">•</span>
+                <span className="text-slate-700 dark:text-slate-300"><strong>Preparing for exams</strong> with past papers and timed practice, especially for GCSE students</span>
+              </li>
+            </ul>
+            <p className="text-slate-700 dark:text-slate-300 text-lg leading-relaxed">
+              Every session ends with feedback, so parents always know how their child is progressing.
+            </p>
+          </div>
+
+          {/* Online Courses for Every Year Group */}
+          <div className="mt-16">
+            <h2 className="font-heading text-3xl font-bold text-slate-900 dark:text-white mb-4">
+              Online Math Courses for Every Year Group
+            </h2>
+            <p className="text-slate-700 dark:text-slate-300 text-lg leading-relaxed mb-8">
+              SkillBridge Tutors designs its online math courses around the UK National Curriculum and GCSE boards. This matters because it keeps lessons relevant to what students are actually being taught in school.
+            </p>
+            <div className="space-y-4">
+              <div className="card p-6 border-l-4 border-blue-500">
+                <h3 className="font-heading font-bold text-slate-900 dark:text-white mb-2">Years 1 to 6</h3>
+                <p className="text-slate-700 dark:text-slate-300">Younger students focus on building number confidence and problem-solving habits early.</p>
+              </div>
+              <div className="card p-6 border-l-4 border-indigo-500">
+                <h3 className="font-heading font-bold text-slate-900 dark:text-white mb-2">Years 7 to 10</h3>
+                <p className="text-slate-700 dark:text-slate-300">Students work on strengthening topics before they become harder to catch up on later.</p>
+              </div>
+              <div className="card p-6 border-l-4 border-amber-500">
+                <h3 className="font-heading font-bold text-slate-900 dark:text-white mb-2">GCSE Students</h3>
+                <p className="text-slate-700 dark:text-slate-300">Get intensive, exam-focused support, including past papers and revision techniques designed to boost grades.</p>
+              </div>
+            </div>
+            <p className="text-slate-700 dark:text-slate-300 text-lg leading-relaxed mt-8">
+              Courses are matched to each student's actual level, not a one-size-fits-all approach.
+            </p>
+          </div>
+
+          {/* Supportive Learning Approach */}
+          <div className="mt-16 bg-white dark:bg-slate-800 rounded-2xl p-8 md:p-12 border border-slate-200 dark:border-slate-700">
+            <h2 className="font-heading text-3xl font-bold text-slate-900 dark:text-white mb-4">
+              A Supportive Way to Study Maths Online
+            </h2>
+            <p className="text-slate-700 dark:text-slate-300 text-lg leading-relaxed mb-4">
+              What sets SkillBridge Tutors apart is the emphasis on <strong>confidence, not just correct answers</strong>. Our team describes the approach as <em>"engaging and stress-free,"</em> with tutors trained to encourage students rather than pressure them.
+            </p>
+            <p className="text-slate-700 dark:text-slate-300 text-lg leading-relaxed mb-4">
+              Parent reviews echo this, with families reporting steady progress after choosing to study maths online with a tutor who understands their child's pace.
+            </p>
+            <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-xl p-6 mt-6">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-2xl">⭐</span>
+                <span className="font-heading font-bold text-slate-900 dark:text-white text-xl">4.9 out of 5</span>
+              </div>
+              <p className="text-slate-700 dark:text-slate-300">Parent rating with a free trial class and one-to-one options, SkillBridge Tutors gives families a low-risk way to try mathematics online classes before committing.</p>
+            </div>
+          </div>
+
+          {/* FAQs Section */}
+          <div className="mt-16">
+            <h2 className="font-heading text-3xl font-bold text-slate-900 dark:text-white mb-10 text-center">
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-4 max-w-3xl mx-auto">
+              {FAQS.map((faq, idx) => (
+                <details key={idx} className="card cursor-pointer group">
+                  <summary className="p-6 font-heading font-bold text-slate-900 dark:text-white flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+                    <span>{faq.q}</span>
+                    <span className="text-xl group-open:rotate-180 transition-transform">▼</span>
+                  </summary>
+                  <div className="px-6 pb-6 text-slate-700 dark:text-slate-300 border-t border-slate-200 dark:border-slate-700 mt-2 pt-4">
+                    {faq.a}
+                  </div>
+                </details>
+              ))}
+            </div>
+          </div>
+
           <div className="mt-12 text-center bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-2xl p-8">
             <h3 className="font-heading text-xl font-bold text-slate-900 dark:text-white mb-2">
               Not sure which course is right?
             </h3>
             <p className="text-slate-600 dark:text-slate-400 mb-5">
-              Book a free demo class — our tutors will assess your child and recommend the best path.
+              Book a free trial class and meet a tutor before you enrol, with no commitment required.
             </p>
             <button onClick={scrollToEnrol} className="btn-primary animate-blink">
               Book Free Demo

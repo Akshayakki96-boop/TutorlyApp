@@ -36,6 +36,27 @@ export default function Fees() {
           </p>
         </div>
 
+        {/* GCSE Section */}
+        <div className="max-w-4xl mx-auto mb-16 grid md:grid-cols-2 gap-8">
+          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl p-8 border border-blue-200 dark:border-blue-800">
+            <h3 className="text-xl font-bold text-blue-900 dark:text-blue-300 mb-4 flex items-center gap-2">
+              <span className="text-2xl">📚</span> GCSE Maths Tuition and Exam Preparation
+            </h3>
+            <p className="text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
+              For students in Year 10 and those sitting their GCSEs, SkillBridge Tutors offers an intensive GCSE package. This includes past papers, timed practice, and exam technique coaching, aligned closely with GCSE board requirements. Their GCSE maths tuition starts from £14 per hour, with priority support included for students under exam pressure.
+            </p>
+          </div>
+
+          <div className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 rounded-2xl p-8 border border-emerald-200 dark:border-emerald-800">
+            <h3 className="text-xl font-bold text-emerald-900 dark:text-emerald-300 mb-4 flex items-center gap-2">
+              <span className="text-2xl">✨</span> Affordable, Flexible and Risk-Free
+            </h3>
+            <p className="text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
+              SkillBridge Tutors keeps pricing transparent. Standard sessions start from £8 per hour, with bundle discounts of up to 10% for families booking 12 sessions at once. Every new family can also book one free trial class before enrolling, so there's no pressure to commit upfront. Sessions can be scheduled around school hours, evenings, or weekends, making online maths tuition genuinely flexible for busy households.
+            </p>
+          </div>
+        </div>
+
         <div className="flex flex-col sm:flex-row justify-center gap-8 max-w-3xl mx-auto items-stretch">
           {PLANS.map((p, i) => (
             <div

@@ -33,6 +33,19 @@ export default function Testimonials() {
   return (
     <section id="testimonials" className="py-20 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950">
       <div className="section-wrap">
+        {/* Supportive Environment Section */}
+        <div className="max-w-4xl mx-auto mb-16 bg-gradient-to-r from-rose-50 to-pink-50 dark:from-rose-900/20 dark:to-pink-900/20 rounded-2xl p-8 border border-rose-200 dark:border-rose-800">
+          <h3 className="text-2xl font-bold text-rose-900 dark:text-rose-300 mb-4 flex items-center gap-2">
+            <span className="text-3xl">🤝</span> A Supportive Learning Environment
+          </h3>
+          <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
+            What sets SkillBridge Tutors apart is the atmosphere they create. Learning should feel encouraging, not stressful. Parents such as Mrs. Patel from London have shared how their children gained confidence within just a few weeks of starting lessons.
+          </p>
+          <p className="text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
+            With an average parent rating of <strong>4.9 out of 5.0</strong>, SkillBridge Tutors has built trust among UK families looking for reliable, affordable maths tuition.
+          </p>
+        </div>
+
         <div className="text-center mb-14">
           <span className="section-tag">💬 Testimonials</span>
           <h2 className="section-heading">What Parents &amp; Students Say</h2>

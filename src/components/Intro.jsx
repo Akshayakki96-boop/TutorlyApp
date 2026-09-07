@@ -21,10 +21,17 @@ export default function Intro() {
         </div>
 
         <div className="mt-10 text-center">
-          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl px-8 py-5 shadow-glow-blue max-w-2xl w-full">
-            <span className="text-3xl">🌟</span>
-            <p className="text-base font-medium leading-snug text-left">
-              Finding the right tutor can make all the difference to how a child feels about maths. SkillBridge Tutors connects families with experienced, background-verified tutors who focus on clear explanations and steady progress.
+          <div className="inline-flex flex-col items-start gap-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl px-8 py-6 shadow-glow-blue max-w-3xl w-full text-left">
+            <div className="flex gap-3 items-start">
+              <span className="text-3xl shrink-0">🌟</span>
+              <div>
+                <p className="text-base font-medium leading-relaxed">
+                  Finding the right tutor can make all the difference to how a child feels about maths. SkillBridge Tutors connects families with experienced, background-verified tutors who focus on clear explanations and steady progress. Their team brings <strong>over 10 years of teaching experience</strong>, covering the full UK curriculum from Year 1 right through to GCSE.
+                </p>
+              </div>
+            </div>
+            <p className="text-base font-medium leading-relaxed border-t border-white/30 pt-4">
+              Unlike generic online classes, SkillBridge Tutors builds a personalised learning plan for each student. Every lesson comes with progress tracking and regular feedback, so parents always know how their child is doing.
             </p>
           </div>
         </div>

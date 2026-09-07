@@ -27,6 +27,15 @@ export default function Services() {
           <p className="section-sub">
             Flexible maths tuition designed around how each student learns best.
           </p>
+          
+          <div className="max-w-3xl mx-auto mt-8 p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
+              SkillBridge Tutors offers both one-to-one sessions and small group classes. This flexibility means families can choose the format that suits their child best. Some students thrive with individual attention, while others enjoy learning alongside peers in a small, supportive group.
+            </p>
+            <p className="text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
+              Either way, the goal stays the same: <strong>helping students understand maths, not just memorise it.</strong>
+            </p>
+          </div>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">

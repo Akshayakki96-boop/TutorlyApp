@@ -101,6 +101,18 @@ const ROUTES = [
     description: 'Improve your grades with GCSE Maths online learning from home. Explore effective study tips, expert guidance, practice strategies, and flexible online support.',
     canonical: `${BASE}/blogs/gcse-maths-online-learning`,
   },
+  {
+    route: '/blogs/gcse-maths-tuition-turn-common-mistakes-into-better-grades',
+    title: 'GCSE Maths Tuition: Turn Common Mistakes into Better Grades | SkillBridge Tutors',
+    description: 'Improve GCSE Maths results with GCSE maths tuition and online math courses that fix common mistakes, strengthen weak areas, build confidence, and boost exam skills.',
+    canonical: `${BASE}/blogs/gcse-maths-tuition-turn-common-mistakes-into-better-grades`,
+  },
+  {
+    route: '/blogs/online-mathematics-tutors-and-courses-smarter-way-to-learn-maths',
+    title: 'Online Mathematics Tutors and Courses | Smarter Maths Learning',
+    description: 'Discover online mathematics tutors, flexible online math courses, and the best maths tutors online to build confidence, strengthen skills, and improve grades.',
+    canonical: `${BASE}/blogs/online-mathematics-tutors-and-courses-smarter-way-to-learn-maths`,
+  },
 ]
 
 // ── Helpers ───────────────────────────────────────────────────────────────────

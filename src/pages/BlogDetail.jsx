@@ -24,6 +24,14 @@ export default function BlogDetail() {
     }
 
     metaDescription.setAttribute('content', post.metaDescription || post.excerpt)
+
+    let canonical = document.querySelector('link[rel="canonical"]')
+    if (!canonical) {
+      canonical = document.createElement('link')
+      canonical.setAttribute('rel', 'canonical')
+      document.head.appendChild(canonical)
+    }
+    canonical.setAttribute('href', `https://skillbridgetutors.com/blogs/${post.slug}`)
   }, [post])
 
   if (!post) {

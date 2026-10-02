@@ -1,4 +1,4 @@
-import { Suspense, lazy } from 'react'
+import { Suspense, lazy, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { ThemeProvider } from './context/ThemeContext'
 import Navigation from './components/Navigation'
@@ -7,6 +7,7 @@ import CookieBanner from './components/CookieBanner'
 import ProtectedRoute from './components/admin/ProtectedRoute'
 import StudentProtectedRoute from './components/student/StudentProtectedRoute'
 import AdminLayout from './components/admin/AdminLayout'
+import { initializeDailyFactsSystem } from './lib/dailyFactsManager'
 
 const Home = lazy(() => import('./pages/Home'))
 const CourseCatalog = lazy(() => import('./pages/CourseCatalog'))
@@ -17,6 +18,8 @@ const StudentRegister = lazy(() => import('./pages/StudentRegister'))
 const StudentPayment = lazy(() => import('./pages/StudentPayment'))
 const PaymentSuccess = lazy(() => import('./pages/PaymentSuccess'))
 const PaymentCancel = lazy(() => import('./pages/PaymentCancel'))
+const TutorLogin = lazy(() => import('./pages/TutorLogin'))
+const TeacherApplication = lazy(() => import('./pages/TeacherApplication'))
 const TutorDash = lazy(() => import('./pages/TutorDashboard'))
 const ParentPortal = lazy(() => import('./pages/ParentPortal'))
 const Blogs = lazy(() => import('./pages/Blogs'))
@@ -24,6 +27,10 @@ const BlogDetail = lazy(() => import('./pages/BlogDetail'))
 const GCSEMathsTutor = lazy(() => import('./pages/GCSEMathsTutor'))
 const MathsALevelTutor = lazy(() => import('./pages/MathsALevelTutor'))
 const MathsTutor = lazy(() => import('./pages/MathsTutor'))
+const DailyMathFacts = lazy(() => import('./pages/DailyMathFacts'))
+const QuizBrowser = lazy(() => import('./pages/QuizBrowser'))
+const QuizPlayer = lazy(() => import('./pages/QuizPlayer'))
+const QuizResults = lazy(() => import('./pages/QuizResults'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'))
 const AdminRegister = lazy(() => import('./pages/admin/AdminRegister'))
@@ -57,12 +64,19 @@ export default function App() {
 
 function AppShell() {
   const location = useLocation()
+  
+  // Initialize daily facts system on app load
+  useEffect(() => {
+    initializeDailyFactsSystem()
+  }, [])
+  
   const isAdminPath = location.pathname.startsWith('/admin')
-  const isStudentAuthPath = ['/student/login', '/student/reset-password', '/student/register', '/student/payment', '/payment/success', '/payment/cancel'].includes(location.pathname)
+  const isQuizPath = location.pathname.startsWith('/quiz/') && !location.pathname.includes('/quiz/results')
+  const isStudentAuthPath = ['/student/login', '/student/reset-password', '/student/register', '/student/payment', '/payment/success', '/payment/cancel', '/teacher/login'].includes(location.pathname)
 
   return (
     <>
-      {!isAdminPath && !isStudentAuthPath && <Navigation />}
+      {!isAdminPath && !isStudentAuthPath && !isQuizPath && <Navigation />}
       <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -74,6 +88,8 @@ function AppShell() {
           <Route path="/student/payment" element={<StudentPayment />} />
           <Route path="/payment/success" element={<PaymentSuccess />} />
           <Route path="/payment/cancel" element={<PaymentCancel />} />
+          <Route path="/teacher/login" element={<TutorLogin />} />
+          <Route path="/teacher/apply" element={<TeacherApplication />} />
           <Route element={<StudentProtectedRoute />}>
             <Route path="/student-dashboard" element={<StudentDash />} />
           </Route>
@@ -85,6 +101,10 @@ function AppShell() {
           <Route path="/gcse-maths-tutor" element={<GCSEMathsTutor />} />
           <Route path="/maths-a-level-tutor" element={<MathsALevelTutor />} />
           <Route path="/maths-tutor" element={<MathsTutor />} />
+          <Route path="/daily-math-facts" element={<DailyMathFacts />} />
+          <Route path="/quiz" element={<QuizBrowser />} />
+          <Route path="/quiz/:quizId" element={<QuizPlayer />} />
+          <Route path="/quiz/results/:quizId" element={<QuizResults />} />
 
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/register" element={<AdminRegister />} />
@@ -104,8 +124,8 @@ function AppShell() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
-      {!isAdminPath && !isStudentAuthPath && <ScrollToTop />}
-      {!isAdminPath && !isStudentAuthPath && <CookieBanner />}
+      {!isAdminPath && !isStudentAuthPath && !isQuizPath && <ScrollToTop />}
+      {!isAdminPath && !isStudentAuthPath && !isQuizPath && <CookieBanner />}
     </>
   )
 }

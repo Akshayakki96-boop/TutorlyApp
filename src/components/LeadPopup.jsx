@@ -11,6 +11,7 @@ export default function LeadPopup() {
   const [isOpen, setIsOpen] = useState(false)
   const [canSubmit, setCanSubmit] = useState(false)
   const [turnstileToken, setTurnstileToken] = useState('')
+  const [turnstileFailed, setTurnstileFailed] = useState(false)
   const formRef = useRef()
 
   useEffect(() => {
@@ -36,7 +37,7 @@ export default function LeadPopup() {
     e.preventDefault()
 
     if (!formRef.current) return
-    if (!turnstileToken) {
+    if (!turnstileToken && !turnstileFailed) {
       Swal.fire({ icon: 'warning', title: 'Verification required', text: 'Please complete the security verification before submitting.' })
       return
     }
@@ -51,7 +52,7 @@ export default function LeadPopup() {
       classYear: (formData.get('childYear') || '').toString().trim(),
       subject: (formData.get('subject') || '').toString().trim(),
       query: (formData.get('description') || '').toString().trim(),
-      turnstileToken,
+      turnstileToken: turnstileFailed ? 'manual-review-fallback' : turnstileToken,
     }
 
     Swal.fire({ title: 'Processing…', text: 'Saving your enquiry and sending confirmation', allowOutsideClick: false, didOpen: () => Swal.showLoading() })
@@ -181,12 +182,15 @@ export default function LeadPopup() {
             </div>
 
             <div className="mt-4">
-              <Turnstile onTokenChange={setTurnstileToken} />
+              <Turnstile onTokenChange={setTurnstileToken} onFailure={setTurnstileFailed} />
+              {turnstileFailed && (
+                <p className="mt-2 text-xs text-amber-600 dark:text-amber-400">Verification is temporarily unavailable, but your form can still be submitted manually.</p>
+              )}
             </div>
 
             <button
               type="submit"
-              disabled={!canSubmit || !turnstileToken}
+              disabled={!canSubmit || (!turnstileToken && !turnstileFailed)}
               className="btn-primary w-full justify-center mt-4 disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none"
             >
               Submit Enquiry

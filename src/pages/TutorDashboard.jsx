@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import Footer from '../components/Footer'
 
 const STATS = [
@@ -23,6 +24,16 @@ const ASSIGNMENTS = [
 ]
 
 export default function TutorDashboard() {
+  const navigate = useNavigate()
+
+  function handleLogout() {
+    // Clear auth data
+    localStorage.removeItem('teacherAuth')
+    sessionStorage.removeItem('teacherAuth')
+    // Redirect to home
+    navigate('/')
+  }
+
   return (
     <>
       <main className="pt-20 min-h-screen bg-slate-50 dark:bg-slate-950">
@@ -34,9 +45,17 @@ export default function TutorDashboard() {
               <h1 className="font-heading text-2xl md:text-3xl font-bold mt-1">Tutor Dashboard</h1>
               <p className="text-white/70 text-sm mt-1">You have 2 classes scheduled today</p>
             </div>
-            <button className="btn-outline-white text-sm py-2.5 px-5">
-              Mark Attendance
-            </button>
+            <div className="flex gap-3">
+              <button className="btn-outline-white text-sm py-2.5 px-5">
+                Mark Attendance
+              </button>
+              <button 
+                onClick={handleLogout}
+                className="btn-outline-white text-sm py-2.5 px-5 hover:bg-white/20 transition-colors"
+              >
+                🚪 Logout
+              </button>
+            </div>
           </div>
         </div>
 

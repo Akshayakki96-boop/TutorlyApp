@@ -23,11 +23,13 @@ export default function Navigation() {
   const [isOpen,      setIsOpen]      = useState(false)
   const [isScrolled,  setIsScrolled]  = useState(false)
   const [showDropdown, setShowDropdown] = useState(false)
+  const [showLearnDropdown, setShowLearnDropdown] = useState(false)
   const [showPortalDropdown, setShowPortalDropdown] = useState(false)
   const location  = useLocation()
   const navigate  = useNavigate()
   const isHome    = location.pathname === '/'
   const servicesRef = useRef(null)
+  const learnRef = useRef(null)
   const portalRef = useRef(null)
   const desktopPortalRef = useRef(null)
 
@@ -37,14 +39,12 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  useEffect(() => { setIsOpen(false); setShowPortalDropdown(false) }, [location])
+  useEffect(() => { setIsOpen(false); setShowPortalDropdown(false); setShowDropdown(false); setShowLearnDropdown(false) }, [location])
 
   useEffect(() => {
     function handleClickOutside(e) {
-      if (!servicesRef.current) return
-      if (!servicesRef.current.contains(e.target)) {
-        setShowDropdown(false)
-      }
+      if (servicesRef.current && servicesRef.current.contains(e.target)) return
+      setShowDropdown(false)
     }
 
     if (showDropdown) {
@@ -57,6 +57,23 @@ export default function Navigation() {
       document.removeEventListener('touchstart', handleClickOutside)
     }
   }, [showDropdown])
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (learnRef.current && learnRef.current.contains(e.target)) return
+      setShowLearnDropdown(false)
+    }
+
+    if (showLearnDropdown) {
+      document.addEventListener('mousedown', handleClickOutside)
+      document.addEventListener('touchstart', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('touchstart', handleClickOutside)
+    }
+  }, [showLearnDropdown])
 
   useEffect(() => {
     function handlePortalClickOutside(e) {
@@ -96,9 +113,9 @@ export default function Navigation() {
   function handleBookDemo() {
     setIsOpen(false)
     if (isHome) {
-      document.querySelector('#assessmentForm')?.scrollIntoView({ behavior: 'smooth' })
+      document.querySelector('#booking-team-section')?.scrollIntoView({ behavior: 'smooth' })
     } else {
-      navigate('/#assessmentForm')
+      navigate('/#booking-team-section')
     }
   }
 
@@ -111,17 +128,17 @@ export default function Navigation() {
   return (
     <header className={navBase} role="banner">
       <div className="section-wrap">
-        <div className="flex items-center justify-between h-14 md:h-16">
+        <div className="flex items-center justify-between h-12">
 
           {/* ── Logo ── */}
-          <Link to="/" className="flex items-center gap-2 shrink-0" aria-label="SkillBridge Tutors home">
+          <Link to="/" className="flex items-center gap-1.5 shrink-0" aria-label="SkillBridge Tutors home">
             <img
               src="/Images/skillbridge_logo_only.png"
               alt="SkillBridge logo"
-              className="h-8 w-auto"
+              className="h-7 w-auto"
               loading="eager"
             />
-            <span className={`font-heading font-bold text-base tracking-wide hidden sm:block ${
+            <span className={`font-heading font-bold text-sm tracking-wide hidden sm:block ${
               isScrolled || !isHome ? 'text-brand-600 dark:text-white' : 'text-white'
             }`}>
               SkillBridge Tutors
@@ -129,7 +146,7 @@ export default function Navigation() {
           </Link>
 
           {/* ── Desktop Nav ── */}
-          <nav className="hidden lg:flex items-center gap-0.5" aria-label="Main navigation">
+          <nav className="hidden lg:flex items-center gap-0" aria-label="Main navigation">
             {NAV_LINKS.map(link => {
               if (link.label === 'Services') {
                 return (
@@ -141,7 +158,7 @@ export default function Navigation() {
                   >
                     <button
                       onClick={() => setShowDropdown(s => !s)}
-                      className={`px-2.5 py-1.5 rounded-lg text-[13px] font-medium transition-colors duration-150 ${
+                      className={`px-2 py-1 rounded text-xs font-medium transition-colors duration-150 ${
                         isScrolled || !isHome
                           ? 'text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-slate-800'
                           : 'text-white/90 hover:text-white hover:bg-white/10'
@@ -152,7 +169,7 @@ export default function Navigation() {
                       Services
                     </button>
 
-                    <div className={`absolute right-0 mt-2 w-56 rounded-lg shadow-lg ring-1 ring-slate-200 dark:ring-slate-800 bg-white dark:bg-slate-900 overflow-hidden transition-transform duration-150 ${showDropdown ? 'scale-100 opacity-100' : 'scale-95 opacity-0 pointer-events-none'}`}>
+                    <div className={`absolute right-0 mt-2 w-48 rounded-lg shadow-lg ring-1 ring-slate-200 dark:ring-slate-800 bg-white dark:bg-slate-900 overflow-hidden transition-transform duration-150 ${showDropdown ? 'scale-100 opacity-100' : 'scale-95 opacity-0 pointer-events-none'}`}>
                       <a href="/gcse-maths-tutor" target="_blank" rel="noopener noreferrer" onClick={() => setShowDropdown(false)} className="block px-4 py-3 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:underline">GCSE Maths Tutor</a>
                       <a href="/maths-a-level-tutor" target="_blank" rel="noopener noreferrer" onClick={() => setShowDropdown(false)} className="block px-4 py-3 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:underline">Maths A Level Tutor</a>
                       <a href="/maths-tutor" target="_blank" rel="noopener noreferrer" onClick={() => setShowDropdown(false)} className="block px-4 py-3 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:underline">Maths Tutor</a>
@@ -168,7 +185,7 @@ export default function Navigation() {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`px-2.5 py-1.5 rounded-lg text-[13px] font-medium transition-colors duration-150 hover:underline ${
+                    className={`px-2 py-1 rounded text-xs font-medium transition-colors duration-150 hover:underline ${
                       isScrolled || !isHome
                         ? 'text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-slate-800'
                         : 'text-white/90 hover:text-white hover:bg-white/10'
@@ -183,7 +200,7 @@ export default function Navigation() {
                 <button
                   key={link.label}
                   onClick={() => handleNavClick(link)}
-                  className={`px-2.5 py-1.5 rounded-lg text-[13px] font-medium transition-colors duration-150 ${
+                  className={`px-2 py-1 rounded text-xs font-medium transition-colors duration-150 ${
                     isScrolled || !isHome
                       ? 'text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-slate-800'
                       : 'text-white/90 hover:text-white hover:bg-white/10'
@@ -197,12 +214,49 @@ export default function Navigation() {
           </nav>
 
           {/* ── Right Actions ── */}
-          <div className="hidden lg:flex items-center gap-2">
+          <div className="hidden lg:flex items-center gap-1.5">
+            {/* Learn Dropdown */}
+            <div className="relative" ref={learnRef}>
+              <button
+                onClick={() => setShowLearnDropdown(s => !s)}
+                onMouseEnter={() => setShowLearnDropdown(true)}
+                className={`px-2 py-1 rounded text-xs font-medium transition-colors duration-150 ${
+                  isScrolled || !isHome
+                    ? 'text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-slate-800'
+                    : 'text-white/90 hover:text-white hover:bg-white/10'
+                }`}
+                title="Learning Tools"
+              >
+                🎓 Learn
+              </button>
+
+              <div className={`absolute right-0 mt-2 w-56 rounded-lg shadow-lg ring-1 ring-slate-200 dark:ring-slate-800 bg-white dark:bg-slate-900 overflow-hidden transition-transform duration-150 ${showLearnDropdown ? 'scale-100 opacity-100' : 'scale-95 opacity-0 pointer-events-none'}`}
+                onMouseLeave={() => setShowLearnDropdown(false)}
+              >
+                <button
+                  onClick={() => { navigate('/daily-math-facts'); setShowLearnDropdown(false) }}
+                  className="w-full text-left px-4 py-3 text-sm text-slate-700 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-800 hover:underline"
+                >
+                  📚 Daily Math Facts
+                </button>
+                <div className="border-t border-slate-200 dark:border-slate-700"></div>
+                <button
+                  onClick={() => { navigate('/quiz'); setShowLearnDropdown(false) }}
+                  className="w-full text-left px-4 py-3 text-sm text-slate-700 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-800 hover:underline"
+                >
+                  📝 Maths Quizzes
+                </button>
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div className={`h-5 w-px ${isScrolled || !isHome ? 'bg-slate-300 dark:bg-slate-700' : 'bg-white/20'}`}></div>
+
             {/* Theme toggle */}
             <button
               onClick={toggle}
               aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-              className={`p-2 rounded-lg transition-colors ${
+              className={`p-1.5 rounded transition-colors ${
                 isScrolled || !isHome
                   ? 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
                   : 'text-white/80 hover:text-white hover:bg-white/10'
@@ -222,22 +276,24 @@ export default function Navigation() {
             <div className="relative" ref={desktopPortalRef}>
               <button
                 onClick={() => setShowPortalDropdown(p => !p)}
+                className="inline-flex items-center justify-center rounded-full border border-white/80 bg-white px-3.5 py-2 text-sm font-bold text-slate-900 shadow-[0_10px_24px_rgba(15,23,42,0.2)] transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-blue-700 dark:border-slate-600 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700"
                 aria-label="Open the portal menu"
                 aria-haspopup="true"
                 aria-expanded={showPortalDropdown}
-                className="inline-flex items-center justify-center rounded-full border border-white/80 bg-white px-3.5 py-2 text-sm font-bold text-slate-900 shadow-[0_10px_24px_rgba(15,23,42,0.2)] transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-blue-700 dark:border-slate-600 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700"
               >
                 Login
               </button>
 
               <div className={`absolute right-0 z-50 mt-2 w-36 overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-slate-200 transition-transform duration-150 dark:bg-slate-900 dark:ring-slate-800 ${showPortalDropdown ? 'scale-100 opacity-100' : 'pointer-events-none scale-95 opacity-0'}`}>
                 <Link to="/student/login" onClick={() => setShowPortalDropdown(false)} className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800">Student</Link>
-                <Link to="/tutor-dashboard" onClick={() => setShowPortalDropdown(false)} className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800">Teacher</Link>
+                <Link to="/teacher/login" onClick={() => setShowPortalDropdown(false)} className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800">Teacher</Link>
+                <div className="h-px bg-slate-200 dark:bg-slate-700 my-1" />
+                <Link to="/teacher/apply" onClick={() => setShowPortalDropdown(false)} className="block px-4 py-2.5 text-sm text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-slate-700/50 font-medium">💼 Apply as Teacher</Link>
               </div>
             </div>
             <button
               onClick={handleBookDemo}
-              className="btn-primary text-sm py-2 px-4 animate-blink"
+              className="btn-primary text-sm py-1.5 px-4 animate-blink"
             >
               Book Free Demo
             </button>
@@ -258,7 +314,9 @@ export default function Navigation() {
 
               <div className={`absolute right-0 z-50 mt-2 w-36 overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-slate-200 transition-transform duration-150 dark:bg-slate-900 dark:ring-slate-800 ${showPortalDropdown ? 'scale-100 opacity-100' : 'pointer-events-none scale-95 opacity-0'}`}>
                 <Link to="/student/login" onClick={() => setShowPortalDropdown(false)} className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800">Student</Link>
-                <Link to="/tutor-dashboard" onClick={() => setShowPortalDropdown(false)} className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800">Teacher</Link>
+                <Link to="/teacher/login" onClick={() => setShowPortalDropdown(false)} className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800">Teacher</Link>
+                <div className="h-px bg-slate-200 dark:bg-slate-700 my-1" />
+                <Link to="/teacher/apply" onClick={() => setShowPortalDropdown(false)} className="block px-4 py-2.5 text-sm text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-slate-700/50 font-medium">💼 Apply as Teacher</Link>
               </div>
             </div>
             <button
@@ -339,9 +397,27 @@ export default function Navigation() {
               </button>
             )
           })}
+
+          {/* Mobile Learn Menu */}
+          <div className="space-y-2 border-t border-slate-100 dark:border-slate-800 pt-3 mt-3">
+            <p className="px-4 py-2 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Learning Tools</p>
+            <button
+              onClick={() => { navigate('/daily-math-facts'); setIsOpen(false) }}
+              className="w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            >
+              📚 Daily Math Facts
+            </button>
+            <button
+              onClick={() => { navigate('/quiz'); setIsOpen(false) }}
+              className="w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            >
+              📝 Maths Quizzes
+            </button>
+          </div>
+
           <button
             onClick={handleBookDemo}
-            className="w-full mt-2 btn-primary justify-center"
+            className="w-full mt-4 btn-primary justify-center"
           >
             Book Free Demo
           </button>

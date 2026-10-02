@@ -27,7 +27,7 @@ function loadTurnstile() {
   return turnstileLoader
 }
 
-export default function Turnstile({ onTokenChange }) {
+export default function Turnstile({ onTokenChange, onFailure }) {
   const containerRef = useRef(null)
   const widgetIdRef = useRef(null)
   const [error, setError] = useState('')
@@ -36,22 +36,34 @@ export default function Turnstile({ onTokenChange }) {
   useEffect(() => {
     let active = true
 
+    const handleFailure = () => {
+      onFailure?.(true)
+      onTokenChange('')
+      setError('Verification could not be completed. Please try again. The form can still be submitted manually.')
+    }
+
     loadTurnstile()
       .then((turnstile) => {
         if (!active || !containerRef.current || !turnstile) return
 
         widgetIdRef.current = turnstile.render(containerRef.current, {
           sitekey: siteKey,
-          callback: (token) => onTokenChange(token),
-          'expired-callback': () => onTokenChange(''),
-          'error-callback': () => {
-            onTokenChange('')
-            setError('Verification could not be completed. Please try again.')
+          callback: (token) => {
+            onFailure?.(false)
+            onTokenChange(token)
           },
+          'expired-callback': () => {
+            onFailure?.(true)
+            onTokenChange('')
+          },
+          'error-callback': handleFailure,
         })
       })
       .catch(() => {
-        if (active) setError('Verification could not be loaded. Please refresh and try again.')
+        if (active) {
+          onFailure?.(true)
+          setError('Verification could not be loaded. Please refresh and try again. The form can still be submitted manually.')
+        }
       })
 
     return () => {

@@ -13,8 +13,9 @@ import FAQ          from '../components/FAQ'
 import Contact      from '../components/Contact'
 import Footer       from '../components/Footer'
 import Chatbot      from '../components/Chatbot'
-import LeadPopup    from '../components/LeadPopup'
-import SchemaMarkup from '../components/SchemaMarkup'
+import LeadPopup         from '../components/LeadPopup'
+import SchemaMarkup     from '../components/SchemaMarkup'
+import LearningResources from '../components/LearningResources'
 
 const HOME_SCHEMA = {
   '@context': 'https://schema.org',
@@ -52,6 +53,7 @@ export default function Home() {
         <Hero />
         <Intro />
         <BoardInfo />
+        <LearningResources />
         <Services />
         <Fees />
         <Referral />

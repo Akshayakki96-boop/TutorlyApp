@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { apiRequest } from '../../lib/apiClient'
 
-const EMPTY_CREATE = { fullName: '', email: '', subjects: '' }
-const EMPTY_UPDATE = { id: '', fullName: '', email: '', subjects: '', isActive: true }
+const EMPTY_CREATE = { fullName: '', email: '', subjects: '', password: '' }
+const EMPTY_UPDATE = { id: '', fullName: '', email: '', subjects: '', password: '', isActive: true }
 
 export default function AdminTeachers() {
   const [teachers, setTeachers] = useState([])
@@ -66,14 +66,18 @@ export default function AdminTeachers() {
     setError('')
 
     try {
+      const updatePayload = {
+        fullName: updateForm.fullName,
+        email: updateForm.email,
+        subjects: updateForm.subjects,
+        isActive: updateForm.isActive,
+      }
+      if (updateForm.password?.trim()) {
+        updatePayload.password = updateForm.password
+      }
       await apiRequest(`/api/teachers/${updateForm.id}`, {
         method: 'PUT',
-        body: JSON.stringify({
-          fullName: updateForm.fullName,
-          email: updateForm.email,
-          subjects: updateForm.subjects,
-          isActive: updateForm.isActive,
-        }),
+        body: JSON.stringify(updatePayload),
       })
       await loadTeachers()
     } catch (err) {
@@ -99,10 +103,11 @@ export default function AdminTeachers() {
 
   function fillUpdate(teacher) {
     setUpdateForm({
-      id: teacher.id || '',
+      id: teacher.teacherId || teacher.id || '',
       fullName: teacher.fullName || '',
       email: teacher.email || '',
       subjects: teacher.subjects || '',
+      password: '',
       isActive: teacher.isActive ?? true,
     })
   }
@@ -110,7 +115,7 @@ export default function AdminTeachers() {
   return (
     <section>
       <h1 className="text-3xl font-black text-slate-900">Teachers</h1>
-      <p className="mt-2 text-slate-600">Manage /api/teachers and /api/teachers/{'{id}'} resources.</p>
+      <p className="mt-2 text-slate-600">Manage /api/teachers and /api/teachers/{'{id}'} resources. Password can only be updated here (no forgot password for teachers).</p>
 
       {error && <p className="mt-4 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">{error}</p>}
 
@@ -118,9 +123,10 @@ export default function AdminTeachers() {
         <form onSubmit={createTeacher} className="rounded-2xl border border-slate-200 p-4">
           <h2 className="text-lg font-bold text-slate-900">Create Teacher</h2>
           <div className="mt-3 space-y-3">
-            <Input label="Full name" name="fullName" value={createForm.fullName} onChange={onCreateChange} />
-            <Input label="Email" name="email" type="email" value={createForm.email} onChange={onCreateChange} />
+            <Input label="Full name" name="fullName" value={createForm.fullName} onChange={onCreateChange} required />
+            <Input label="Email" name="email" type="email" value={createForm.email} onChange={onCreateChange} required />
             <Input label="Subjects" name="subjects" value={createForm.subjects} onChange={onCreateChange} />
+            <Input label="Password" name="password" type="password" value={createForm.password} onChange={onCreateChange} placeholder="Temporary password" required />
           </div>
           <button type="submit" disabled={savingCreate} className="mt-4 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white hover:bg-blue-700 disabled:opacity-70">
             {savingCreate ? 'Saving...' : 'Create'}
@@ -134,6 +140,7 @@ export default function AdminTeachers() {
             <Input label="Full name" name="fullName" value={updateForm.fullName} onChange={onUpdateChange} />
             <Input label="Email" name="email" type="email" value={updateForm.email} onChange={onUpdateChange} />
             <Input label="Subjects" name="subjects" value={updateForm.subjects} onChange={onUpdateChange} />
+            <Input label="New Password" name="password" type="password" value={updateForm.password} onChange={onUpdateChange} placeholder="Leave blank to keep current password" />
             <label className="flex items-center gap-2 text-sm font-semibold text-slate-700">
               <input type="checkbox" name="isActive" checked={updateForm.isActive} onChange={onUpdateChange} />
               Active
@@ -175,8 +182,8 @@ export default function AdminTeachers() {
                 </tr>
               )}
               {!loading && teachers.map((teacher) => (
-                <tr key={teacher.id || teacher.email} className="border-t border-slate-200">
-                  <td className="px-4 py-2.5 font-medium">{teacher.id ?? '-'}</td>
+                <tr key={teacher.teacherId || teacher.id || teacher.email} className="border-t border-slate-200">
+                  <td className="px-4 py-2.5 font-medium">{teacher.teacherId ?? teacher.id ?? '-'}</td>
                   <td className="px-4 py-2.5">{teacher.fullName || '-'}</td>
                   <td className="px-4 py-2.5">{teacher.email || '-'}</td>
                   <td className="px-4 py-2.5">{teacher.subjects || '-'}</td>
@@ -184,14 +191,14 @@ export default function AdminTeachers() {
                   <td className="px-4 py-2.5">
                     <div className="flex gap-3">
                       <button type="button" onClick={() => fillUpdate(teacher)} className="font-semibold text-blue-700 underline">Edit</button>
-                      {teacher.id ? (
+                      {teacher.teacherId || teacher.id ? (
                         <button
                           type="button"
-                          onClick={() => deleteTeacher(teacher.id)}
-                          disabled={deletingId === teacher.id}
+                          onClick={() => deleteTeacher(teacher.teacherId || teacher.id)}
+                          disabled={deletingId === (teacher.teacherId || teacher.id)}
                           className="font-semibold text-rose-700 underline disabled:opacity-60"
                         >
-                          {deletingId === teacher.id ? 'Deleting...' : 'Delete'}
+                          {deletingId === (teacher.teacherId || teacher.id) ? 'Deleting...' : 'Delete'}
                         </button>
                       ) : (
                         <span className="text-slate-400">-</span>

@@ -100,7 +100,7 @@ export default function MathsTutor() {
             </div>
             <div className="relative">
               <div className="absolute -inset-4 bg-white/10 rounded-3xl blur-2xl" />
-              <img src="https://images.pexels.com/photos/8798898/pexels-photo-8798898.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Adult helping a child with homework" className="relative rounded-2xl shadow-2xl w-full object-cover aspect-video" />
+              <img src="/Images/mathstutor.jpg" alt="Adult helping a child with homework" className="relative rounded-2xl shadow-2xl w-full object-cover aspect-video" />
             </div>
           </div>
         </div>
@@ -197,7 +197,7 @@ export default function MathsTutor() {
               <p className="text-slate-600 dark:text-slate-300 leading-relaxed">With online mathematics tutors, students can continue learning from anywhere while maintaining regular progress.</p>
             </div>
             <div>
-              <img src="/Images/Carousel3.png" alt="Online maths tuition from home" className="rounded-2xl shadow-xl w-full object-cover" />
+              <img src="/Images/mathstutor.jpg" alt="Online maths tuition from home" className="rounded-2xl shadow-xl w-full object-cover" />
             </div>
           </div>
         </div>

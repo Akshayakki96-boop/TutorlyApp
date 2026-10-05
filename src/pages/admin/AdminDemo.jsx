@@ -619,15 +619,29 @@ export default function AdminDemo() {
               type="datetime-local"
               required
               value={newSlot.startTime}
-              onChange={(e) => setNewSlot((p) => ({ ...p, startTime: e.target.value }))}
+              onChange={(e) => {
+                const startValue = e.target.value
+                setNewSlot((p) => {
+                  // Calculate end time as 1 hour after start time
+                  if (startValue) {
+                    const startDate = new Date(startValue)
+                    const endDate = new Date(startDate.getTime() + 60 * 60 * 1000)
+                    const endTimeValue = endDate.toISOString().slice(0, 16)
+                    return { ...p, startTime: startValue, endTime: endTimeValue }
+                  }
+                  return { ...p, startTime: startValue }
+                })
+              }}
             />
             <Input
-              label="End Time"
+              label="End Time (Auto-calculated - 1 hour after start)"
               name="slot-end"
               type="datetime-local"
               required
+              disabled
+              readOnly
               value={newSlot.endTime}
-              onChange={(e) => setNewSlot((p) => ({ ...p, endTime: e.target.value }))}
+              className="bg-slate-100 cursor-not-allowed opacity-70"
             />
             <label className="flex items-center gap-2 text-sm font-semibold text-slate-700">
               <input

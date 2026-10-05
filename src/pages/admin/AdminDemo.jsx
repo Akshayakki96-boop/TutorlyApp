@@ -81,6 +81,7 @@ export default function AdminDemo() {
         day: 'numeric',
         hour: '2-digit',
         minute: '2-digit',
+        timeZone: 'Europe/London',
         timeZoneName: 'short',
       }).format(date)
     } catch (error) {
@@ -90,6 +91,7 @@ export default function AdminDemo() {
         day: 'numeric',
         hour: '2-digit',
         minute: '2-digit',
+        timeZone: 'Europe/London',
       }).format(date)
     }
   }
@@ -540,7 +542,7 @@ export default function AdminDemo() {
   return (
     <section>
       <h1 className="text-3xl font-black text-slate-900">Demo Management</h1>
-      <p className="mt-2 text-slate-600">Manage slots, availability, teacher mapping, and bookings using /api/demo/admin/* endpoints.</p>
+      <p className="mt-2 text-slate-600">Manage slots, availability, teacher mapping, and bookings using /api/demo/admin/* endpoints. All times displayed and managed in UK timezone (Europe/London).</p>
 
       {error && <p className="mt-4 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">{error}</p>}
       {message && <p className="mt-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">{message}</p>}
@@ -554,14 +556,14 @@ export default function AdminDemo() {
 
           <div className="grid gap-3 border-b border-slate-200 p-4 sm:grid-cols-2">
             <Input
-              label="From (UTC filter)"
+              label="From (UK timezone filter)"
               name="slot-from"
               type="datetime-local"
               value={toLocalInputValue(slotFilter.fromUtc)}
               onChange={(e) => setSlotFilter((p) => ({ ...p, fromUtc: toUtcIso(e.target.value) }))}
             />
             <Input
-              label="To (UTC filter)"
+              label="To (UK timezone filter)"
               name="slot-to"
               type="datetime-local"
               value={toLocalInputValue(slotFilter.toUtc)}
@@ -614,7 +616,7 @@ export default function AdminDemo() {
           <h2 className="text-lg font-bold text-slate-900">Create Slot</h2>
           <div className="mt-3 space-y-3">
             <Input
-              label="Start Time"
+              label="Start Time (UK timezone)"
               name="slot-start"
               type="datetime-local"
               required
@@ -626,7 +628,15 @@ export default function AdminDemo() {
                   if (startValue) {
                     const startDate = new Date(startValue)
                     const endDate = new Date(startDate.getTime() + 60 * 60 * 1000)
-                    const endTimeValue = endDate.toISOString().slice(0, 16)
+                    
+                    // Format back to datetime-local format using local time (not UTC)
+                    const year = endDate.getFullYear()
+                    const month = String(endDate.getMonth() + 1).padStart(2, '0')
+                    const day = String(endDate.getDate()).padStart(2, '0')
+                    const hours = String(endDate.getHours()).padStart(2, '0')
+                    const minutes = String(endDate.getMinutes()).padStart(2, '0')
+                    const endTimeValue = `${year}-${month}-${day}T${hours}:${minutes}`
+                    
                     return { ...p, startTime: startValue, endTime: endTimeValue }
                   }
                   return { ...p, startTime: startValue }
@@ -634,7 +644,7 @@ export default function AdminDemo() {
               }}
             />
             <Input
-              label="End Time (Auto-calculated - 1 hour after start)"
+              label="End Time (Auto-calculated - 1 hour after start, UK timezone)"
               name="slot-end"
               type="datetime-local"
               required

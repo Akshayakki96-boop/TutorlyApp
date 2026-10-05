@@ -106,7 +106,7 @@ export default function GCSEMathsTutor() {
             </div>
             <div className="relative">
               <div className="absolute -inset-4 bg-white/10 rounded-3xl blur-2xl" />
-              <img src="/Images/NewHeaderImage.jpg" alt="GCSE maths online tutoring" className="relative rounded-2xl shadow-2xl w-full object-cover aspect-video" />
+              <img src="https://images.pexels.com/photos/8798898/pexels-photo-8798898.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Adult helping a child with homework" className="relative rounded-2xl shadow-2xl w-full object-cover aspect-video" />
             </div>
           </div>
         </div>
@@ -183,7 +183,7 @@ export default function GCSEMathsTutor() {
         <div className="section-wrap">
           <div className="grid lg:grid-cols-2 gap-14 items-center">
             <div>
-              <img src="/Images/Bannertutor.jpg" alt="GCSE exam preparation online" className="rounded-2xl shadow-xl w-full object-cover" />
+              <img src="https://images.pexels.com/photos/8798898/pexels-photo-8798898.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Adult helping a child with homework" className="rounded-2xl shadow-xl w-full object-cover" />
             </div>
             <div>
               <span className="section-tag">Exam Ready</span>

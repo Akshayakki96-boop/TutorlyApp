@@ -100,7 +100,7 @@ export default function MathsTutor() {
             </div>
             <div className="relative">
               <div className="absolute -inset-4 bg-white/10 rounded-3xl blur-2xl" />
-              <img src="/Images/Bannertutor.jpg" alt="Private maths tutor helping student online" className="relative rounded-2xl shadow-2xl w-full object-cover aspect-video" />
+              <img src="https://images.pexels.com/photos/8798898/pexels-photo-8798898.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Adult helping a child with homework" className="relative rounded-2xl shadow-2xl w-full object-cover aspect-video" />
             </div>
           </div>
         </div>

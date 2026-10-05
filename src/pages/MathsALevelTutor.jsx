@@ -257,7 +257,7 @@ export default function MathsALevelTutor() {
         <div className="section-wrap">
           <div className="grid lg:grid-cols-2 gap-14 items-center">
             <div>
-              <img src="/Images/NewHeaderImage.jpg" alt="A Level maths support online" className="rounded-2xl shadow-xl w-full object-cover" />
+              <img src="https://images.pexels.com/photos/8798898/pexels-photo-8798898.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Adult helping a child with homework" className="rounded-2xl shadow-xl w-full object-cover" />
             </div>
             <div>
               <span className="section-tag">Online Advantages</span>

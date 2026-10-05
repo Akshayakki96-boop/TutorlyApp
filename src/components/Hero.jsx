@@ -87,7 +87,7 @@ export default function Hero() {
               {/* Image */}
               <div className="relative glass rounded-3xl p-3 shadow-2xl">
                 <img
-                  src="/Images/NewHeaderImage.jpg"
+                  src="https://images.pexels.com/photos/8798898/pexels-photo-8798898.jpeg?auto=compress&cs=tinysrgb&w=1600"
                   alt="Expert tutor helping a student one-to-one"
                   className="rounded-2xl w-full object-cover object-center"
                   style={{ maxHeight: '420px' }}

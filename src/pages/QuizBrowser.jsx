@@ -10,6 +10,17 @@ export default function QuizBrowser() {
   const categories = getCategories()
 
   useEffect(() => {
+    document.title = 'Maths Quiz - Fun Interactive Maths Questions | SkillBridge Tutors'
+    let metaDescription = document.querySelector('meta[name="description"]')
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta')
+      metaDescription.setAttribute('name', 'description')
+      document.head.appendChild(metaDescription)
+    }
+    metaDescription.setAttribute('content', 'Take fun and interactive maths quizzes from KS1 to GCSE, test your knowledge, track your progress and improve your maths skills with SkillBridge Tutors.')
+  }, [])
+
+  useEffect(() => {
     if (selectedCategory === 'All') {
       setFilteredQuizzes(quizzes)
     } else {

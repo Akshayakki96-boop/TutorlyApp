@@ -16,6 +16,17 @@ export default function DailyMathFacts() {
   }, [])
 
   useEffect(() => {
+    document.title = 'Amazing Daily Math Facts, Fun Maths & Learning Tips | SkillBridge Tutors'
+    let metaDescription = document.querySelector('meta[name="description"]')
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta')
+      metaDescription.setAttribute('name', 'description')
+      document.head.appendChild(metaDescription)
+    }
+    metaDescription.setAttribute('content', 'Explore amazing daily math facts, fun maths concepts, interesting patterns and useful learning tips to make maths engaging for students from Year 1 to GCSE.')
+  }, [])
+
+  useEffect(() => {
     if (selectedCategory === 'All') {
       setFilteredFacts(mathFacts)
     } else {

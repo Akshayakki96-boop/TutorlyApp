@@ -44,7 +44,7 @@ const ROUTES = [
     route: '/daily-math-facts',
     title: 'Amazing Daily Math Facts, Fun Maths & Learning Tips | SkillBridge Tutors',
     description: 'Explore amazing daily math facts, fun maths concepts, interesting patterns and useful learning tips to make maths engaging for students from Year 1 to GCSE.',
-    canonical: `${BASE}/facts/`,
+    canonical: `${BASE}/daily-math-facts/`,
   },
   {
     route: '/courses',

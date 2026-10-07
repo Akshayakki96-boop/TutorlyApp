@@ -100,7 +100,7 @@ export default function MathsALevelTutor() {
     meta.setAttribute('content', 'Get expert support from a Maths A Level Tutor Online at SkillBridge Tutors, with personalised A Level Maths Tuition to build confidence and prepare effectively for exams.')
     let canonical = document.querySelector('link[rel="canonical"]')
     if (!canonical) { canonical = document.createElement('link'); canonical.setAttribute('rel', 'canonical'); document.head.appendChild(canonical) }
-    canonical.setAttribute('href', 'https://skillbridgetutors.com/maths-a-level-tutor')
+    canonical.setAttribute('href', 'https://skillbridgetutors.com/maths-a-level-tutor/')
     return () => { const c = document.querySelector('link[rel="canonical"]'); if (c) c.remove() }
   }, [])
 

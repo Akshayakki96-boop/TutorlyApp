@@ -24,6 +24,15 @@ export default function DailyMathFacts() {
       document.head.appendChild(metaDescription)
     }
     metaDescription.setAttribute('content', 'Explore amazing daily math facts, fun maths concepts, interesting patterns and useful learning tips to make maths engaging for students from Year 1 to GCSE.')
+    
+    let canonical = document.querySelector('link[rel="canonical"]')
+    if (!canonical) {
+      canonical = document.createElement('link')
+      canonical.setAttribute('rel', 'canonical')
+      document.head.appendChild(canonical)
+    }
+    canonical.setAttribute('href', 'https://skillbridgetutors.com/facts/')
+    return () => { const c = document.querySelector('link[rel="canonical"]'); if (c) c.remove() }
   }, [])
 
   useEffect(() => {

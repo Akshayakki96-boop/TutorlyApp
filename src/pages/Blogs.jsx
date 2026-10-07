@@ -38,7 +38,9 @@ export default function Blogs() {
                   <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
                 </div>
                 <div className="p-5 flex flex-col flex-1">
-                  <h3 className="font-heading font-bold text-slate-900 dark:text-white text-lg mb-2">{post.title}</h3>
+                  <Link to={`/blogs/${post.slug}`} className="font-heading font-bold text-slate-900 dark:text-white text-lg mb-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                    {post.title}
+                  </Link>
                   <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">{post.excerpt}</p>
                   <div className="mt-auto flex items-center justify-between">
                     <Link to={`/blogs/${post.slug}`} className="text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline">Read More →</Link>

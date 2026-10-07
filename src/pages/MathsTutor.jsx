@@ -72,7 +72,7 @@ export default function MathsTutor() {
     meta.setAttribute('content', 'Find expert Online Mathematics Tutors for personalised Online Maths Tutoring, Maths Tuition, and support from a dedicated Private Maths Tutor for exam success.')
     let canonical = document.querySelector('link[rel="canonical"]')
     if (!canonical) { canonical = document.createElement('link'); canonical.setAttribute('rel', 'canonical'); document.head.appendChild(canonical) }
-    canonical.setAttribute('href', 'https://skillbridgetutors.com/maths-tutor')
+    canonical.setAttribute('href', 'https://skillbridgetutors.com/maths-tutor/')
     return () => { const c = document.querySelector('link[rel="canonical"]'); if (c) c.remove() }
   }, [])
 

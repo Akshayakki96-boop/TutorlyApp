@@ -18,6 +18,15 @@ export default function QuizBrowser() {
       document.head.appendChild(metaDescription)
     }
     metaDescription.setAttribute('content', 'Take fun and interactive maths quizzes from KS1 to GCSE, test your knowledge, track your progress and improve your maths skills with SkillBridge Tutors.')
+    
+    let canonical = document.querySelector('link[rel="canonical"]')
+    if (!canonical) {
+      canonical = document.createElement('link')
+      canonical.setAttribute('rel', 'canonical')
+      document.head.appendChild(canonical)
+    }
+    canonical.setAttribute('href', 'https://skillbridgetutors.com/quiz/')
+    return () => { const c = document.querySelector('link[rel="canonical"]'); if (c) c.remove() }
   }, [])
 
   useEffect(() => {

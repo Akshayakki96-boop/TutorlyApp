@@ -78,7 +78,7 @@ export default function GCSEMathsTutor() {
     meta.setAttribute('content', 'Join a GCSE Maths Course Online with GCSE Maths Online Learning, expert GCSE Online Maths Tutor support and personalised GCSE Maths Tuition to boost confidence.')
     let canonical = document.querySelector('link[rel="canonical"]')
     if (!canonical) { canonical = document.createElement('link'); canonical.setAttribute('rel', 'canonical'); document.head.appendChild(canonical) }
-    canonical.setAttribute('href', 'https://skillbridgetutors.com/gcse-maths-tutor')
+    canonical.setAttribute('href', 'https://skillbridgetutors.com/gcse-maths-tutor/')
     return () => { const c = document.querySelector('link[rel="canonical"]'); if (c) c.remove() }
   }, [])
 

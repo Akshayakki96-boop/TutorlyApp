@@ -57,15 +57,6 @@ export default function BlogDetail() {
     headline: post.title,
     description: post.metaDescription || post.excerpt,
     image: post.image,
-    author: {
-      '@type': 'Organization',
-      name: post.author
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'SkillBridge Tutors',
-      url: 'https://skillbridgetutors.com/'
-    },
     datePublished: '2026-07-01',
     dateModified: '2026-07-01',
     articleSection: post.category,

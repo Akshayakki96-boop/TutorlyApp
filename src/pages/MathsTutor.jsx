@@ -10,11 +10,6 @@ const MATHS_TUTOR_SCHEMA = {
   name: 'Online Mathematics Tutors',
   serviceType: 'Private Maths Tutor and Online Maths Tutoring',
   description: 'Expert online mathematics tutors providing personalised maths tuition, flexible scheduling, targeted revision and support for school and exam success.',
-  provider: {
-    '@type': 'Organization',
-    name: 'SkillBridge Tutors',
-    url: 'https://skillbridgetutors.com/'
-  },
   areaServed: 'United Kingdom',
   audience: {
     '@type': 'EducationalAudience',

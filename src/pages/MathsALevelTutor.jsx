@@ -10,11 +10,6 @@ const A_LEVEL_SCHEMA = {
   name: 'A Level Maths Tutor Online',
   serviceType: 'A-Level Maths Tuition and Online Maths Tutor Support',
   description: 'Experienced A-Level maths tutors helping students improve understanding, boost confidence and prepare for exams with personalised online tuition.',
-  provider: {
-    '@type': 'Organization',
-    name: 'SkillBridge Tutors',
-    url: 'https://skillbridgetutors.com/'
-  },
   areaServed: 'United Kingdom',
   audience: {
     '@type': 'EducationalAudience',

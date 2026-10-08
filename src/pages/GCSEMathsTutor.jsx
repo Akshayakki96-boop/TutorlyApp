@@ -10,11 +10,6 @@ const GCSE_SCHEMA = {
   name: 'GCSE Maths Tutor Online',
   serviceType: 'GCSE Maths Tuition and Online Maths Tutor Support',
   description: 'Personalised GCSE maths tuition online with expert tutors, structured lessons, exam preparation and confidence-building support for students across the UK.',
-  provider: {
-    '@type': 'Organization',
-    name: 'SkillBridge Tutors',
-    url: 'https://skillbridgetutors.com/'
-  },
   areaServed: 'United Kingdom',
   audience: {
     '@type': 'EducationalAudience',

@@ -25,7 +25,7 @@ export default function QuizBrowser() {
       canonical.setAttribute('rel', 'canonical')
       document.head.appendChild(canonical)
     }
-    canonical.setAttribute('href', 'https://skillbridgetutors.com/quiz/')
+    canonical.setAttribute('href', 'https://skillbridgetutors.com/quiz')
     return () => { const c = document.querySelector('link[rel="canonical"]'); if (c) c.remove() }
   }, [])
 

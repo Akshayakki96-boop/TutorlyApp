@@ -100,8 +100,6 @@ export default function Footer() {
               <ul className="space-y-2">
                 {[
                   { label: 'Student Dashboard', href: '/student-dashboard' },
-                  { label: 'Tutor Dashboard', href: '/tutor-dashboard' },
-                  { label: 'Parent Portal', href: '/parent-portal' },
                   { label: 'Course Catalog', href: '/courses' },
                 ].map(l => (
                   <li key={l.label}>

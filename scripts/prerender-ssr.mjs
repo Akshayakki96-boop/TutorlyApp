@@ -38,7 +38,7 @@ const ROUTES = [
     route: '/quiz',
     title: 'Maths Quiz - Fun Interactive Maths Questions | SkillBridge Tutors',
     description: 'Take fun and interactive maths quizzes from KS1 to GCSE, test your knowledge, track your progress and improve your maths skills with SkillBridge Tutors.',
-    canonical: `${BASE}/quiz/`,
+    canonical: `${BASE}/quiz`,
   },
   {
     route: '/daily-math-facts',

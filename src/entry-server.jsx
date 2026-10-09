@@ -16,6 +16,7 @@ import { ThemeProvider } from './context/ThemeContext'
 import Navigation    from './components/Navigation'
 import ScrollToTop   from './components/ScrollToTop'
 import CookieBanner  from './components/CookieBanner'
+import OrganizationSchema from './components/OrganizationSchema'
 
 // Eager imports — no React.lazy() here so renderToString captures full HTML
 import Home             from './pages/Home'
@@ -30,6 +31,7 @@ export function render(url) {
   return renderToString(
     <ThemeProvider>
       <StaticRouter location={url}>
+        <OrganizationSchema />
         <Navigation />
         <Suspense fallback={null}>
           <Routes>

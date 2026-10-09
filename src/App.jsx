@@ -7,6 +7,7 @@ import CookieBanner from './components/CookieBanner'
 import ProtectedRoute from './components/admin/ProtectedRoute'
 import StudentProtectedRoute from './components/student/StudentProtectedRoute'
 import AdminLayout from './components/admin/AdminLayout'
+import OrganizationSchema from './components/OrganizationSchema'
 import { initializeDailyFactsSystem } from './lib/dailyFactsManager'
 
 const Home = lazy(() => import('./pages/Home'))
@@ -76,6 +77,7 @@ function AppShell() {
 
   return (
     <>
+      <OrganizationSchema />
       {!isAdminPath && !isStudentAuthPath && !isQuizPath && <Navigation />}
       <Suspense fallback={<PageLoader />}>
         <Routes>

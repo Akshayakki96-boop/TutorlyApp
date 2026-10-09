@@ -240,7 +240,7 @@ export function createBlogSchema({ post, faqs = [] }) {
       headline,
       description,
       url: pageUrl,
-      image: post.image,
+      image: new URL(post.image, SITE_URL).href,
       author: {
         '@type': 'Organization',
         name: 'SkillBridge Tutors',

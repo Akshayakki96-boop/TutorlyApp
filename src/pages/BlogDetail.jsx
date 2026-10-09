@@ -117,11 +117,17 @@ export default function BlogDetail() {
               if (block.type === 'richText') {
                 return (
                   <p key={index} className="text-slate-700 dark:text-slate-200 leading-relaxed text-base">
-                    {block.segments.map((seg, i) =>
-                      seg.href
-                        ? <a key={i} href={seg.href} target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">{seg.text}</a>
-                        : <span key={i}>{seg.text}</span>
-                    )}
+                    {block.segments.map((seg, i) => {
+                      if (!seg.href) return <span key={i}>{seg.text}</span>
+
+                      const link = new URL(seg.href, 'https://skillbridgetutors.com')
+                      const className = 'text-blue-600 dark:text-blue-400 hover:underline font-medium'
+                      if (link.origin === 'https://skillbridgetutors.com') {
+                        return <Link key={i} to={`${link.pathname}${link.search}${link.hash}`} className={className}>{seg.text}</Link>
+                      }
+
+                      return <a key={i} href={seg.href} target="_blank" rel="noopener noreferrer" className={className}>{seg.text}</a>
+                    })}
                   </p>
                 )
               }
@@ -138,7 +144,7 @@ export default function BlogDetail() {
             })}
 
             <div className="rounded-3xl overflow-hidden shadow-lg">
-              <img src={post.image} alt={post.title} className="w-full h-72 object-cover" />
+              <img src={post.image} alt={post.imageAlt || post.title} className="w-full h-72 object-cover" />
             </div>
 
             <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 shadow-sm">

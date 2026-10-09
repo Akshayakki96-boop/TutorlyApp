@@ -124,6 +124,18 @@ const ROUTES = [
     description: 'Discover online mathematics tutors, flexible online math courses, and the best maths tutors online to build confidence, strengthen skills, and improve grades.',
     canonical: `${BASE}/blogs/online-mathematics-tutors-and-courses-smarter-way-to-learn-maths/`,
   },
+  {
+    route: '/blogs/build-strong-maths-skills-online-learning-at-home',
+    title: 'How to Build Strong Maths Skills with Online Learning at Home',
+    description: 'Learn how online maths learning at home, regular practice and personalised tutoring can help children build strong maths skills and confidence.',
+    canonical: `${BASE}/blogs/build-strong-maths-skills-online-learning-at-home/`,
+  },
+  {
+    route: '/blogs/gcse-maths-foundation-vs-higher-tier',
+    title: 'GCSE Maths Foundation vs Higher: Which Tier Is Right for You?',
+    description: 'Find out whether GCSE Maths Foundation or Higher is right for you. Compare grades, topics, difficulty and future study goals before choosing a tier.',
+    canonical: `${BASE}/blogs/gcse-maths-foundation-vs-higher-tier/`,
+  },
 ]
 
 // ── Helpers ───────────────────────────────────────────────────────────────────

@@ -3,21 +3,7 @@ import Footer from '../components/Footer'
 import Chatbot from '../components/Chatbot'
 import FAQAccordion from '../components/FAQAccordion'
 import SchemaMarkup from '../components/SchemaMarkup'
-
-const MATHS_TUTOR_SCHEMA = {
-  '@context': 'https://schema.org',
-  '@type': 'Service',
-  name: 'Online Mathematics Tutors',
-  serviceType: 'Private Maths Tutor and Online Maths Tutoring',
-  description: 'Expert online mathematics tutors providing personalised maths tuition, flexible scheduling, targeted revision and support for school and exam success.',
-  areaServed: 'United Kingdom',
-  audience: {
-    '@type': 'EducationalAudience',
-    audienceType: 'Primary, secondary and GCSE mathematics learners'
-  },
-  url: 'https://skillbridgetutors.com/maths-tutor',
-  keywords: ['online mathematics tutors', 'maths tuition online', 'private maths tutor', 'online maths tutoring']
-}
+import { MATHS_TUTOR_FAQS, MATHS_TUTOR_SCHEMA } from '../data/pageSchemas'
 
 const WHY_FEATURES = [
   { icon: '🎯', title: 'One-to-one live lessons',        desc: 'Full individual attention in every session.' },
@@ -246,34 +232,7 @@ export default function MathsTutor() {
               <span className="section-tag">FAQs</span>
               <h2 className="section-heading">Frequently Asked Questions</h2>
             </div>
-            <FAQAccordion
-              faqs={[
-                {
-                  q: "What Does a Private Maths Tutor Teach and How Can They Support Students?",
-                  a: "A private maths tutor teaches topics based on the student's curriculum, explains difficult concepts, provides personalised practice, helps with homework, and prepares students for tests and examinations while building confidence."
-                },
-                {
-                  q: "Why Choose Online Mathematics Tutors for One-to-One Learning?",
-                  a: "Online mathematics tutors provide individual attention, flexible scheduling, customised lesson plans, and regular feedback. Students receive lessons tailored to their learning style, making progress faster than in many traditional classroom settings."
-                },
-                {
-                  q: "How Can Online Maths Tutoring Make Learning Maths Easier?",
-                  a: "Online maths tutoring allows students to learn at their own pace, ask unlimited questions, receive immediate explanations, and practise concepts through interactive lessons from the comfort of home."
-                },
-                {
-                  q: "What Age Groups Can Benefit From Maths Tuition Online?",
-                  a: "Maths tuition online is suitable for primary school students, secondary students, GCSE and IGCSE learners, A Level students, and anyone looking to strengthen their mathematical understanding."
-                },
-                {
-                  q: "Can Online Maths Tutoring Help Students Prepare for Important Exams?",
-                  a: "Yes. Online maths tutoring includes structured revision, past paper practice, exam strategies, regular assessments, and personalised guidance to help students perform confidently in important examinations."
-                },
-                {
-                  q: "How Do I Find the Best Maths Tutor for My Child's Learning Needs?",
-                  a: "Look for experienced tutors who offer personalised lesson plans, one-to-one teaching, flexible scheduling, progress tracking, and a teaching style that matches your child's learning needs. SkillBridge Tutors provides experienced tutors who focus on both academic improvement and student confidence."
-                }
-              ]}
-            />
+            <FAQAccordion faqs={MATHS_TUTOR_FAQS} />
           </div>
         </div>
       </section>

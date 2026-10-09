@@ -3,21 +3,7 @@ import Footer from '../components/Footer'
 import Chatbot from '../components/Chatbot'
 import FAQAccordion from '../components/FAQAccordion'
 import SchemaMarkup from '../components/SchemaMarkup'
-
-const A_LEVEL_SCHEMA = {
-  '@context': 'https://schema.org',
-  '@type': 'Service',
-  name: 'A Level Maths Tutor Online',
-  serviceType: 'A-Level Maths Tuition and Online Maths Tutor Support',
-  description: 'Experienced A-Level maths tutors helping students improve understanding, boost confidence and prepare for exams with personalised online tuition.',
-  areaServed: 'United Kingdom',
-  audience: {
-    '@type': 'EducationalAudience',
-    audienceType: 'A-Level mathematics students'
-  },
-  url: 'https://skillbridgetutors.com/maths-a-level-tutor',
-  keywords: ['A Level Maths Tutor', 'Maths A Level Tutor', 'A Level maths tuition online', 'online A-Level maths tutor']
-}
+import { A_LEVEL_MATHS_FAQS, A_LEVEL_MATHS_SCHEMA } from '../data/pageSchemas'
 
 const WHY_FEATURES = [
   { icon: '🎯', title: 'One to one online tutoring',     desc: 'Full individual focus in every session.' },
@@ -101,7 +87,7 @@ export default function MathsALevelTutor() {
 
   return (
     <>
-      <SchemaMarkup data={A_LEVEL_SCHEMA} />
+      <SchemaMarkup data={A_LEVEL_MATHS_SCHEMA} />
       <main className="min-h-screen bg-white dark:bg-slate-950">
 
       {/* ── Hero ── */}
@@ -287,34 +273,7 @@ export default function MathsALevelTutor() {
               <span className="section-tag">FAQs</span>
               <h2 className="section-heading">Frequently Asked Questions</h2>
             </div>
-            <FAQAccordion
-              faqs={[
-                {
-                  q: "How Can an Online Maths A-Level Tutor Help Students Improve Their Understanding?",
-                  a: "As a maths a level tutor online, we explain difficult concepts step by step, identify learning gaps, provide personalised guidance, and help students gain confidence through regular practice."
-                },
-                {
-                  q: "What Can Students Expect From A-Level Maths Tuition Online?",
-                  a: "Our a level maths tuition includes one to one lessons, customised study plans, interactive teaching, homework support, regular assessments, and continuous feedback."
-                },
-                {
-                  q: "How Does Online A-Level Maths Tutoring Support Exam Preparation?",
-                  a: "We prepare students with past paper practice, mock examinations, revision plans, exam strategies, and detailed feedback to improve overall performance."
-                },
-                {
-                  q: "Can Online A-Level Maths Tuition Help Students With Difficult Topics?",
-                  a: "Yes. Our a level maths tuition breaks complex topics into manageable sections, making them easier to understand through guided explanations and additional practice."
-                },
-                {
-                  q: "When Should a Student Consider Getting an A-Level Maths Tutor Online?",
-                  a: "Students should consider working with an a level maths tutor online if they are struggling with specific topics, preparing for exams, aiming for higher grades, or looking for personalised academic support."
-                },
-                {
-                  q: "How Can Students Get the Most Out of Online A-Level Maths Tutoring?",
-                  a: "Students benefit the most by attending lessons regularly, completing assignments, asking questions, revising consistently, and practising past papers alongside our a level maths tuition program."
-                }
-              ]}
-            />
+            <FAQAccordion faqs={A_LEVEL_MATHS_FAQS} />
           </div>
         </div>
       </section>

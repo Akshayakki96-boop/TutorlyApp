@@ -3,21 +3,7 @@ import Footer from '../components/Footer'
 import Chatbot from '../components/Chatbot'
 import FAQAccordion from '../components/FAQAccordion'
 import SchemaMarkup from '../components/SchemaMarkup'
-
-const GCSE_SCHEMA = {
-  '@context': 'https://schema.org',
-  '@type': 'Service',
-  name: 'GCSE Maths Tutor Online',
-  serviceType: 'GCSE Maths Tuition and Online Maths Tutor Support',
-  description: 'Personalised GCSE maths tuition online with expert tutors, structured lessons, exam preparation and confidence-building support for students across the UK.',
-  areaServed: 'United Kingdom',
-  audience: {
-    '@type': 'EducationalAudience',
-    audienceType: 'GCSE maths students'
-  },
-  url: 'https://skillbridgetutors.com/gcse-maths-tutor',
-  keywords: ['GCSE Maths Tutor', 'GCSE Maths Tuition', 'Online GCSE Maths Tutor', 'GCSE maths course online']
-}
+import { GCSE_MATHS_FAQS, GCSE_MATHS_SCHEMA } from '../data/pageSchemas'
 
 const COURSE_TOPICS = [
   {
@@ -79,7 +65,7 @@ export default function GCSEMathsTutor() {
 
   return (
     <>
-      <SchemaMarkup data={GCSE_SCHEMA} />
+      <SchemaMarkup data={GCSE_MATHS_SCHEMA} />
       <main className="min-h-screen bg-white dark:bg-slate-950">
 
       {/* ── Hero ── */}
@@ -250,34 +236,7 @@ export default function GCSEMathsTutor() {
               <span className="section-tag">FAQs</span>
               <h2 className="section-heading">Frequently Asked Questions</h2>
             </div>
-            <FAQAccordion
-              faqs={[
-                {
-                  q: "What Is an Online GCSE Maths Tutor and How Can They Help Students?",
-                  a: "An online GCSE maths tutor provides one-to-one lessons over the internet, helping students understand difficult topics, improve problem-solving skills, and prepare effectively for GCSE examinations."
-                },
-                {
-                  q: "How Does GCSE Maths Tuition Online Help Students Prepare for GCSE Exams?",
-                  a: "Our GCSE maths tuition focuses on syllabus coverage, regular revision, practice papers, exam strategies, and personalised support so students are fully prepared for their GCSE exams."
-                },
-                {
-                  q: "What Topics Are Covered in GCSE Maths Online Learning?",
-                  a: "Our GCSE maths online learning covers number, algebra, geometry, measures, probability, statistics, graphs, equations, trigonometry, and exam preparation for both Foundation and Higher Tier GCSE Maths."
-                },
-                {
-                  q: "Is an Online GCSE Maths Tutor Suitable for Students of All Ability Levels?",
-                  a: "Yes. A GCSE online maths tutor works with students of all abilities, providing lessons that match their current level while helping them achieve their academic goals."
-                },
-                {
-                  q: "How Can GCSE Maths Tutoring Online Improve a Student's Confidence and Results?",
-                  a: "Regular sessions with a maths tutor GCSE online improve understanding, reduce anxiety, strengthen exam techniques, and help students become more confident when solving mathematical problems."
-                },
-                {
-                  q: "What Should Parents Look for When Choosing a GCSE Maths Tutor Online?",
-                  a: "Parents should look for an experienced GCSE maths tutor online who offers personalised lesson plans, regular progress updates, flexible scheduling, curriculum knowledge, and a teaching style that matches the student's learning needs."
-                }
-              ]}
-            />
+            <FAQAccordion faqs={GCSE_MATHS_FAQS} />
           </div>
         </div>
       </section>

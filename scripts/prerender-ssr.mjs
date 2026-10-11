@@ -126,8 +126,8 @@ const ROUTES = [
   },
   {
     route: '/blogs/build-strong-maths-skills-online-learning-at-home',
-    title: 'How to Build Strong Maths Skills with Online Learning at Home',
-    description: 'Learn how online maths learning at home, regular practice and personalised tutoring can help children build strong maths skills and confidence.',
+    title: 'Online Maths Tutoring Build Strong Maths Skills at Home',
+    description: 'Build strong maths skills with online maths tutoring from SkillBridge Tutors. Improve understanding, boost confidence and prepare for GCSE and IGCSE exams.',
     canonical: `${BASE}/blogs/build-strong-maths-skills-online-learning-at-home/`,
   },
   {

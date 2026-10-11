@@ -512,8 +512,8 @@ export const BLOGS = [
           "Learning at Home",
           "Maths Practice"
         ],
-        "metaTitle": "How to Build Strong Maths Skills with Online Learning at Home",
-        "metaDescription": "Learn how online maths learning at home, regular practice and personalised tutoring can help children build strong maths skills and confidence.",
+        "metaTitle": "Online Maths Tutoring Build Strong Maths Skills at Home",
+        "metaDescription": "Build strong maths skills with online maths tutoring from SkillBridge Tutors. Improve understanding, boost confidence and prepare for GCSE and IGCSE exams.",
         "content": [
           {
             "type": "paragraph",
@@ -792,8 +792,8 @@ export const BLOGS = [
       "Higher Maths",
       "Exam Preparation"
     ],
-    "metaTitle": "GCSE Maths Foundation vs Higher: Which Tier Is Right for You?",
-    "metaDescription": "Find out whether GCSE Maths Foundation or Higher is right for you. Compare grades, topics, difficulty and future study goals before choosing a tier.",
+    "metaTitle": "GCSE Maths Foundation vs Higher: Which Tier Is Right | SkillBridge Tutors",
+    "metaDescription": "Compare GCSE Maths Foundation and Higher tiers, grade ranges and exam difficulty. Find out how GCSE Maths tuition can help you achieve your target grade.",
     "content": [
       {
         "type": "paragraph",

@@ -22,6 +22,7 @@ const PaymentCancel = lazy(() => import('./pages/PaymentCancel'))
 const TutorLogin = lazy(() => import('./pages/TutorLogin'))
 const TeacherApplication = lazy(() => import('./pages/TeacherApplication'))
 const TutorDash = lazy(() => import('./pages/TutorDashboard'))
+const TeacherAvailability = lazy(() => import('./pages/TeacherAvailability'))
 const ParentPortal = lazy(() => import('./pages/ParentPortal'))
 const Blogs = lazy(() => import('./pages/Blogs'))
 const BlogDetail = lazy(() => import('./pages/BlogDetail'))
@@ -39,6 +40,9 @@ const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'))
 const AdminLeads = lazy(() => import('./pages/admin/AdminLeads'))
 const AdminLeadDetail = lazy(() => import('./pages/admin/AdminLeadDetail'))
 const AdminTeachers = lazy(() => import('./pages/admin/AdminTeachers'))
+const AdminFindTeachers = lazy(() => import('./pages/admin/AdminFindTeachers'))
+const AdminAssignClass = lazy(() => import('./pages/admin/AdminAssignClass'))
+const AdminClassesManager = lazy(() => import('./pages/admin/AdminClassesManager'))
 const AdminDemo = lazy(() => import('./pages/admin/AdminDemo'))
 const AdminRetellWebhook = lazy(() => import('./pages/admin/AdminRetellWebhook'))
 
@@ -97,6 +101,7 @@ function AppShell() {
           </Route>
 
           <Route path="/tutor-dashboard" element={<TutorDash />} />
+          <Route path="/teacher/availability" element={<TeacherAvailability />} />
           <Route path="/parent-portal" element={<ParentPortal />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/:slug" element={<BlogDetail />} />
@@ -117,6 +122,9 @@ function AppShell() {
               <Route path="/admin/leads" element={<AdminLeads />} />
               <Route path="/admin/leads/:id" element={<AdminLeadDetail />} />
               <Route path="/admin/teachers" element={<AdminTeachers />} />
+              <Route path="/admin/schedule/find-teachers" element={<AdminFindTeachers />} />
+              <Route path="/admin/schedule/assign-class" element={<AdminAssignClass />} />
+              <Route path="/admin/schedule/classes" element={<AdminClassesManager />} />
               <Route path="/admin/demo" element={<AdminDemo />} />
               <Route path="/admin/retell-webhook" element={<AdminRetellWebhook />} />
             </Route>

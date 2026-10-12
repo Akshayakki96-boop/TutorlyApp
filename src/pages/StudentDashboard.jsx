@@ -3,33 +3,12 @@ import { Link, useNavigate } from 'react-router-dom'
 import { apiRequest } from '../lib/apiClient'
 import { clearStudentAuth, getStudentUser } from '../lib/authStorage'
 
-const defaultUpcoming = [
-  { subject: 'Mathematics – Algebra', tutor: 'Mr. Ahmed', time: 'Today, 4:00 PM', badge: 'Today', badgeColor: 'bg-emerald-500' },
-  { subject: 'GCSE Physics – Mechanics', tutor: 'Ms. Khan', time: 'Wed, 5:00 PM', badge: 'Wed', badgeColor: 'bg-sky-500' },
-  { subject: 'Exam Technique Workshop', tutor: 'Ms. Collins', time: 'Fri, 3:30 PM', badge: 'Fri', badgeColor: 'bg-violet-500' },
-]
-
-const defaultProgress = [
-  { subject: 'Mathematics', progress: 82, color: 'from-blue-500 to-cyan-500' },
-  { subject: 'Physics', progress: 74, color: 'from-emerald-500 to-teal-500' },
-  { subject: 'Chemistry', progress: 68, color: 'from-violet-500 to-fuchsia-500' },
-]
-
-const defaultAssignments = [
-  { title: 'Algebra worksheet', subject: 'Mathematics', due: 'Today', status: 'Pending', tone: 'text-amber-600 bg-amber-100' },
-  { title: 'Past paper review', subject: 'Physics', due: 'Thu', status: 'In progress', tone: 'text-blue-600 bg-blue-100' },
-  { title: 'Topic summary notes', subject: 'Chemistry', due: 'Sun', status: 'Draft', tone: 'text-violet-600 bg-violet-100' },
-]
-
-const samplePayments = [
-  { id: 101, amount: 149.0, status: 'Paid', createdAt: '2026-08-28T10:30:00Z' },
-  { id: 102, amount: 89.0, status: 'Pending', createdAt: '2026-09-01T12:00:00Z' },
-]
-
 export default function StudentDashboard() {
   const navigate = useNavigate()
   const [student, setStudent] = useState(() => getStudentUser() || { fullName: 'Student' })
-  const [payments, setPayments] = useState(samplePayments)
+  const [payments, setPayments] = useState([])
+  const [dashboard, setDashboard] = useState(null)
+  const [loadingDashboard, setLoadingDashboard] = useState(true)
   const [paymentForm, setPaymentForm] = useState({ amount: '149', currency: 'GBP' })
   const [loadingPayments, setLoadingPayments] = useState(false)
   const [paying, setPaying] = useState(false)
@@ -40,9 +19,20 @@ export default function StudentDashboard() {
     const currentStudent = getStudentUser() || { fullName: 'Student' }
     setStudent(currentStudent)
 
-    if (currentStudent?.id) {
-      void loadPayments(currentStudent.id)
-    }
+    let alive = true
+    apiRequest('/api/students/dashboard')
+      .then((result) => {
+        if (!alive) return
+        setDashboard(result)
+        setStudent(result)
+      })
+      .catch((err) => {
+        if (alive) setError(err.message || 'Unable to load your dashboard.')
+      })
+      .finally(() => { if (alive) setLoadingDashboard(false) })
+
+    if (currentStudent?.id) void loadPayments(currentStudent.id)
+    return () => { alive = false }
   }, [])
 
   async function loadPayments(studentId) {
@@ -51,13 +41,9 @@ export default function StudentDashboard() {
 
     try {
       const result = await apiRequest(`/api/payments/student/${studentId}`)
-      if (Array.isArray(result) && result.length) {
-        setPayments(result)
-        return
-      }
-      setPayments(samplePayments)
-    } catch {
-      setPayments(samplePayments)
+      setPayments(Array.isArray(result) ? result : [])
+    } catch (err) {
+      setError(err.message || 'Unable to load payment records.')
     } finally {
       setLoadingPayments(false)
     }
@@ -110,11 +96,11 @@ export default function StudentDashboard() {
   }
 
   const stats = useMemo(() => [
-    { label: 'Classes This Week', value: '5', icon: '📅', tone: 'from-blue-500 to-cyan-500' },
-    { label: 'Assignments Due', value: '3', icon: '📝', tone: 'from-violet-500 to-purple-500' },
-    { label: 'Progress Score', value: '82%', icon: '📈', tone: 'from-emerald-500 to-teal-500' },
-    { label: 'Attendance', value: '95%', icon: '✅', tone: 'from-amber-500 to-orange-500' },
-  ], [])
+    { label: 'Total Classes', value: dashboard?.totalClasses ?? 0, icon: '📅', tone: 'from-blue-500 to-cyan-500' },
+    { label: 'Completed', value: dashboard?.completedClasses ?? 0, icon: '✅', tone: 'from-violet-500 to-purple-500' },
+    { label: 'Upcoming', value: dashboard?.upcomingClasses ?? 0, icon: '📈', tone: 'from-emerald-500 to-teal-500' },
+    { label: 'Subject', value: dashboard?.subject || '—', icon: '📚', tone: 'from-amber-500 to-orange-500' },
+  ], [dashboard])
 
   const totalPaid = payments.reduce((sum, payment) => {
     return payment.status === 'Paid' ? sum + Number(payment.amount || 0) : sum
@@ -127,7 +113,7 @@ export default function StudentDashboard() {
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <p className="text-sm font-medium uppercase tracking-[0.2em] text-blue-100">Welcome back</p>
-              <h1 className="mt-2 text-3xl font-black md:text-4xl">{student?.fullName || 'Student Dashboard'}</h1>
+              <h1 className="mt-2 text-3xl font-black md:text-4xl">{dashboard?.studentName || student?.fullName || 'Student Dashboard'}</h1>
               <p className="mt-2 max-w-xl text-sm text-blue-100/90 md:text-base">Keep your studies on track with lessons, progress updates, and payment management in one place.</p>
             </div>
 
@@ -140,6 +126,7 @@ export default function StudentDashboard() {
 
         {error && <div className="mb-6 rounded-2xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-700 dark:text-rose-200">{error}</div>}
         {success && <div className="mb-6 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-700 dark:text-emerald-200">{success}</div>}
+        {loadingDashboard && <p className="mb-6 text-sm text-slate-500">Loading your classes...</p>}
 
         <div className="mb-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {stats.map((item) => (
@@ -156,20 +143,21 @@ export default function StudentDashboard() {
             <section className="card p-6">
               <div className="mb-5 flex items-center justify-between">
                 <h2 className="text-xl font-black text-slate-900 dark:text-white">Upcoming lessons</h2>
-                <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700">3 scheduled</span>
+                <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700">{dashboard?.upcomingClasses ?? 0} scheduled</span>
               </div>
 
               <div className="space-y-3">
-                {defaultUpcoming.map((item, index) => (
-                  <div key={`${item.subject}-${index}`} className="flex items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-3.5 dark:border-slate-700 dark:bg-slate-800/60">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-violet-500 text-lg font-bold text-white">{item.subject.charAt(0)}</div>
+                {(dashboard?.todaysClasses || []).concat(dashboard?.upcomingClassesList || []).map((item) => (
+                  <div key={item.classId} className="flex items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-3.5 dark:border-slate-700 dark:bg-slate-800/60">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-violet-500 text-lg font-bold text-white">{item.subject?.charAt(0) || 'C'}</div>
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-bold text-slate-800 dark:text-slate-100">{item.subject}</p>
-                      <p className="text-xs text-slate-500 dark:text-slate-400">{item.tutor} • {item.time}</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">{item.teacherName} · {new Date(item.startTime).toLocaleString()}</p>
                     </div>
-                    <span className={`${item.badgeColor} rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white`}>{item.badge}</span>
+                    <span className="rounded-full bg-blue-500 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white">{item.status}</span>
                   </div>
                 ))}
+                {!loadingDashboard && !(dashboard?.todaysClasses?.length || dashboard?.upcomingClassesList?.length) && <p className="text-sm text-slate-500">No upcoming classes scheduled.</p>}
               </div>
             </section>
 
@@ -180,17 +168,16 @@ export default function StudentDashboard() {
               </div>
 
               <div className="space-y-5">
-                {defaultProgress.map((row) => (
+                {(dashboard?.pastClasses || []).map((row) => (
                   <div key={row.subject}>
                     <div className="mb-2 flex items-center justify-between text-sm font-semibold text-slate-700 dark:text-slate-200">
-                      <span>{row.subject}</span>
-                      <span>{row.progress}%</span>
+                      <span>{row.subject} · {row.teacherName}</span>
+                      <span>{row.status}</span>
                     </div>
-                    <div className="h-2.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
-                      <div className={`h-full rounded-full bg-gradient-to-r ${row.color}`} style={{ width: `${row.progress}%` }} />
-                    </div>
+                    <p className="text-xs text-slate-500">{new Date(row.startTime).toLocaleString()}</p>
                   </div>
                 ))}
+                {!dashboard?.pastClasses?.length && <p className="text-sm text-slate-500">No past classes yet.</p>}
               </div>
             </section>
 
@@ -201,16 +188,17 @@ export default function StudentDashboard() {
               </div>
 
               <div className="space-y-3">
-                {defaultAssignments.map((item) => (
-                  <div key={item.title} className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-3.5 dark:border-slate-700 dark:bg-slate-800/60">
+                {(dashboard?.todaysClasses || []).map((item) => (
+                  <div key={item.classId} className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-3.5 dark:border-slate-700 dark:bg-slate-800/60">
                     <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-amber-100 text-lg dark:bg-amber-900/30">📄</div>
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-bold text-slate-800 dark:text-slate-100">{item.title}</p>
-                      <p className="text-xs text-slate-500 dark:text-slate-400">{item.subject} • Due {item.due}</p>
+                      <p className="truncate text-sm font-bold text-slate-800 dark:text-slate-100">{item.subject} class</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">{item.teacherName} · {item.recurrencePattern || item.status}</p>
                     </div>
-                    <span className={`rounded-full px-2.5 py-1 text-[10px] font-bold ${item.tone}`}>{item.status}</span>
+                    {item.meetingLink && <a href={item.meetingLink} target="_blank" rel="noreferrer" className="text-xs font-bold text-blue-600">Join</a>}
                   </div>
                 ))}
+                {!dashboard?.todaysClasses?.length && <p className="text-sm text-slate-500">No classes today.</p>}
               </div>
             </section>
           </div>

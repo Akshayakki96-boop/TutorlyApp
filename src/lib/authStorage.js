@@ -2,6 +2,8 @@ const ADMIN_TOKEN_KEY = 'skillbridge_admin_token'
 const ADMIN_USER_KEY = 'skillbridge_admin_user'
 const STUDENT_TOKEN_KEY = 'skillbridge_student_token'
 const STUDENT_USER_KEY = 'skillbridge_student_user'
+const TEACHER_TOKEN_KEY = 'skillbridge_teacher_token'
+const TEACHER_USER_KEY = 'skillbridge_teacher_user'
 
 export function saveAuth(token, user) {
   localStorage.setItem(ADMIN_TOKEN_KEY, token)
@@ -59,4 +61,18 @@ export function getStudentUser() {
 
 export function isStudentAuthenticated() {
   return Boolean(getStudentToken())
+}
+
+export function saveTeacherAuth(token, user) {
+  localStorage.setItem(TEACHER_TOKEN_KEY, token)
+  localStorage.setItem(TEACHER_USER_KEY, JSON.stringify(user ?? null))
+}
+
+export function clearTeacherAuth() {
+  localStorage.removeItem(TEACHER_TOKEN_KEY)
+  localStorage.removeItem(TEACHER_USER_KEY)
+}
+
+export function getTeacherToken() {
+  return localStorage.getItem(TEACHER_TOKEN_KEY)
 }

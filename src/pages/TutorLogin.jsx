@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { apiRequest } from '../lib/apiClient'
-import { saveStudentAuth } from '../lib/authStorage'
+import { saveTeacherAuth } from '../lib/authStorage'
 
 export default function TutorLogin() {
   const navigate = useNavigate()
@@ -36,7 +36,7 @@ export default function TutorLogin() {
         throw new Error('Login succeeded but no token was returned.')
       }
 
-      saveStudentAuth(token, result?.user || { email: form.email.trim() })
+      saveTeacherAuth(token, result?.user || { email: form.email.trim() })
       navigate(redirectPath, { replace: true })
     } catch (err) {
       setError(err.message || 'Unable to sign in. Please check your credentials.')

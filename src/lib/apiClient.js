@@ -1,4 +1,4 @@
-import { getToken, getStudentToken } from './authStorage'
+import { getToken, getStudentToken, getTeacherToken } from './authStorage'
 
 const envApiBaseUrl = import.meta.env.VITE_API_BASE_URL?.trim()
 
@@ -13,7 +13,10 @@ export async function apiRequest(path, options = {}) {
   // Student/payment routes must prefer the student token so a stale admin
   // session in the same browser doesn't get sent instead.
   const isStudentRoute = path.startsWith('/api/student') || path.startsWith('/api/payments')
-  const token = isStudentRoute
+  const isTeacherRoute = path.startsWith('/api/teacher') || path.startsWith('/api/teachers/dashboard')
+  const token = isTeacherRoute
+    ? getTeacherToken() || getStudentToken() || getToken()
+    : isStudentRoute
     ? getStudentToken() || getToken()
     : getToken() || getStudentToken()
   const headers = {

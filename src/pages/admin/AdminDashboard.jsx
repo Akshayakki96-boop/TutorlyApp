@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { getApiBaseUrl, apiRequest } from '../../lib/apiClient'
 
 export default function AdminDashboard() {
+  const navigate = useNavigate()
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [stats, setStats] = useState({ leads: 0, teachers: 0, slots: 0, bookings: 0 })
@@ -53,6 +55,30 @@ export default function AdminDashboard() {
         <StatCard label="Teachers" value={loading ? '...' : stats.teachers} tone="teal" />
         <StatCard label="Demo Slots" value={loading ? '...' : stats.slots} tone="amber" />
         <StatCard label="Demo Bookings" value={loading ? '...' : stats.bookings} tone="indigo" />
+      </div>
+
+      <div className="mt-6 grid lg:grid-cols-2 gap-6">
+        <div className="rounded-2xl border border-slate-200 bg-gradient-to-br from-blue-50 to-blue-100 p-5">
+          <h2 className="text-lg font-bold text-blue-900">📅 Create New Class</h2>
+          <p className="mt-2 text-sm text-blue-800">Search for available teachers and schedule classes</p>
+          <button
+            onClick={() => navigate('/admin/schedule/find-teachers')}
+            className="mt-4 inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700 transition-colors"
+          >
+            🔍 Find Teachers & Schedule
+          </button>
+        </div>
+
+        <div className="rounded-2xl border border-slate-200 bg-gradient-to-br from-amber-50 to-amber-100 p-5">
+          <h2 className="text-lg font-bold text-amber-900">🔄 Manage Classes</h2>
+          <p className="mt-2 text-sm text-amber-800">View all classes and reschedule as needed</p>
+          <button
+            onClick={() => navigate('/admin/schedule/classes')}
+            className="mt-4 inline-flex items-center gap-2 rounded-lg bg-amber-600 px-4 py-2 font-semibold text-white hover:bg-amber-700 transition-colors"
+          >
+            📋 View & Reschedule Classes
+          </button>
+        </div>
       </div>
 
       <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-5">

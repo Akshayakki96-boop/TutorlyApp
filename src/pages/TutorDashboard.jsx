@@ -45,19 +45,19 @@ export default function TutorDashboard() {
               <h1 className="font-heading text-2xl md:text-3xl font-bold mt-1">{dashboard?.teacherName || 'Welcome'}</h1>
               <p className="text-white/70 text-sm mt-1">You have {dashboard?.classesToday ?? 0} classes scheduled today</p>
             </div>
-            <div className="flex gap-3">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-4">
               <button 
                 onClick={() => navigate('/teacher/availability')}
-                className="btn-outline-white text-sm py-2.5 px-5"
+                className="btn-outline-white text-xs sm:text-sm py-2 sm:py-2.5 px-3 sm:px-5 w-full sm:w-auto"
               >
                 📅 Set Availability
               </button>
-              <button className="btn-outline-white text-sm py-2.5 px-5">
+              <button className="btn-outline-white text-xs sm:text-sm py-2 sm:py-2.5 px-3 sm:px-5 w-full sm:w-auto">
                 Mark Attendance
               </button>
               <button 
                 onClick={handleLogout}
-                className="btn-outline-white text-sm py-2.5 px-5 hover:bg-white/20 transition-colors"
+                className="btn-outline-white text-xs sm:text-sm py-2 sm:py-2.5 px-3 sm:px-5 w-full sm:w-auto hover:bg-white/20 transition-colors"
               >
                 🚪 Logout
               </button>
@@ -69,7 +69,7 @@ export default function TutorDashboard() {
           {error && <p role="alert" className="mb-6 rounded-xl bg-rose-50 p-4 text-sm text-rose-700">{error}</p>}
           {loading && <p className="mb-6 text-sm text-slate-500">Loading your dashboard...</p>}
           {/* Stats */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             {[
               { label: 'Classes Today', value: dashboard?.classesToday ?? 0, icon: '📅', color: 'from-blue-500 to-cyan-500' },
               { label: 'Total Students', value: dashboard?.totalStudents ?? 0, icon: '🎓', color: 'from-purple-500 to-pink-500' },
@@ -84,14 +84,14 @@ export default function TutorDashboard() {
             ))}
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Today's Schedule */}
-            <div className="lg:col-span-2 card p-6">
+            <div className="md:col-span-2 lg:col-span-2 card p-6">
               <h2 className="font-heading font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                 <span className="text-lg">📅</span> Tutor Session Schedule
               </h2>
 
-              <div className="grid gap-4 xl:grid-cols-[1.1fr_0.9fr]">
+              <div className="grid gap-4 grid-cols-1 md:grid-cols-[1.1fr_0.9fr]">
                 <div className="space-y-3">
                   {schedule.map(session => (
                     <button
@@ -184,7 +184,7 @@ export default function TutorDashboard() {
             </div>
 
             {/* Student Management */}
-            <div className="lg:col-span-2 card p-6">
+            <div className="md:col-span-2 lg:col-span-2 card p-6">
               <h2 className="font-heading font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                 <span className="text-lg">🎓</span> My Students
               </h2>

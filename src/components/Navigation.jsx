@@ -25,6 +25,7 @@ export default function Navigation() {
   const [showDropdown, setShowDropdown] = useState(false)
   const [showLearnDropdown, setShowLearnDropdown] = useState(false)
   const [showPortalDropdown, setShowPortalDropdown] = useState(false)
+  const [showMobilePortalDropdown, setShowMobilePortalDropdown] = useState(false)
   const location  = useLocation()
   const navigate  = useNavigate()
   const isHome    = location.pathname === '/'
@@ -39,7 +40,7 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  useEffect(() => { setIsOpen(false); setShowPortalDropdown(false); setShowDropdown(false); setShowLearnDropdown(false) }, [location])
+  useEffect(() => { setIsOpen(false); setShowPortalDropdown(false); setShowMobilePortalDropdown(false); setShowDropdown(false); setShowLearnDropdown(false) }, [location])
 
   useEffect(() => {
     function handleClickOutside(e) {
@@ -76,24 +77,42 @@ export default function Navigation() {
   }, [showLearnDropdown])
 
   useEffect(() => {
-    function handlePortalClickOutside(e) {
-      const insideMobile = portalRef.current?.contains(e.target)
+    function handleDesktopPortalClickOutside(e) {
       const insideDesktop = desktopPortalRef.current?.contains(e.target)
-      if (!insideMobile && !insideDesktop) {
+      if (!insideDesktop) {
         setShowPortalDropdown(false)
       }
     }
 
     if (showPortalDropdown) {
-      document.addEventListener('mousedown', handlePortalClickOutside)
-      document.addEventListener('touchstart', handlePortalClickOutside)
+      document.addEventListener('mousedown', handleDesktopPortalClickOutside)
+      document.addEventListener('touchstart', handleDesktopPortalClickOutside)
     }
 
     return () => {
-      document.removeEventListener('mousedown', handlePortalClickOutside)
-      document.removeEventListener('touchstart', handlePortalClickOutside)
+      document.removeEventListener('mousedown', handleDesktopPortalClickOutside)
+      document.removeEventListener('touchstart', handleDesktopPortalClickOutside)
     }
   }, [showPortalDropdown])
+
+  useEffect(() => {
+    function handleMobilePortalClickOutside(e) {
+      const insideMobile = portalRef.current?.contains(e.target)
+      if (!insideMobile) {
+        setShowMobilePortalDropdown(false)
+      }
+    }
+
+    if (showMobilePortalDropdown) {
+      document.addEventListener('mousedown', handleMobilePortalClickOutside)
+      document.addEventListener('touchstart', handleMobilePortalClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleMobilePortalClickOutside)
+      document.removeEventListener('touchstart', handleMobilePortalClickOutside)
+    }
+  }, [showMobilePortalDropdown])
 
   function handleNavClick(link) {
     setIsOpen(false)
@@ -303,20 +322,20 @@ export default function Navigation() {
           <div className="flex lg:hidden items-center gap-2">
             <div className="relative" ref={portalRef}>
               <button
-                onClick={() => setShowPortalDropdown(p => !p)}
+                onClick={() => setShowMobilePortalDropdown(p => !p)}
                 aria-label="Open the portal menu"
                 aria-haspopup="true"
-                aria-expanded={showPortalDropdown}
+                aria-expanded={showMobilePortalDropdown}
                 className={`rounded-full border px-3 py-2 text-xs font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 ${isScrolled || !isHome ? 'border-slate-200 bg-white text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white' : 'border-white/80 bg-white text-slate-900 shadow-[0_10px_20px_rgba(15,23,42,0.18)]'}`}
               >
                 Portal
               </button>
 
-              <div className={`absolute right-0 z-50 mt-2 w-36 overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-slate-200 transition-transform duration-150 dark:bg-slate-900 dark:ring-slate-800 ${showPortalDropdown ? 'scale-100 opacity-100' : 'pointer-events-none scale-95 opacity-0'}`}>
-                <Link to="/student/login" onClick={() => setShowPortalDropdown(false)} className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800">Student</Link>
-                <Link to="/teacher/login" onClick={() => setShowPortalDropdown(false)} className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800">Teacher</Link>
+              <div className={`absolute right-0 z-50 mt-2 w-36 overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-slate-200 transition-transform duration-150 dark:bg-slate-900 dark:ring-slate-800 ${showMobilePortalDropdown ? 'scale-100 opacity-100' : 'pointer-events-none scale-95 opacity-0'}`}>
+                <Link to="/student/login" onClick={() => setShowMobilePortalDropdown(false)} className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800">Student</Link>
+                <Link to="/teacher/login" onClick={() => setShowMobilePortalDropdown(false)} className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800">Teacher</Link>
                 <div className="h-px bg-slate-200 dark:bg-slate-700 my-1" />
-                <Link to="/teacher/apply" onClick={() => setShowPortalDropdown(false)} className="block px-4 py-2.5 text-sm text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-slate-700/50 font-medium">💼 Apply as Teacher</Link>
+                <Link to="/teacher/apply" onClick={() => setShowMobilePortalDropdown(false)} className="block px-4 py-2.5 text-sm text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-slate-700/50 font-medium">💼 Apply as Teacher</Link>
               </div>
             </div>
             <button

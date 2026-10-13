@@ -113,13 +113,13 @@ export default function AdminTeachers() {
   }
 
   return (
-    <section>
-      <h1 className="text-3xl font-black text-slate-900">Teachers</h1>
-      <p className="mt-2 text-slate-600">Manage /api/teachers and /api/teachers/{'{id}'} resources. Password can only be updated here (no forgot password for teachers).</p>
+    <section className="w-full">
+      <h1 className="text-2xl sm:text-3xl font-black text-slate-900">Teachers</h1>
+      <p className="mt-2 text-sm sm:text-base text-slate-600">Manage /api/teachers and /api/teachers/{'{id}'} resources. Password can only be updated here (no forgot password for teachers).</p>
 
       {error && <p className="mt-4 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">{error}</p>}
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-2">
+      <div className="mt-6 grid gap-6 grid-cols-1 lg:grid-cols-2">
         <form onSubmit={createTeacher} className="rounded-2xl border border-slate-200 p-4">
           <h2 className="text-lg font-bold text-slate-900">Create Teacher</h2>
           <div className="mt-3 space-y-3">

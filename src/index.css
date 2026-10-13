@@ -45,7 +45,7 @@
     @apply hover:shadow-card-hover hover:-translate-y-1;
   }
   .section-wrap {
-    @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full;
   }
   .section-tag {
     @apply inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-semibold

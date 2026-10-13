@@ -9,6 +9,9 @@ export default function StudentDashboard() {
   const [payments, setPayments] = useState([])
   const [dashboard, setDashboard] = useState(null)
   const [loadingDashboard, setLoadingDashboard] = useState(true)
+  const [paymentDueDate, setPaymentDueDate] = useState(null)
+  const [isPaymentDue, setIsPaymentDue] = useState(false)
+  const [showAlternativePayment, setShowAlternativePayment] = useState(false)
   const [paymentForm, setPaymentForm] = useState({ amount: '149', currency: 'GBP' })
   const [loadingPayments, setLoadingPayments] = useState(false)
   const [paying, setPaying] = useState(false)
@@ -31,7 +34,10 @@ export default function StudentDashboard() {
       })
       .finally(() => { if (alive) setLoadingDashboard(false) })
 
-    if (currentStudent?.id) void loadPayments(currentStudent.id)
+    if (currentStudent?.id) {
+      void loadPayments(currentStudent.id)
+      void checkPaymentDueDate(currentStudent.id)
+    }
     return () => { alive = false }
   }, [])
 
@@ -46,6 +52,23 @@ export default function StudentDashboard() {
       setError(err.message || 'Unable to load payment records.')
     } finally {
       setLoadingPayments(false)
+    }
+  }
+
+  async function checkPaymentDueDate(studentId) {
+    try {
+      const result = await apiRequest(`/api/payments/due-date/${studentId}`)
+      if (result?.dueDate) {
+        const dueDate = new Date(result.dueDate)
+        setPaymentDueDate(dueDate)
+        
+        const now = new Date()
+        const daysUntilDue = Math.ceil((dueDate - now) / (1000 * 60 * 60 * 24))
+        
+        setIsPaymentDue(daysUntilDue <= 7 && daysUntilDue >= 0)
+      }
+    } catch (err) {
+      console.error('Error checking payment due date:', err)
     }
   }
 
@@ -109,17 +132,16 @@ export default function StudentDashboard() {
   return (
     <main className="min-h-screen bg-slate-100 pt-20 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       <div className="section-wrap pb-12">
-        <div className="mb-8 rounded-[32px] bg-[linear-gradient(135deg,#0f172a,#1d4ed8_38%,#7c3aed_100%)] p-6 text-white shadow-[0_24px_60px_rgba(37,99,235,0.28)] md:p-8">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+        <div className="mb-8 rounded-[32px] bg-[linear-gradient(135deg,#0f172a,#1d4ed8_38%,#7c3aed_100%)] p-4 sm:p-6 md:p-8 text-white shadow-[0_24px_60px_rgba(37,99,235,0.28)]">
+          <div className="flex flex-col gap-4 sm:gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <p className="text-sm font-medium uppercase tracking-[0.2em] text-blue-100">Welcome back</p>
-              <h1 className="mt-2 text-3xl font-black md:text-4xl">{dashboard?.studentName || student?.fullName || 'Student Dashboard'}</h1>
-              <p className="mt-2 max-w-xl text-sm text-blue-100/90 md:text-base">Keep your studies on track with lessons, progress updates, and payment management in one place.</p>
+              <p className="text-xs sm:text-sm font-medium uppercase tracking-[0.2em] text-blue-100">Welcome back</p>
+              <h1 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-black">{dashboard?.studentName || student?.fullName || 'Student Dashboard'}</h1>
+              <p className="mt-2 max-w-xl text-xs sm:text-sm text-blue-100/90 md:text-base">Keep your studies on track with lessons, progress updates, and payment management in one place.</p>
             </div>
 
-            <div className="flex flex-wrap gap-3">
-              <Link to="/#assessmentForm" className="inline-flex items-center justify-center rounded-full border border-white/30 bg-white/10 px-5 py-2.5 text-sm font-semibold text-white hover:bg-white/15">Book a session</Link>
-              <button type="button" onClick={handleLogout} className="inline-flex items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-bold text-slate-900 hover:bg-slate-100">Logout</button>
+            <div className="flex flex-wrap gap-2 sm:gap-3">
+              <button type="button" onClick={handleLogout} className="inline-flex items-center justify-center rounded-full bg-white px-3 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-bold text-slate-900 hover:bg-slate-100">Logout</button>
             </div>
           </div>
         </div>
@@ -128,7 +150,7 @@ export default function StudentDashboard() {
         {success && <div className="mb-6 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-700 dark:text-emerald-200">{success}</div>}
         {loadingDashboard && <p className="mb-6 text-sm text-slate-500">Loading your classes...</p>}
 
-        <div className="mb-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="mb-8 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
           {stats.map((item) => (
             <div key={item.label} className="card card-hover p-5">
               <div className={`mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br ${item.tone} text-xl shadow-lg`}>{item.icon}</div>
@@ -138,8 +160,8 @@ export default function StudentDashboard() {
           ))}
         </div>
 
-        <div className="grid gap-6 xl:grid-cols-[1.45fr_0.95fr]">
-          <div className="space-y-6">
+        <div className="grid gap-6 lg:grid-cols-3">
+          <div className="space-y-6 lg:col-span-2">
             <section className="card p-6">
               <div className="mb-5 flex items-center justify-between">
                 <h2 className="text-xl font-black text-slate-900 dark:text-white">Upcoming lessons</h2>
@@ -203,39 +225,114 @@ export default function StudentDashboard() {
             </section>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-6 lg:col-span-1">
             <section className="card p-6">
               <div className="mb-5 flex items-center justify-between">
                 <h2 className="text-xl font-black text-slate-900 dark:text-white">Billing &amp; payments</h2>
                 <span className="rounded-full bg-slate-200 px-3 py-1 text-xs font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">{payments.length} records</span>
               </div>
 
-              <form onSubmit={handlePayNow} className="space-y-4">
-                <div>
-                  <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200">Amount</label>
-                  <input
-                    type="number"
-                    step="0.01"
-                    min="1"
-                    value={paymentForm.amount}
-                    onChange={(e) => setPaymentForm((prev) => ({ ...prev, amount: e.target.value }))}
-                    className="input-field"
-                  />
-                </div>
+              {isPaymentDue ? (
+                <form onSubmit={handlePayNow} className="space-y-4">
+                  <div className="mb-4 rounded-2xl border border-amber-200 bg-amber-50 p-3.5 dark:border-amber-900/60 dark:bg-amber-900/20">
+                    <p className="text-sm font-semibold text-amber-800 dark:text-amber-200">⚠️ Payment Due Soon</p>
+                    <p className="text-xs text-amber-700 dark:text-amber-300 mt-1">
+                      Your payment is due on {paymentDueDate?.toLocaleDateString()}
+                    </p>
+                  </div>
 
-                <div>
-                  <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200">Currency</label>
-                  <select value={paymentForm.currency} onChange={(e) => setPaymentForm((prev) => ({ ...prev, currency: e.target.value }))} className="input-field">
-                    <option value="GBP">GBP</option>
-                    <option value="USD">USD</option>
-                    <option value="EUR">EUR</option>
-                  </select>
-                </div>
+                  <div>
+                    <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200">Amount</label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      min="1"
+                      value={paymentForm.amount}
+                      onChange={(e) => setPaymentForm((prev) => ({ ...prev, amount: e.target.value }))}
+                      className="input-field"
+                    />
+                  </div>
 
-                <button type="submit" disabled={paying} className="w-full rounded-2xl bg-gradient-to-r from-violet-600 to-blue-600 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-violet-500/20 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70">
-                  {paying ? 'Processing...' : 'Pay now'}
-                </button>
-              </form>
+                  <div>
+                    <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200">Currency</label>
+                    <select value={paymentForm.currency} onChange={(e) => setPaymentForm((prev) => ({ ...prev, currency: e.target.value }))} className="input-field">
+                      <option value="GBP">GBP</option>
+                      <option value="USD">USD</option>
+                      <option value="EUR">EUR</option>
+                    </select>
+                  </div>
+
+                  <button type="submit" disabled={paying} className="w-full rounded-2xl bg-gradient-to-r from-violet-600 to-blue-600 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-violet-500/20 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70">
+                    {paying ? 'Processing...' : 'Pay now'}
+                  </button>
+                </form>
+              ) : (
+                <div className="space-y-4">
+                  <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-900/60 dark:bg-emerald-900/20">
+                    <p className="text-sm font-semibold text-emerald-800 dark:text-emerald-200">✓ Payment Status</p>
+                    <p className="text-xs text-emerald-700 dark:text-emerald-300 mt-1">
+                      No payment due at this time. Your admin will notify you when payment is required.
+                    </p>
+                  </div>
+
+                  {!showAlternativePayment ? (
+                    <div className="space-y-2.5">
+                      <p className="text-xs text-slate-500 dark:text-slate-400">
+                        To request a session or ask about payment, contact your admin:
+                      </p>
+                      <a 
+                        href="mailto:info@skillbridgetutors.com" 
+                        className="inline-flex w-full items-center justify-center rounded-xl border border-blue-200 bg-blue-50 px-4 py-2 text-xs font-semibold text-blue-700 hover:bg-blue-100 dark:border-blue-900/60 dark:bg-blue-900/20 dark:text-blue-200"
+                      >
+                        📧 info@skillbridgetutors.com
+                      </a>
+                      <button 
+                        type="button"
+                        onClick={() => setShowAlternativePayment(true)}
+                        className="w-full rounded-xl border border-violet-200 bg-violet-50 px-4 py-2 text-xs font-semibold text-violet-700 hover:bg-violet-100 dark:border-violet-900/60 dark:bg-violet-900/20 dark:text-violet-200"
+                      >
+                        💳 Make a payment
+                      </button>
+                    </div>
+                  ) : (
+                    <form onSubmit={handlePayNow} className="space-y-3">
+                      <div>
+                        <label className="mb-2 block text-xs font-semibold text-slate-700 dark:text-slate-200">Amount</label>
+                        <input
+                          type="number"
+                          step="0.01"
+                          min="1"
+                          value={paymentForm.amount}
+                          onChange={(e) => setPaymentForm((prev) => ({ ...prev, amount: e.target.value }))}
+                          className="input-field text-sm"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="mb-2 block text-xs font-semibold text-slate-700 dark:text-slate-200">Currency</label>
+                        <select value={paymentForm.currency} onChange={(e) => setPaymentForm((prev) => ({ ...prev, currency: e.target.value }))} className="input-field text-sm">
+                          <option value="GBP">GBP</option>
+                          <option value="USD">USD</option>
+                          <option value="EUR">EUR</option>
+                        </select>
+                      </div>
+
+                      <div className="flex gap-2">
+                        <button type="submit" disabled={paying} className="flex-1 rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 px-3 py-2 text-xs font-bold text-white shadow-lg shadow-violet-500/20 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70">
+                          {paying ? 'Processing...' : 'Pay'}
+                        </button>
+                        <button 
+                          type="button"
+                          onClick={() => setShowAlternativePayment(false)}
+                          className="flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </form>
+                  )}
+                </div>
+              )}
 
               <div className="mt-5 rounded-2xl bg-slate-50 p-4 dark:bg-slate-800/60">
                 <div className="flex items-center justify-between text-sm text-slate-600 dark:text-slate-300">
@@ -267,9 +364,8 @@ export default function StudentDashboard() {
             <section className="card p-6">
               <h2 className="text-xl font-black text-slate-900 dark:text-white">Quick actions</h2>
               <div className="mt-4 grid gap-3">
-                <Link to="/#assessmentForm" className="rounded-2xl border border-blue-200 bg-blue-50 px-4 py-3 text-sm font-semibold text-blue-700 hover:bg-blue-100 dark:border-blue-900/60 dark:bg-blue-900/20 dark:text-blue-200">Schedule a lesson</Link>
+                <a href="mailto:info@skillbridgetutors.com" className="rounded-2xl border border-blue-200 bg-blue-50 px-4 py-3 text-sm font-semibold text-blue-700 hover:bg-blue-100 dark:border-blue-900/60 dark:bg-blue-900/20 dark:text-blue-200">📧 Contact admin via email</a>
                 <Link to="/courses" className="rounded-2xl border border-violet-200 bg-violet-50 px-4 py-3 text-sm font-semibold text-violet-700 hover:bg-violet-100 dark:border-violet-900/60 dark:bg-violet-900/20 dark:text-violet-200">Browse courses</Link>
-                <Link to="/parent-portal" className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700 hover:bg-emerald-100 dark:border-emerald-900/60 dark:bg-emerald-900/20 dark:text-emerald-200">Parent portal</Link>
               </div>
             </section>
           </div>

@@ -207,16 +207,16 @@ export default function AdminAssignClass() {
               <h1 className="font-heading text-2xl md:text-3xl font-bold mt-1">Assign Class to Student</h1>
               <p className="text-white/70 text-sm mt-1">Create a regular class between teacher and student</p>
             </div>
-            <div className="flex gap-3">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full sm:w-auto">
               <button
                 onClick={handleBackToSearch}
-                className="btn-outline-white text-sm py-2.5 px-5"
+                className="btn-outline-white text-xs sm:text-sm py-2 sm:py-2.5 px-3 sm:px-5 w-full sm:w-auto"
               >
                 ← Back to Search
               </button>
               <button
                 onClick={handleLogout}
-                className="btn-outline-white text-sm py-2.5 px-5 hover:bg-white/20 transition-colors"
+                className="btn-outline-white text-xs sm:text-sm py-2 sm:py-2.5 px-3 sm:px-5 w-full sm:w-auto hover:bg-white/20 transition-colors"
               >
                 🚪 Logout
               </button>
@@ -243,9 +243,9 @@ export default function AdminAssignClass() {
             </div>
           )}
 
-          <div className="grid lg:grid-cols-3 gap-6">
-            {/* Class Details Summary */}
-            <div className="lg:col-span-1">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:order-none">
+            {/* Assignment Form - comes first on mobile */}
+            <div className="lg:col-span-2 lg:order-2">
               <div className="card p-6 space-y-4">
                 <div>
                   <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1">
@@ -280,8 +280,8 @@ export default function AdminAssignClass() {
               </div>
             </div>
 
-            {/* Assignment Form */}
-            <div className="lg:col-span-2">
+            {/* Class Details Summary - comes second on mobile */}
+            <div className="lg:col-span-1 lg:order-1">
               <form onSubmit={handleSubmit} className="card p-6">
                 <h2 className="font-heading font-bold text-slate-900 dark:text-white mb-6">Assign to Student</h2>
 

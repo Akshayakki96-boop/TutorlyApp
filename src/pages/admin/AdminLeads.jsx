@@ -59,13 +59,13 @@ export default function AdminLeads() {
   }
 
   return (
-    <section>
-      <h1 className="text-3xl font-black text-slate-900">Leads</h1>
-      <p className="mt-2 text-slate-600">Create and inspect leads via /api/leads and /api/leads/{'{id}'}.</p>
+    <section className="w-full">
+      <h1 className="text-2xl sm:text-3xl font-black text-slate-900">Leads</h1>
+      <p className="mt-2 text-sm sm:text-base text-slate-600">Create and inspect leads via /api/leads and /api/leads/{'{id}'}.</p>
 
       {error && <p className="mt-4 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">{error}</p>}
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-5">
+      <div className="mt-6 grid gap-6 grid-cols-1 lg:grid-cols-5">
         <form onSubmit={onSubmit} className="rounded-2xl border border-slate-200 p-4 lg:col-span-2">
           <h2 className="text-lg font-bold text-slate-900">Create Lead</h2>
           <div className="mt-4 space-y-3">
@@ -95,7 +95,7 @@ export default function AdminLeads() {
           </button>
         </form>
 
-        <div className="overflow-hidden rounded-2xl border border-slate-200 lg:col-span-3">
+        <div className="overflow-x-auto rounded-2xl border border-slate-200 lg:col-span-3">
           <div className="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-3">
             <h2 className="text-lg font-bold text-slate-900">All Leads</h2>
             <button onClick={loadLeads} className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-semibold text-slate-700 hover:bg-slate-100">Refresh</button>

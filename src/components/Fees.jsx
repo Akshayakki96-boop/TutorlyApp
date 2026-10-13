@@ -19,6 +19,17 @@ const PLANS = [
     highlight: true,
     features: ['Year 10 & GCSE focused', 'Past papers & exam technique', 'Timed practice sessions', 'Priority support'],
   },
+  {
+    badge: '🎉 LIMITED OFFER',
+    badgeColor: 'bg-gradient-to-r from-amber-500 to-orange-500',
+    title: 'Pay 2 Months',
+    subtitle: 'Get 1 FREE',
+    forLabel: '3 months of tuition for the price of 2',
+    original: '33% discount on quarterly packages',
+    highlight: false,
+    isPromo: true,
+    features: ['3 months of lessons', 'Unlimited flexibility', 'One free month included', 'Priority booking slots'],
+  },
 ]
 
 export default function Fees() {
@@ -57,12 +68,13 @@ export default function Fees() {
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row justify-center gap-8 max-w-3xl mx-auto items-stretch">
+        <div className="flex flex-col sm:flex-row justify-center gap-8 max-w-5xl mx-auto items-stretch">
           {PLANS.map((p, i) => (
             <div
               key={p.title}
               className={`relative flex-1 card card-hover flex flex-col overflow-hidden
                 ${p.highlight ? 'border-2 border-blue-500 shadow-glow-blue scale-[1.03]' : ''}
+                ${p.isPromo ? 'border-2 border-transparent bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 dark:from-amber-900/30 dark:via-orange-900/30 dark:to-rose-900/30 shadow-lg shadow-amber-500/20 scale-[1.05]' : ''}
               `}
               style={{ animationDelay: `${i * 0.15}s` }}
             >
@@ -71,20 +83,51 @@ export default function Fees() {
                 {p.badge}
               </span>
 
-              <div className="p-7 pt-9 flex flex-col h-full">
+              {/* Promo glow effect */}
+              {p.isPromo && (
+                <div className="absolute inset-0 pointer-events-none opacity-40">
+                  <div className="absolute top-2 right-2 w-24 h-24 bg-gradient-to-br from-amber-300 to-orange-300 rounded-full blur-3xl"></div>
+                </div>
+              )}
+
+              <div className="p-7 pt-9 flex flex-col h-full relative z-10">
                 <div className="mb-4">
-                  <p className="text-4xl font-extrabold font-heading text-brand-600 dark:text-blue-400 leading-none">
+                  <p className={`text-4xl font-extrabold font-heading leading-none ${
+                    p.isPromo 
+                      ? 'bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent' 
+                      : 'text-brand-600 dark:text-blue-400'
+                  }`}>
                     {p.title}
-                    <span className="text-xl font-semibold text-slate-500 dark:text-slate-400 ml-1">{p.subtitle}</span>
+                    <span className={`text-xl font-semibold ml-1 ${
+                      p.isPromo 
+                        ? 'text-orange-600 dark:text-orange-400' 
+                        : 'text-slate-500 dark:text-slate-400'
+                    }`}>{p.subtitle}</span>
                   </p>
-                  <p className="mt-2 text-sm font-semibold text-slate-700 dark:text-slate-300">{p.forLabel}</p>
-                  <p className="text-sm text-slate-400 line-through mt-1">{p.original}</p>
+                  <p className={`mt-2 text-sm font-semibold ${
+                    p.isPromo 
+                      ? 'text-orange-700 dark:text-orange-300' 
+                      : 'text-slate-700 dark:text-slate-300'
+                  }`}>{p.forLabel}</p>
+                  <p className={`text-sm mt-1 ${
+                    p.isPromo 
+                      ? 'text-orange-600 dark:text-orange-400 font-semibold' 
+                      : 'text-slate-400 line-through'
+                  }`}>{p.original}</p>
                 </div>
 
                 <ul className="space-y-2 my-5 flex-1">
                   {p.features.map(f => (
-                    <li key={f} className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-                      <svg className="w-4 h-4 text-green-500 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <li key={f} className={`flex items-center gap-2 text-sm ${
+                      p.isPromo 
+                        ? 'text-orange-700 dark:text-orange-300' 
+                        : 'text-slate-600 dark:text-slate-400'
+                    }`}>
+                      <svg className={`w-4 h-4 shrink-0 ${
+                        p.isPromo 
+                          ? 'text-orange-500' 
+                          : 'text-green-500'
+                      }`} fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                       </svg>
                       {f}
@@ -94,23 +137,34 @@ export default function Fees() {
 
                 <button
                   onClick={scrollToForm}
-                  className={p.highlight ? 'btn-primary justify-center w-full' : 'btn-secondary justify-center w-full'}
+                  className={p.isPromo 
+                    ? 'justify-center w-full rounded-full px-6 py-3 font-semibold text-white bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 shadow-lg shadow-amber-500/30 transition-all duration-200 hover:-translate-y-0.5'
+                    : p.highlight ? 'btn-primary justify-center w-full' : 'btn-secondary justify-center w-full'
+                  }
                 >
-                  Enrol Now
+                  {p.isPromo ? '🚀 Claim Offer' : 'Enrol Now'}
                 </button>
               </div>
             </div>
           ))}
         </div>
 
-<div className="mt-8">
-          <p className="text-center text-sm text-slate-600 dark:text-slate-300 mb-6">
+<div className="mt-12 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-2xl p-8 border border-amber-200 dark:border-amber-800">
+          <p className="text-center text-sm text-slate-600 dark:text-slate-300 mb-4">
             SkillBridge Tutors offers flexible, affordable maths tuition aligned with the UK curriculum and GCSE board requirements. 
             Sessions can be scheduled around school hours, evenings, or weekends to fit busy family routines.
           </p>
-          <p className="text-center text-sm text-slate-500 dark:text-slate-400">
-            🎁 <strong>One FREE trial class</strong> available before enrollment — no commitment required
-          </p>
+          <div className="text-center">
+            <p className="text-lg font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent mb-3">
+              ✨ LIMITED TIME OFFER ✨
+            </p>
+            <p className="text-sm font-semibold text-orange-700 dark:text-orange-300 mb-4">
+              Pay for 2 months of tuition and receive the 3rd month completely FREE! That's a 33% discount on your quarterly package.
+            </p>
+            <p className="text-sm text-slate-500 dark:text-slate-400">
+              🎁 <strong>One FREE trial class</strong> available before enrollment — no commitment required
+            </p>
+          </div>
         </div>
       </div>
     </section>

@@ -48,8 +48,8 @@ const ROUTES = [
   },
   {
     route: '/courses',
-    title: 'Mathematics Online Classes | Learn & Study Maths Online Courses',
-    description: "Join the UK's trusted Mathematics Online Classes and Online Math Courses to learn and study maths online with expert tutors and flexible lessons.",
+    title: 'Mathematics Online Classes, Online Math Courses | SkillBridge Tutors',
+    description: 'Get mathematics online classes with flexible lessons. Learn maths online at your own pace with structured courses designed to build confidence and improve skills.',
     canonical: `${BASE}/courses/`,
   },
   {
@@ -60,20 +60,20 @@ const ROUTES = [
   },
   {
     route: '/gcse-maths-tutor',
-    title: 'GCSE Maths Course Online, Online GCSE Maths Tutor, Tuition & Learning',
-    description: 'Join a GCSE Maths Course Online with GCSE Maths Online Learning, expert GCSE Online Maths Tutor support and personalised GCSE Maths Tuition to boost confidence.',
+    title: 'GCSE Maths Course Online, GCSE Maths Tutor | SkillBridge Tutors',
+    description: 'Explore GCSE maths online learning with flexible tuition, topic-based practice and expert guidance to prepare for exams and strengthen core maths skills.',
     canonical: `${BASE}/gcse-maths-tutor/`,
   },
   {
     route: '/maths-a-level-tutor',
-    title: 'A Level Maths Tutor Online, Maths A Level Tutor & Tuition Online',
-    description: 'Get expert support from a Maths A Level Tutor Online at SkillBridge Tutors, with personalised A Level Maths Tuition to build confidence and prepare effectively for exams.',
+    title: 'A Level Maths Tuition, Maths A Level Tutor Online | SkillBridge Tutors',
+    description: 'Boost your A Level Maths knowledge with online tuition focused on complex topics, problem-solving techniques and exam preparation to improve mathematical understanding.',
     canonical: `${BASE}/maths-a-level-tutor/`,
   },
   {
     route: '/maths-tutor',
-    title: 'Online Mathematics Tutors | Maths Tutoring & Private Tuition',
-    description: 'Find expert Online Mathematics Tutors for personalised Online Maths Tutoring, Maths Tuition, and support from a dedicated Private Maths Tutor for exam success.',
+    title: 'Online Mathematics Tutors, Online Maths Tutoring | SkillBridge Tutors',
+    description: 'Find a private maths tutor for personalised learning. Online mathematics tutors provide flexible lessons to build confidence and improve skills with maths tuition online.',
     canonical: `${BASE}/maths-tutor/`,
   },
   {

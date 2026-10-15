@@ -9,7 +9,7 @@
  */
 import { renderToString } from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom/server'
-import { Routes, Route, Outlet } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import { Suspense } from 'react'
 
 import { ThemeProvider } from './context/ThemeContext'
@@ -26,6 +26,8 @@ import BlogDetail       from './pages/BlogDetail'
 import GCSEMathsTutor   from './pages/GCSEMathsTutor'
 import MathsALevelTutor from './pages/MathsALevelTutor'
 import MathsTutor       from './pages/MathsTutor'
+import DailyMathFacts   from './pages/DailyMathFacts'
+import QuizBrowser      from './pages/QuizBrowser'
 
 export function render(url) {
   return renderToString(
@@ -42,6 +44,8 @@ export function render(url) {
             <Route path="/gcse-maths-tutor"    element={<GCSEMathsTutor />} />
             <Route path="/maths-a-level-tutor" element={<MathsALevelTutor />} />
             <Route path="/maths-tutor"         element={<MathsTutor />} />
+            <Route path="/daily-math-facts"    element={<DailyMathFacts />} />
+            <Route path="/quiz"                element={<QuizBrowser />} />
             <Route path="*"                    element={<Home />} />
           </Routes>
         </Suspense>

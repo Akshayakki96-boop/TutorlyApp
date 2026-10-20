@@ -105,6 +105,12 @@ const ROUTES = [
     description: 'Discover online mathematics tutors, flexible online math courses, and the best maths tutors online to build confidence, strengthen skills, and improve grades.',
     canonical: `${BASE}/blogs/online-mathematics-tutors-and-courses-smarter-way-to-learn-maths`,
   },
+  {
+    route: '/blogs/maths-without-mental-blocks',
+    title: 'Maths Without Mental Blocks Build a Better Learning Routine',
+    description: 'Build a simple learning routine with maths tuition online, personalised lessons, and regular practice to boost confidence, overcome challenges, and improve maths skills.',
+    canonical: `${BASE}/blogs/maths-without-mental-blocks`,
+  },
 ]
 
 // ── Helpers ───────────────────────────────────────────────────────────────────

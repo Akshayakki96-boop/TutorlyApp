@@ -1040,5 +1040,108 @@ export const BLOGS = [
         "text": "If you’re unsure, speak to your Maths teacher, look at your recent results and try realistic exam questions from both tiers. The goal isn’t to take the hardest paper. The goal is to achieve the best grade you can."
       }
     ]
+  },
+  {
+    "id": 11,
+    "slug": "maths-without-mental-blocks",
+    "title": "Maths Without The Mental Blocks: Build A Learning Routine That Works For You",
+    "excerpt": "Build a simple learning routine with maths tuition online, personalised lessons, and regular practice to boost confidence, overcome challenges, and improve maths skills.",
+    "image": "https://images.unsplash.com/photo-1577720643272-265ae4b55e84?auto=format&fit=crop&w=1200&q=80",
+    "date": "Oct 2026",
+    "readingTime": "7 min read",
+    "author": "SkillBridge Tutor Team",
+    "category": "Maths",
+    "tags": [
+      "Maths Routine",
+      "Learning Strategy",
+      "Maths Confidence"
+    ],
+    "metaTitle": "Maths Without Mental Blocks Build a Better Learning Routine",
+    "metaDescription": "Build a simple learning routine with maths tuition online, personalised lessons, and regular practice to boost confidence, overcome challenges, and improve maths skills.",
+    "keywords": "Maths tuition online, study maths online",
+    "content": [
+      {
+        "type": "paragraph",
+        "text": "Mathematics becomes more manageable when students stop treating every problem as a test and start seeing it as a puzzle to solve. Rather than hours of the same practice, learners can develop a practice that involves brief sessions of practice, visual explanations, and frequent feedback. Even a difficult topic can be made more manageable with the right support."
+      },
+      {
+        "type": "paragraph",
+        "text": "Maths tuition online offers students flexibility in learning – at home, when they need to review challenging topics and without having to travel to a tuition centre to receive guidance. SkillBridge Tutors offers lessons tailored to a student's specific learning needs, and supports the student in strengthening their understanding while managing schoolwork and other activities."
+      },
+      {
+        "type": "heading",
+        "text": "Use Small Learning Wins to create Lasting Progress"
+      },
+      {
+        "type": "paragraph",
+        "text": "A good approach to getting better in Maths is to concentrate on a single thing at a time. Students can focus on one concept, practice a few problems, and then check their errors and proceed to the next concept."
+      },
+      {
+        "type": "paragraph",
+        "text": "Maths tuition online will provide students with personalised attention, be able to work through examples with a teacher, and can practise techniques at their own rate. SkillBridge Tutors offers tutoring for students in Years 1 to 10, as well as GCSE preparation, offering flexible timetables and personalised learning plans."
+      },
+      {
+        "type": "heading",
+        "text": "Create a Practical Maths Routine"
+      },
+      {
+        "type": "paragraph",
+        "text": "Here are some healthy habits to make a habit this week:"
+      },
+      {
+        "type": "paragraph",
+        "text": "Learn one concept: Study a fraction, algebra or geometry concept.\n\nWork independently: Answer questions without looking at the answer key.\n\nLook back at errors: Learn from errors and understand why they are wrong before repeating a task.\n\nMonitor progress: Make notes of the topics that have become easier and those that need more attention.\n\nThis can help to identify learning gaps and to slowly develop confidence."
+      },
+      {
+        "type": "heading",
+        "text": "Make Online Learning More Interactive"
+      },
+      {
+        "type": "paragraph",
+        "text": "Study maths online can offer students interactive explanations, digital whiteboards, problem-solving support, and instant feedback. These approaches enable students to grasp the procedure for the answer rather than the formula."
+      },
+      {
+        "type": "paragraph",
+        "text": "SkillBridge tutors provide personalized lessons, one-on-one tutoring, and small group tutoring for maths tuition online. Students can practice structured basic concepts, reinforcement of problem-solving skills, and get ready for exams."
+      },
+      {
+        "type": "paragraph",
+        "text": "Students can also create consistency by taking regular study maths online. Flexible sessions are available around school and family commitments with progress updates to inform parents of the need for additional support."
+      },
+      {
+        "type": "heading",
+        "text": "Select Support That Matches Your Goals"
+      },
+      {
+        "type": "paragraph",
+        "text": "Each learner is unique with their own priorities. Younger students might need more difficult number skills, secondary students could need some support with algebra and trigonometry and the GCSE students could use timed practice papers and exam techniques."
+      },
+      {
+        "type": "paragraph",
+        "text": "You should think about your ability to do the course, the areas you struggle with and the frequency of your practice. Families can try out the teaching method with a free trial class with SkillBridge Tutors before signing up."
+      },
+      {
+        "type": "richText",
+        "segments": [
+          {
+            "text": "For people who wish to "
+          },
+          {
+            "text": "study maths online",
+            "href": "https://skillbridgetutors.com/courses"
+          },
+          {
+            "text": ", there are maths courses that you can avail. Get custom tutoring on the "
+          },
+          {
+            "text": "Maths tutoring page online",
+            "href": "https://skillbridgetutors.com/maths-tutor"
+          },
+          {
+            "text": "."
+          }
+        ]
+      }
+    ]
   }
 ]

@@ -136,6 +136,12 @@ const ROUTES = [
     description: 'Find out whether GCSE Maths Foundation or Higher is right for you. Compare grades, topics, difficulty and future study goals before choosing a tier.',
     canonical: `${BASE}/blogs/gcse-maths-foundation-vs-higher-tier/`,
   },
+  {
+    route: '/blogs/maths-without-mental-blocks',
+    title: 'Maths Without Mental Blocks Build a Better Learning Routine',
+    description: 'Build a simple learning routine with maths tuition online, personalised lessons, and regular practice to boost confidence, overcome challenges, and improve maths skills.',
+    canonical: `${BASE}/blogs/maths-without-mental-blocks/`,
+  },
 ]
 
 // ── Helpers ───────────────────────────────────────────────────────────────────

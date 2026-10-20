@@ -1077,8 +1077,16 @@ export const BLOGS = [
         "text": "A good approach to getting better in Maths is to concentrate on a single thing at a time. Students can focus on one concept, practice a few problems, and then check their errors and proceed to the next concept."
       },
       {
-        "type": "paragraph",
-        "text": "Maths tuition online will provide students with personalised attention, be able to work through examples with a teacher, and can practise techniques at their own rate. SkillBridge Tutors offers tutoring for students in Years 1 to 10, as well as GCSE preparation, offering flexible timetables and personalised learning plans."
+        "type": "richText",
+        "segments": [
+          {
+            "text": "Maths tuition online",
+            "href": "https://skillbridgetutors.com/maths-tutor/"
+          },
+          {
+            "text": " will provide students with personalised attention, be able to work through examples with a teacher, and can practise techniques at their own rate. SkillBridge Tutors offers tutoring for students in Years 1 to 10, as well as GCSE preparation, offering flexible timetables and personalised learning plans."
+          }
+        ]
       },
       {
         "type": "heading",
@@ -1119,28 +1127,6 @@ export const BLOGS = [
       {
         "type": "paragraph",
         "text": "You should think about your ability to do the course, the areas you struggle with and the frequency of your practice. Families can try out the teaching method with a free trial class with SkillBridge Tutors before signing up."
-      },
-      {
-        "type": "richText",
-        "segments": [
-          {
-            "text": "For people who wish to "
-          },
-          {
-            "text": "study maths online",
-            "href": "https://skillbridgetutors.com/courses"
-          },
-          {
-            "text": ", there are maths courses that you can avail. Get custom tutoring on the "
-          },
-          {
-            "text": "Maths tutoring page online",
-            "href": "https://skillbridgetutors.com/maths-tutor"
-          },
-          {
-            "text": "."
-          }
-        ]
       }
     ]
   }

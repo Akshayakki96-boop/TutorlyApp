@@ -1285,32 +1285,32 @@ export const BLOGS = [
         "type": "faq",
         "faqs": [
           {
-            "question": "What is the best way to find a GCSE Maths tutor online?",
-            "answer": "To find a suitable maths tutor gcse online, compare curriculum knowledge, teaching methods, personalised lesson plans, student feedback, scheduling options, and trial-session availability."
+            "q": "What is the best way to find a GCSE Maths tutor online?",
+            "a": "To find a suitable maths tutor gcse online, compare curriculum knowledge, teaching methods, personalised lesson plans, student feedback, scheduling options, and trial-session availability."
           },
           {
-            "question": "How can an online GCSE Maths tutor help improve my grades?",
-            "answer": "An online tutor identifies knowledge gaps, explains difficult concepts, provides targeted practice, reviews mistakes, and develops examination techniques to support academic progress."
+            "q": "How can an online GCSE Maths tutor help improve my grades?",
+            "a": "An online tutor identifies knowledge gaps, explains difficult concepts, provides targeted practice, reviews mistakes, and develops examination techniques to support academic progress."
           },
           {
-            "question": "What should I look for in a GCSE Maths tutor online?",
-            "answer": "Look for relevant curriculum experience, clear explanations, personalised teaching, regular progress assessments, exam preparation, flexible scheduling, and constructive feedback."
+            "q": "What should I look for in a GCSE Maths tutor online?",
+            "a": "Look for relevant curriculum experience, clear explanations, personalised teaching, regular progress assessments, exam preparation, flexible scheduling, and constructive feedback."
           },
           {
-            "question": "What is the best way to prepare for A Level Maths exams?",
-            "answer": "Follow your examination syllabus, revise challenging topics, practise past papers under timed conditions, analyse mistakes, and maintain a consistent revision schedule."
+            "q": "What is the best way to prepare for A Level Maths exams?",
+            "a": "Follow your examination syllabus, revise challenging topics, practise past papers under timed conditions, analyse mistakes, and maintain a consistent revision schedule."
           },
           {
-            "question": "How can A Level Maths tuition help with difficult topics?",
-            "answer": "Targeted a level maths tuition breaks complex concepts into manageable steps, provides guided practice, corrects misconceptions, and strengthens independent problem-solving skills."
+            "q": "How can A Level Maths tuition help with difficult topics?",
+            "a": "Targeted a level maths tuition breaks complex concepts into manageable steps, provides guided practice, corrects misconceptions, and strengthens independent problem-solving skills."
           },
           {
-            "question": "Should I choose one-to-one or group A Level Maths tuition?",
-            "answer": "Choose one-to-one lessons for focused individual support or small-group sessions for collaborative learning, depending on your preferences, budget, and academic requirements."
+            "q": "Should I choose one-to-one or group A Level Maths tuition?",
+            "a": "Choose one-to-one lessons for focused individual support or small-group sessions for collaborative learning, depending on your preferences, budget, and academic requirements."
           },
           {
-            "question": "How can I choose the right online Maths tutor for GCSE or A Level?",
-            "answer": "Compare qualifications, syllabus knowledge, personalised teaching, progress tracking, examination support, and trial lessons before selecting a tutor who matches your goals for maths tutor gcse online."
+            "q": "How can I choose the right online Maths tutor for GCSE or A Level?",
+            "a": "Compare qualifications, syllabus knowledge, personalised teaching, progress tracking, examination support, and trial lessons before selecting a tutor who matches your goals for maths tutor gcse online."
           }
         ]
       }

@@ -1113,8 +1113,19 @@ export const BLOGS = [
         "text": "SkillBridge tutors provide personalized lessons, one-on-one tutoring, and small group tutoring for maths tuition online. Students can practice structured basic concepts, reinforcement of problem-solving skills, and get ready for exams."
       },
       {
-        "type": "paragraph",
-        "text": "Students can also create consistency by taking regular study maths online. Flexible sessions are available around school and family commitments with progress updates to inform parents of the need for additional support."
+        "type": "richText",
+        "segments": [
+          {
+            "text": "Students can also create consistency by taking regular "
+          },
+          {
+            "text": "study maths online",
+            "href": "https://skillbridgetutors.com/courses/"
+          },
+          {
+            "text": ". Flexible sessions are available around school and family commitments with progress updates to inform parents of the need for additional support."
+          }
+        ]
       },
       {
         "type": "heading",

@@ -142,6 +142,12 @@ const ROUTES = [
     description: 'Build a simple learning routine with maths tuition online, personalised lessons, and regular practice to boost confidence, overcome challenges, and improve maths skills.',
     canonical: `${BASE}/blogs/maths-without-mental-blocks/`,
   },
+  {
+    route: '/blogs/gcse-a-level-maths-online-tuition',
+    title: 'GCSE and A Level Maths Success with Online Tuition - SkillBridge Tutors',
+    description: 'Prepare for GCSE and A Level Maths with a maths tutor gcse online, personalised lessons, past paper practice, and structured revision to boost confidence and exam skills.',
+    canonical: `${BASE}/blogs/gcse-a-level-maths-online-tuition/`,
+  },
 ]
 
 // ── Helpers ───────────────────────────────────────────────────────────────────

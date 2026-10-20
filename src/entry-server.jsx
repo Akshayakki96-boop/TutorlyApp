@@ -30,10 +30,12 @@ import DailyMathFacts   from './pages/DailyMathFacts'
 import QuizBrowser      from './pages/QuizBrowser'
 
 export function render(url) {
+  const isNoSchemaPath = url === '/daily-math-facts' || url === '/daily-math-facts/' || url === '/quiz' || url === '/quiz/'
+  
   return renderToString(
     <ThemeProvider>
       <StaticRouter location={url}>
-        <OrganizationSchema />
+        {!isNoSchemaPath && <OrganizationSchema />}
         <Navigation />
         <Suspense fallback={null}>
           <Routes>

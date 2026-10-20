@@ -78,10 +78,11 @@ function AppShell() {
   const isAdminPath = location.pathname.startsWith('/admin')
   const isQuizPath = location.pathname.startsWith('/quiz/') && !location.pathname.includes('/quiz/results')
   const isStudentAuthPath = ['/student/login', '/student/reset-password', '/student/register', '/student/payment', '/payment/success', '/payment/cancel', '/teacher/login'].includes(location.pathname)
+  const isNoSchemaPath = location.pathname === '/daily-math-facts' || location.pathname === '/quiz'
 
   return (
     <>
-      <OrganizationSchema />
+      {!isNoSchemaPath && <OrganizationSchema />}
       {!isAdminPath && !isStudentAuthPath && !isQuizPath && <Navigation />}
       <Suspense fallback={<PageLoader />}>
         <Routes>

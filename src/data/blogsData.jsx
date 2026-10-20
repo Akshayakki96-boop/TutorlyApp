@@ -1146,7 +1146,7 @@ export const BLOGS = [
     "slug": "gcse-a-level-maths-online-tuition",
     "title": "How To Succeed in GCSE and A Level Maths with Online Tuition",
     "excerpt": "Prepare for GCSE and A Level Maths with a maths tutor gcse online, personalised lessons, past paper practice, and structured revision to boost confidence and exam skills.",
-    "image": "/Images/teacher-using-colorful-building-blocks-teach-basic-math-concepts-children_693425-63450.avif",
+    "image": "/Images/online-maths-a-level-student-studying.jpg",
     "date": "Oct 2026",
     "readingTime": "12 min read",
     "author": "SkillBridge Tutor Team",
@@ -1270,46 +1270,8 @@ export const BLOGS = [
         ]
       },
       {
-        "type": "richText",
-        "segments": [
-          {
-            "text": "SkillBridge Tutors provide online one-to-one support in the following areas: topic revision, past paper practice, mock exams and feedback. Please see the "
-          },
-          {
-            "text": "A Level Maths tutoring page",
-            "href": "https://skillbridgetutors.com/maths-a-level-tutor/"
-          },
-          {
-            "text": " for details of the programme."
-          }
-        ]
-      },
-      {
-        "type": "heading",
-        "text": "Choosing the Perfect Tutor for Your Learning Objectives"
-      },
-      {
         "type": "paragraph",
-        "text": "It makes it easier to select a tutor if you have goals in mind. Some pupils require support to catch up with the lessons in the classroom and others wish to develop their examination technique and/or prepare for higher grades."
-      },
-      {
-        "type": "paragraph",
-        "text": "Ask potential teachers about their teaching experience, coverage of the curriculum, how they plan lessons, how they track student progress, and if they can come to a trial lesson. It is also important to know the fees, cancellation policy, and practice time that is anticipated in between lessons."
-      },
-      {
-        "type": "richText",
-        "segments": [
-          {
-            "text": "A "
-          },
-          {
-            "text": "maths tutor gcse online",
-            "href": "https://skillbridgetutors.com/gcse-maths-tutor/"
-          },
-          {
-            "text": " should make it easier for students to learn and more independent. Likewise, an appropriate level maths tutoring should also include solid conceptual knowledge along with regular practice and feedback."
-          }
-        ]
+        "text": "SkillBridge Tutors provide online one-to-one support in the following areas: topic revision, past paper practice, mock exams and feedback. Please see the A Level Maths tutoring page for details of the programme."
       },
       {
         "type": "paragraph",

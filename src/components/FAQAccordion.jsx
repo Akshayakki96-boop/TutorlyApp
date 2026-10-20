@@ -1,10 +1,35 @@
 import { useState, useRef, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 export default function FAQAccordion({ faqs = [] }) {
   const [openIndex, setOpenIndex] = useState(null)
 
   const toggle = (i) => {
     setOpenIndex(prev => (prev === i ? null : i))
+  }
+
+  const renderAnswer = (answer) => {
+    if (typeof answer === 'string') {
+      return answer
+    }
+    
+    // If answer is an array of segments (richText format)
+    if (Array.isArray(answer)) {
+      return answer.map((segment, i) => {
+        if (!segment.href) return <span key={i}>{segment.text}</span>
+        
+        const link = new URL(segment.href, 'https://skillbridgetutors.com')
+        const className = 'text-blue-600 dark:text-blue-400 hover:underline font-medium'
+        
+        if (link.origin === 'https://skillbridgetutors.com') {
+          return <Link key={i} to={`${link.pathname}${link.search}${link.hash}`} className={className}>{segment.text}</Link>
+        }
+        
+        return <a key={i} href={segment.href} target="_blank" rel="noopener noreferrer" className={className}>{segment.text}</a>
+      })
+    }
+    
+    return answer
   }
 
   return (
@@ -41,7 +66,7 @@ export default function FAQAccordion({ faqs = [] }) {
             style={{ maxHeight: openIndex === i ? 500 : 0 }}
           >
             <div className={`text-slate-700 dark:text-slate-200 ${openIndex === i ? 'py-3' : 'py-0'}`}>
-              {item.a}
+              {renderAnswer(item.a)}
             </div>
           </div>
         </div>

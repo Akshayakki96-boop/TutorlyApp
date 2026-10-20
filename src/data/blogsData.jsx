@@ -1166,26 +1166,8 @@ export const BLOGS = [
         "text": "Students will find mathematics more manageable if they have an understanding of why each formula is used rather than just memorising steps. When algebra, geometry, calculus or exam-style problems begin to get tricky, though, the correct instruction can help make learning easier. It is important to find a tutor that is right for the student and to determine what skills they need to work on and what lessons they should take to help them reach their academic objectives."
       },
       {
-        "type": "richText",
-        "segments": [
-          {
-            "text": "A "
-          },
-          {
-            "text": "maths tutor gcse online",
-            "href": "https://skillbridgetutors.com/gcse-maths-tutor/"
-          },
-          {
-            "text": " is able to help students reinforce their base knowledge, practice exam papers and build confidence by providing tailored lessons. Advanced examinations preparation students can be given "
-          },
-          {
-            "text": "a level maths tuition",
-            "href": "https://skillbridgetutors.com/maths-a-level-tutor/"
-          },
-          {
-            "text": " with emphasis on complex concepts, logical reasoning and structured revision. SkillBridge Tutors offers online Maths tutoring tailored to each student's needs and goals, helping them learn from the comfort of their homes."
-          }
-        ]
+        "type": "paragraph",
+        "text": "A maths tutor gcse online is able to help students reinforce their base knowledge, practice exam papers and build confidence by providing tailored lessons. Advanced examinations preparation students can be given a level maths tuition with emphasis on complex concepts, logical reasoning and structured revision. SkillBridge Tutors offers online Maths tutoring tailored to each student's needs and goals, helping them learn from the comfort of their homes."
       },
       {
         "type": "heading",
@@ -1222,8 +1204,19 @@ export const BLOGS = [
         "text": "In GCSE Maths, there are a number of interconnected topics which include number, algebra, geometry, statistics and probability. A student who is having difficulties learning a concept may have more and more difficulty with more advanced questions. These gaps can be targeted before affecting performance throughout the syllabus."
       },
       {
-        "type": "paragraph",
-        "text": "The maths tutor gcse online will provide students with one-on-one attention without the stress of being in a large classroom. Tutors have the ability to go back to challenging areas, show different approaches and give practice questions that are appropriate for the student's level."
+        "type": "richText",
+        "segments": [
+          {
+            "text": "The "
+          },
+          {
+            "text": "maths tutor gcse online",
+            "href": "https://skillbridgetutors.com/gcse-maths-tutor/"
+          },
+          {
+            "text": " will provide students with one-on-one attention without the stress of being in a large classroom. Tutors have the ability to go back to challenging areas, show different approaches and give practice questions that are appropriate for the student's level."
+          }
+        ]
       },
       {
         "type": "paragraph",
@@ -1302,7 +1295,18 @@ export const BLOGS = [
           },
           {
             "q": "How can A Level Maths tuition help with difficult topics?",
-            "a": "Targeted a level maths tuition breaks complex concepts into manageable steps, provides guided practice, corrects misconceptions, and strengthens independent problem-solving skills."
+            "a": [
+              {
+                "text": "Targeted "
+              },
+              {
+                "text": "a level maths tuition",
+                "href": "https://skillbridgetutors.com/maths-a-level-tutor/"
+              },
+              {
+                "text": " breaks complex concepts into manageable steps, provides guided practice, corrects misconceptions, and strengthens independent problem-solving skills."
+              }
+            ]
           },
           {
             "q": "Should I choose one-to-one or group A Level Maths tuition?",

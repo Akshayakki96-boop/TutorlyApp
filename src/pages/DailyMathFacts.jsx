@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { getTodaysFact, getRandomFact, mathFacts, getAllCategories, getFactsByCategory } from '../data/mathFacts'
 import Footer from '../components/Footer'
+import { setPageMeta } from '../lib/metaTagManager'
 
 export default function DailyMathFacts() {
   const [todaysFact, setTodaysFact] = useState(null)
@@ -16,23 +17,12 @@ export default function DailyMathFacts() {
   }, [])
 
   useEffect(() => {
-    document.title = 'Amazing Daily Math Facts, Fun Maths & Learning Tips | SkillBridge Tutors'
-    let metaDescription = document.querySelector('meta[name="description"]')
-    if (!metaDescription) {
-      metaDescription = document.createElement('meta')
-      metaDescription.setAttribute('name', 'description')
-      document.head.appendChild(metaDescription)
-    }
-    metaDescription.setAttribute('content', 'Explore amazing daily math facts, fun maths concepts, interesting patterns and useful learning tips to make maths engaging for students from Year 1 to GCSE.')
-    
-    let canonical = document.querySelector('link[rel="canonical"]')
-    if (!canonical) {
-      canonical = document.createElement('link')
-      canonical.setAttribute('rel', 'canonical')
-      document.head.appendChild(canonical)
-    }
-    canonical.setAttribute('href', 'https://skillbridgetutors.com/facts/')
-    return () => { const c = document.querySelector('link[rel="canonical"]'); if (c) c.remove() }
+    setPageMeta({
+      title: 'Amazing Daily Math Facts, Fun Maths & Learning Tips | SkillBridge Tutors',
+      description: 'Explore amazing daily math facts, fun maths concepts, interesting patterns and useful learning tips to make maths engaging for students from Year 1 to GCSE.',
+      canonicalUrl: 'https://skillbridgetutors.com/facts/',
+      keywords: 'daily math facts, fun mathematics, learning tips, maths concepts, interesting patterns'
+    })
   }, [])
 
   useEffect(() => {

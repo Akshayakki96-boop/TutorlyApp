@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Footer from '../components/Footer'
 import Chatbot from '../components/Chatbot'
 import { Link } from 'react-router-dom'
+import { setPageMeta } from '../lib/metaTagManager'
 
 const COURSES = [
   {
@@ -126,19 +127,12 @@ export default function CourseCatalog() {
   const [activeLevel,   setActiveLevel]   = useState('All')
 
   useEffect(() => {
-    document.title = 'Mathematics Online Classes with SkillBridge Tutors'
-
-    let metaDescription = document.querySelector('meta[name="description"]')
-    if (!metaDescription) {
-      metaDescription = document.createElement('meta')
-      metaDescription.setAttribute('name', 'description')
-      document.head.appendChild(metaDescription)
-    }
-
-    metaDescription.setAttribute(
-      'content',
-      'Explore mathematics online classes for UK students Years 1–10 and GCSE. One-to-one maths tuition with personalised learning plans, flexible scheduling from £8/session, and a free trial class. Qualified UK tutors with 10+ years experience.'
-    )
+    setPageMeta({
+      title: 'Mathematics Online Classes with SkillBridge Tutors',
+      description: 'Explore mathematics online classes for UK students Years 1–10 and GCSE. One-to-one maths tuition with personalised learning plans, flexible scheduling from £8/session, and a free trial class. Qualified UK tutors with 10+ years experience.',
+      canonicalUrl: 'https://skillbridgetutors.com/course-catalog/',
+      keywords: 'online maths classes, mathematics tuition, GCSE maths, online maths tutor'
+    })
   }, [])
 
   const filtered = COURSES.filter(c =>

@@ -4,6 +4,7 @@ import Chatbot from '../components/Chatbot'
 import FAQAccordion from '../components/FAQAccordion'
 import SchemaMarkup from '../components/SchemaMarkup'
 import { MATHS_TUTOR_FAQS, MATHS_TUTOR_SCHEMA } from '../data/pageSchemas'
+import { setPageMeta } from '../lib/metaTagManager'
 
 const WHY_FEATURES = [
   { icon: '🎯', title: 'One-to-one live lessons',        desc: 'Full individual attention in every session.' },
@@ -47,14 +48,12 @@ function CheckItem({ children }) {
 
 export default function MathsTutor() {
   useEffect(() => {
-    document.title = 'Online Mathematics Tutors | Maths Tutoring & Private Tuition'
-    let meta = document.querySelector('meta[name="description"]')
-    if (!meta) { meta = document.createElement('meta'); meta.setAttribute('name', 'description'); document.head.appendChild(meta) }
-    meta.setAttribute('content', 'Find expert Online Mathematics Tutors for personalised Online Maths Tutoring, Maths Tuition, and support from a dedicated Private Maths Tutor for exam success.')
-    let canonical = document.querySelector('link[rel="canonical"]')
-    if (!canonical) { canonical = document.createElement('link'); canonical.setAttribute('rel', 'canonical'); document.head.appendChild(canonical) }
-    canonical.setAttribute('href', 'https://skillbridgetutors.com/maths-tutor/')
-    return () => { const c = document.querySelector('link[rel="canonical"]'); if (c) c.remove() }
+    setPageMeta({
+      title: 'Online Mathematics Tutors | Maths Tutoring & Private Tuition',
+      description: 'Find expert Online Mathematics Tutors for personalised Online Maths Tutoring, Maths Tuition, and support from a dedicated Private Maths Tutor for exam success.',
+      canonicalUrl: 'https://skillbridgetutors.com/maths-tutor/',
+      keywords: 'online mathematics tutors, maths tuition, private maths tutor, online maths tutoring'
+    })
   }, [])
 
   return (

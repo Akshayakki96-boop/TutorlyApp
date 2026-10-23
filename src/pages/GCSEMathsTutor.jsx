@@ -4,6 +4,7 @@ import Chatbot from '../components/Chatbot'
 import FAQAccordion from '../components/FAQAccordion'
 import SchemaMarkup from '../components/SchemaMarkup'
 import { GCSE_MATHS_FAQS, GCSE_MATHS_SCHEMA } from '../data/pageSchemas'
+import { setPageMeta, cleanupCanonical } from '../lib/metaTagManager'
 
 const COURSE_TOPICS = [
   {
@@ -53,14 +54,15 @@ function CheckItem({ children }) {
 
 export default function GCSEMathsTutor() {
   useEffect(() => {
-    document.title = 'GCSE Maths Course Online, Online GCSE Maths Tutor, Tuition & Learning'
-    let meta = document.querySelector('meta[name="description"]')
-    if (!meta) { meta = document.createElement('meta'); meta.setAttribute('name', 'description'); document.head.appendChild(meta) }
-    meta.setAttribute('content', 'Join a GCSE Maths Course Online with GCSE Maths Online Learning, expert GCSE Online Maths Tutor support and personalised GCSE Maths Tuition to boost confidence.')
-    let canonical = document.querySelector('link[rel="canonical"]')
-    if (!canonical) { canonical = document.createElement('link'); canonical.setAttribute('rel', 'canonical'); document.head.appendChild(canonical) }
-    canonical.setAttribute('href', 'https://skillbridgetutors.com/gcse-maths-tutor/')
-    return () => { const c = document.querySelector('link[rel="canonical"]'); if (c) c.remove() }
+    setPageMeta({
+      title: 'GCSE Maths Tutor Online | SkillBridge Tutors',
+      description: 'Personalised online GCSE Maths tutoring with one-to-one lessons, revision support, practice questions and exam preparation.',
+      canonicalUrl: 'https://skillbridgetutors.com/gcse-maths-tutor/',
+      keywords: 'GCSE Maths tutor, online GCSE Maths tuition, GCSE Maths course, GCSE Maths lessons'
+    })
+    return () => {
+      cleanupCanonical()
+    }
   }, [])
 
   return (

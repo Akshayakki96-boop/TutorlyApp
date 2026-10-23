@@ -4,6 +4,7 @@ import Chatbot from '../components/Chatbot'
 import FAQAccordion from '../components/FAQAccordion'
 import SchemaMarkup from '../components/SchemaMarkup'
 import { A_LEVEL_MATHS_FAQS, A_LEVEL_MATHS_SCHEMA } from '../data/pageSchemas'
+import { setPageMeta } from '../lib/metaTagManager'
 
 const WHY_FEATURES = [
   { icon: '🎯', title: 'One to one online tutoring',     desc: 'Full individual focus in every session.' },
@@ -75,14 +76,12 @@ function TopicPill({ color, children }) {
 
 export default function MathsALevelTutor() {
   useEffect(() => {
-    document.title = 'A Level Maths Tutor Online, Maths A Level Tutor & Tuition Online'
-    let meta = document.querySelector('meta[name="description"]')
-    if (!meta) { meta = document.createElement('meta'); meta.setAttribute('name', 'description'); document.head.appendChild(meta) }
-    meta.setAttribute('content', 'Get expert support from a Maths A Level Tutor Online at SkillBridge Tutors, with personalised A Level Maths Tuition to build confidence and prepare effectively for exams.')
-    let canonical = document.querySelector('link[rel="canonical"]')
-    if (!canonical) { canonical = document.createElement('link'); canonical.setAttribute('rel', 'canonical'); document.head.appendChild(canonical) }
-    canonical.setAttribute('href', 'https://skillbridgetutors.com/maths-a-level-tutor/')
-    return () => { const c = document.querySelector('link[rel="canonical"]'); if (c) c.remove() }
+    setPageMeta({
+      title: 'A Level Maths Tutor Online, Maths A Level Tutor & Tuition Online',
+      description: 'Get expert support from a Maths A Level Tutor Online at SkillBridge Tutors, with personalised A Level Maths Tuition to build confidence and prepare effectively for exams.',
+      canonicalUrl: 'https://skillbridgetutors.com/maths-a-level-tutor/',
+      keywords: 'A Level maths tutor, A Level maths tuition, online maths tutor, A Level mathematics'
+    })
   }, [])
 
   return (

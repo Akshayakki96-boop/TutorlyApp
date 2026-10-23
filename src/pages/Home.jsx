@@ -16,6 +16,7 @@ import Chatbot      from '../components/Chatbot'
 import LeadPopup         from '../components/LeadPopup'
 import SchemaMarkup     from '../components/SchemaMarkup'
 import LearningResources from '../components/LearningResources'
+import { setPageMeta } from '../lib/metaTagManager'
 
 const HOME_SCHEMA = {
   '@context': 'https://schema.org',
@@ -102,19 +103,12 @@ const HOME_SCHEMA = {
 
 export default function Home() {
   useEffect(() => {
-    document.title = "Maths Tuition | UK's Trusted Online Tuition Platform"
-
-    let metaDescription = document.querySelector('meta[name="description"]')
-    if (!metaDescription) {
-      metaDescription = document.createElement('meta')
-      metaDescription.setAttribute('name', 'description')
-      document.head.appendChild(metaDescription)
-    }
-
-    metaDescription.setAttribute(
-      'content',
-      "Expert online maths tuition for Year 1 to GCSE with personalised support, affordable lessons from £8 per hour and a free trial class."
-    )
+    setPageMeta({
+      title: "Maths Tuition | UK's Trusted Online Tuition Platform",
+      description: "Expert online maths tuition for Year 1 to GCSE with personalised support, affordable lessons from £8 per hour and a free trial class.",
+      canonicalUrl: 'https://skillbridgetutors.com/',
+      keywords: 'online maths tuition, maths tutor, online maths tutor, maths tuition UK'
+    })
   }, [])
 
   return (

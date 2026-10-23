@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { quizzes, getCategories } from '../data/quizzes'
 import Footer from '../components/Footer'
+import { setPageMeta } from '../lib/metaTagManager'
 
 export default function QuizBrowser() {
   const navigate = useNavigate()
@@ -10,23 +11,12 @@ export default function QuizBrowser() {
   const categories = getCategories()
 
   useEffect(() => {
-    document.title = 'Maths Quiz - Fun Interactive Maths Questions | SkillBridge Tutors'
-    let metaDescription = document.querySelector('meta[name="description"]')
-    if (!metaDescription) {
-      metaDescription = document.createElement('meta')
-      metaDescription.setAttribute('name', 'description')
-      document.head.appendChild(metaDescription)
-    }
-    metaDescription.setAttribute('content', 'Take fun and interactive maths quizzes from KS1 to GCSE, test your knowledge, track your progress and improve your maths skills with SkillBridge Tutors.')
-    
-    let canonical = document.querySelector('link[rel="canonical"]')
-    if (!canonical) {
-      canonical = document.createElement('link')
-      canonical.setAttribute('rel', 'canonical')
-      document.head.appendChild(canonical)
-    }
-    canonical.setAttribute('href', 'https://skillbridgetutors.com/quiz')
-    return () => { const c = document.querySelector('link[rel="canonical"]'); if (c) c.remove() }
+    setPageMeta({
+      title: 'Maths Quiz - Fun Interactive Maths Questions | SkillBridge Tutors',
+      description: 'Take fun and interactive maths quizzes from KS1 to GCSE, test your knowledge, track your progress and improve your maths skills with SkillBridge Tutors.',
+      canonicalUrl: 'https://skillbridgetutors.com/quiz',
+      keywords: 'maths quiz, interactive maths questions, KS1 to GCSE, online maths practice'
+    })
   }, [])
 
   useEffect(() => {

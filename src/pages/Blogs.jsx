@@ -5,6 +5,17 @@ import Chatbot from '../components/Chatbot'
 import { BLOGS } from '../data/blogsData'
 import { setPageMeta } from '../lib/metaTagManager'
 
+function formatDate(dateString) {
+  if (!dateString) return ''
+  
+  // Handle both ISO format (2026-10-26) and text format (Oct 2026)
+  if (dateString.includes('-')) {
+    const date = new Date(dateString + 'T00:00:00Z')
+    return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: '2-digit' })
+  }
+  return dateString
+}
+
 export default function Blogs() {
   useEffect(() => {
     setPageMeta({
@@ -43,7 +54,7 @@ export default function Blogs() {
                   <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">{post.excerpt}</p>
                   <div className="mt-auto flex items-center justify-between">
                     <Link to={`/blogs/${post.slug}`} className="text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline">Read More →</Link>
-                    <time className="text-xs text-slate-400">{post.date}</time>
+                    <time className="text-xs text-slate-400">{formatDate(post.date)}</time>
                   </div>
                 </div>
               </article>

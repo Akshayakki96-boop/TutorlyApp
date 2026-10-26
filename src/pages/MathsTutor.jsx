@@ -49,8 +49,8 @@ function CheckItem({ children }) {
 export default function MathsTutor() {
   useEffect(() => {
     setPageMeta({
-      title: 'Online Mathematics Tutors | Maths Tutoring & Private Tuition',
-      description: 'Find expert Online Mathematics Tutors for personalised Online Maths Tutoring, Maths Tuition, and support from a dedicated Private Maths Tutor for exam success.',
+      title: 'Private Maths Tutor | SkillBridge Tutors',
+      description: 'Personalised online Maths tutoring with one-to-one lessons, exam preparation, revision support and expert guidance for students across the UK.',
       canonicalUrl: 'https://skillbridgetutors.com/maths-tutor/',
       keywords: 'online mathematics tutors, maths tuition, private maths tutor, online maths tutoring'
     })

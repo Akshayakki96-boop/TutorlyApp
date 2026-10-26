@@ -128,9 +128,9 @@ export default function CourseCatalog() {
 
   useEffect(() => {
     setPageMeta({
-      title: 'Mathematics Online Classes with SkillBridge Tutors',
-      description: 'Explore mathematics online classes for UK students Years 1–10 and GCSE. One-to-one maths tuition with personalised learning plans, flexible scheduling from £8/session, and a free trial class. Qualified UK tutors with 10+ years experience.',
-      canonicalUrl: 'https://skillbridgetutors.com/course-catalog/',
+      title: 'Mathematics Online Classes, Online Math Courses | SkillBridge Tutors',
+      description: 'Get mathematics online classes with flexible lessons. Learn maths online at your own pace with structured courses designed to build confidence and improve skills.',
+      canonicalUrl: 'https://skillbridgetutors.com/courses/',
       keywords: 'online maths classes, mathematics tuition, GCSE maths, online maths tutor'
     })
   }, [])

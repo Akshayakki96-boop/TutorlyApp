@@ -77,8 +77,8 @@ function TopicPill({ color, children }) {
 export default function MathsALevelTutor() {
   useEffect(() => {
     setPageMeta({
-      title: 'Maths A Level Tutor Online | SkillBridge Tutors',
-      description: 'Personalised online A-Level Maths tutoring with one-to-one lessons, exam preparation, revision support and expert guidance for students across the UK.',
+      title: 'A Level Maths Tuition, Maths A Level Tutor Online | SkillBridge Tutors',
+      description: 'Boost your A Level Maths knowledge with online tuition focused on complex topics, problem-solving techniques and exam preparation to improve mathematical understanding.',
       canonicalUrl: 'https://skillbridgetutors.com/maths-a-level-tutor/',
       keywords: 'A Level maths tutor, A Level maths tuition, online maths tutor, A Level mathematics'
     })

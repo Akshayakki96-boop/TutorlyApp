@@ -55,8 +55,8 @@ function CheckItem({ children }) {
 export default function GCSEMathsTutor() {
   useEffect(() => {
     setPageMeta({
-      title: 'GCSE Maths Tutor Online | SkillBridge Tutors',
-      description: 'Personalised online GCSE Maths tutoring with one-to-one lessons, revision support, practice questions and exam preparation.',
+      title: 'GCSE Maths Course Online, GCSE Maths Tutor | SkillBridge Tutors',
+      description: 'Explore GCSE maths online learning with flexible tuition, topic-based practice and expert guidance to prepare for exams and strengthen core maths skills.',
       canonicalUrl: 'https://skillbridgetutors.com/gcse-maths-tutor/',
       keywords: 'GCSE Maths tutor, online GCSE Maths tuition, GCSE Maths course, GCSE Maths lessons'
     })

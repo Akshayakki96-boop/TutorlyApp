@@ -1046,7 +1046,7 @@ export const BLOGS = [
     "slug": "maths-without-mental-blocks",
     "title": "Maths Without The Mental Blocks: Build A Learning Routine That Works For You",
     "excerpt": "Build a simple learning routine with maths tuition online, personalised lessons, and regular practice to boost confidence, overcome challenges, and improve maths skills.",
-    "image": "/Images/teacher-using-colorful-building-blocks-teach-basic-math-concepts-children_693425-63450.avif",
+    "image": "/Images/math-learning-routine-blocks.png",
     "date": "2026-10-01",
     "readingTime": "7 min read",
     "author": "SkillBridge Tutor Team",

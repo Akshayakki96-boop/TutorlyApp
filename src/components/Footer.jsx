@@ -137,8 +137,6 @@ export default function Footer() {
               <button onClick={() => setModal('privacy')} className="hover:text-white transition-colors">Privacy Policy</button>
               <span>|</span>
               <button onClick={() => setModal('terms')} className="hover:text-white transition-colors">Terms & Conditions</button>
-              <span>|</span>
-              <a href="cookie-policy.html" className="hover:text-white transition-colors">Cookie Policy</a>
             </div>
           </div>
         </div>

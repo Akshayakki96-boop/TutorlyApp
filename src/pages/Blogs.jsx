@@ -21,7 +21,7 @@ export default function Blogs() {
     setPageMeta({
       title: 'Latest GCSE Blogs and Study Tips | SkillBridge Tutors',
       description: 'Practical advice, subject guides and exam strategies to help students prepare confidently for their GCSEs.',
-      canonicalUrl: 'https://skillbridgetutors.com/blogs/',
+      canonicalUrl: 'https://skillbridgetutors.com/blogs',
       keywords: 'GCSE blogs, study tips, exam strategies, GCSE preparation'
     })
   }, [])

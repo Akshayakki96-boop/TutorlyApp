@@ -4,13 +4,19 @@ import { ThemeProvider } from './context/ThemeContext'
 import Navigation from './components/Navigation'
 import ScrollToTop from './components/ScrollToTop'
 import CookieBanner from './components/CookieBanner'
+import FloatingChat from './components/FloatingChat'
 import ProtectedRoute from './components/admin/ProtectedRoute'
 import StudentProtectedRoute from './components/student/StudentProtectedRoute'
 import AdminLayout from './components/admin/AdminLayout'
 import OrganizationSchema from './components/OrganizationSchema'
 import { initializeDailyFactsSystem } from './lib/dailyFactsManager'
+import { setCanonicalUrl } from './lib/metaTagManager'
 
 const Home = lazy(() => import('./pages/Home'))
+const Services = lazy(() => import('./pages/Services'))
+const AboutUs = lazy(() => import('./pages/AboutUs'))
+const CourseFees = lazy(() => import('./pages/CourseFees'))
+const ContactUs = lazy(() => import('./pages/ContactUs'))
 const CourseCatalog = lazy(() => import('./pages/CourseCatalog'))
 const StudentDash = lazy(() => import('./pages/StudentDashboard'))
 const StudentLogin = lazy(() => import('./pages/StudentLogin'))
@@ -74,6 +80,10 @@ function AppShell() {
   useEffect(() => {
     initializeDailyFactsSystem()
   }, [])
+
+  useEffect(() => {
+    setCanonicalUrl(location.pathname)
+  }, [location.pathname])
   
   const isAdminPath = location.pathname.startsWith('/admin')
   const isQuizPath = location.pathname.startsWith('/quiz/') && !location.pathname.includes('/quiz/results')
@@ -88,6 +98,10 @@ function AppShell() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/courses" element={<CourseCatalog />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/course-fees" element={<CourseFees />} />
+          <Route path="/contact" element={<ContactUs />} />
 
           <Route path="/student/login" element={<StudentLogin />} />
           <Route path="/student/reset-password" element={<StudentResetPassword />} />
@@ -137,6 +151,7 @@ function AppShell() {
       </Suspense>
       {!isAdminPath && !isStudentAuthPath && !isQuizPath && <ScrollToTop />}
       {!isAdminPath && !isStudentAuthPath && !isQuizPath && <CookieBanner />}
+      {!isAdminPath && !isStudentAuthPath && !isQuizPath && <FloatingChat />}
     </>
   )
 }

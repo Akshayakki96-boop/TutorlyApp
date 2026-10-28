@@ -3,6 +3,26 @@
  * Prevents duplicate meta tags and ensures consistent updates across all pages
  */
 
+const CANONICAL_ORIGIN = 'https://skillbridgetutors.com'
+
+export function setCanonicalUrl(pathname = window.location.pathname, origin = CANONICAL_ORIGIN) {
+  const normalizedPath = pathname === '/' ? '/' : pathname.replace(/\/+$/, '')
+  const canonicalUrl = `${origin}${normalizedPath}`
+  let canonical = document.querySelector('link[rel="canonical"]')
+
+  document.querySelectorAll('link[rel="canonical"]').forEach((element, index) => {
+    if (index > 0) element.remove()
+  })
+
+  if (!canonical) {
+    canonical = document.createElement('link')
+    canonical.setAttribute('rel', 'canonical')
+    document.head.appendChild(canonical)
+  }
+
+  canonical.setAttribute('href', canonicalUrl)
+}
+
 export function setPageMeta({
   title,
   description,
@@ -57,20 +77,7 @@ export function setPageMeta({
 
   // Update canonical link
   if (canonicalUrl) {
-    let canonical = document.querySelector('link[rel="canonical"]')
-    
-    // Remove all duplicate canonical tags
-    const allCanonical = document.querySelectorAll('link[rel="canonical"]')
-    allCanonical.forEach((el, index) => {
-      if (index > 0) el.remove()
-    })
-
-    if (!canonical) {
-      canonical = document.createElement('link')
-      canonical.setAttribute('rel', 'canonical')
-      document.head.appendChild(canonical)
-    }
-    canonical.setAttribute('href', canonicalUrl)
+    setCanonicalUrl(window.location.pathname, new URL(canonicalUrl).origin)
   }
 
   // Update Open Graph tags

@@ -20,7 +20,7 @@ export default function DailyMathFacts() {
     setPageMeta({
       title: 'Amazing Daily Math Facts, Fun Maths & Learning Tips | SkillBridge Tutors',
       description: 'Explore amazing daily math facts, fun maths concepts, interesting patterns and useful learning tips to make maths engaging for students from Year 1 to GCSE.',
-      canonicalUrl: 'https://skillbridgetutors.com/facts/',
+      canonicalUrl: 'https://skillbridgetutors.com/daily-math-facts',
       keywords: 'daily math facts, fun mathematics, learning tips, maths concepts, interesting patterns'
     })
   }, [])

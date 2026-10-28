@@ -1336,8 +1336,8 @@ export const BLOGS = [
       "Online Tuition",
       "Study Skills"
     ],
-    "metaTitle": "A Level Maths Tuition Online: How to Build Stronger Problem-Solving Skills",
-    "metaDescription": "Discover proven strategies to improve problem-solving skills in A Level Maths with expert online tuition at SkillBridge Tutors.",
+    "metaTitle": "A Level Maths Tuition Online: Build Problem-Solving Skills",
+    "metaDescription": "Build problem-solving skills with A Level Maths tuition online and maths tuition online. Improve exam techniques, tackle complex questions and gain confidence.",
     "content": [
       {
         "type": "paragraph",
@@ -1409,8 +1409,7 @@ export const BLOGS = [
             "text": "For wider support with school maths, "
           },
           {
-            "text": "maths tuition online",
-            "href": "https://skillbridgetutors.com/maths-tutor/"
+            "text": "maths tuition online"
           },
           {
             "text": " can also help learners strengthen foundations and build confidence in their methods."
@@ -1436,8 +1435,7 @@ export const BLOGS = [
             "text": "With a "
           },
           {
-            "text": "maths a level tutor online",
-            "href": "https://skillbridgetutors.com/maths-a-level-tutor/"
+            "text": "maths a level tutor online"
           },
           {
             "text": ", students can review these sticking points and decide what to practise next. Consistent, focused work is usually more useful than trying to revise the entire syllabus in one sitting."
@@ -1474,7 +1472,7 @@ export const BLOGS = [
     "slug": "online-maths-courses-expert-tutors-guide",
     "title": "A Complete Guide to Learning Maths Through Online Courses and Expert Tutors",
     "excerpt": "Learn how online courses and expert maths tutors can help you build strong mathematical skills. Discover the benefits of structured learning, when to use tutoring, and practical habits for progress.",
-    "image": "/online-tuition-near-me.jpg",
+    "image": "/ai-tutoring-systems.jpg",
     "date": "2026-10-26",
     "readingTime": "8 min read",
     "author": "SkillBridge Tutor Team",
@@ -1485,8 +1483,8 @@ export const BLOGS = [
       "Maths Tutoring",
       "Study Guide"
     ],
-    "metaTitle": "A Complete Guide to Learning Maths Through Online Courses and Expert Tutors",
-    "metaDescription": "Learn how online courses and expert tutors help students build stronger maths skills. Discover the benefits of structured learning and practical habits for progress.",
+    "metaTitle": "Learning Maths Online: Courses and Expert Tutor Guide - SkillBridge Tutors",
+    "metaDescription": "Discover how online maths courses and expert tutors help students strengthen core skills, improve problem-solving and build confidence through regular practice.",
     "content": [
       {
         "type": "paragraph",
@@ -1538,8 +1536,7 @@ export const BLOGS = [
             "text": "Courses and tuition can complement one another. A student might study linear equations through a course, practise during the week and use a tutoring session to review mistakes. The tutor can recommend what to practise next.\n\nFamilies can explore structured learning and consider individual tuition if a student needs extra explanation or accountability. The right balance depends on confidence, independence, current attainment and the support available at school.\n\nFor personalised guidance, "
           },
           {
-            "text": "online mathematics tutors",
-            "href": "/maths-tutor/"
+            "text": "online mathematics tutors"
           },
           {
             "text": " can focus on specific topics and adjust the pace as the student improves."
@@ -1570,7 +1567,18 @@ export const BLOGS = [
         "type": "faq",
         "faqs": [
           {
-            "q": "What are the benefits of taking online math courses?",
+            "q": [
+              {
+                "text": "What are the benefits of taking "
+              },
+              {
+                "text": "online math courses",
+                "href": "https://skillbridgetutors.com/courses/"
+              },
+              {
+                "text": "?"
+              }
+            ],
             "a": "They offer structured lessons, flexible study times and practice students can revisit. The best results come when learners solve questions actively and review mistakes."
           },
           {

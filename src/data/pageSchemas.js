@@ -49,7 +49,7 @@ function createServicePageSchema({
   breadcrumbName,
   faqs
 }) {
-  const pageUrl = `${SITE_URL}${path}/`
+  const pageUrl = `${SITE_URL}${path}`
   const pageId = `${pageUrl}#webpage`
   const serviceId = `${pageUrl}#service`
   const breadcrumbId = `${pageUrl}#breadcrumb`
@@ -213,7 +213,7 @@ export const MATHS_TUTOR_SCHEMA = createServicePageSchema({
 })
 
 export function createBlogSchema({ post, faqs = [] }) {
-  const pageUrl = `${SITE_URL}blogs/${post.slug}/`
+  const pageUrl = `${SITE_URL}blogs/${post.slug}`
   const pageId = `${pageUrl}#webpage`
   const articleId = `${pageUrl}#article`
   const breadcrumbId = `${pageUrl}#breadcrumb`
@@ -260,7 +260,7 @@ export function createBlogSchema({ post, faqs = [] }) {
 
   graph.push(createBreadcrumbSchema('blogs/' + post.slug, [
     { name: 'Home', url: SITE_URL },
-    { name: 'Blogs', url: `${SITE_URL}blogs/` },
+    { name: 'Blogs', url: `${SITE_URL}blogs` },
     { name: headline, url: pageUrl }
   ]))
 

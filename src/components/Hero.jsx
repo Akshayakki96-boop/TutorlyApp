@@ -33,6 +33,31 @@ export default function Hero() {
               UK's Trusted Online Tuition Platform
             </div>
 
+            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 mb-6">
+              <a
+                href="tel:+447451295266"
+                aria-label="Call SkillBridge Tutors at +44 7451 295266"
+                className="inline-flex items-center gap-3 rounded-xl border border-white/25 bg-white/10 px-4 py-3 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+              >
+                <span aria-hidden="true" className="text-xl">📞</span>
+                <span className="text-left">
+                  <span className="block text-xs text-white/70">Call us</span>
+                  <span className="block font-semibold">+44 7451 295266</span>
+                </span>
+              </a>
+              <a
+                href="mailto:info@skillbridgetutors.com"
+                aria-label="Email SkillBridge Tutors at info@skillbridgetutors.com"
+                className="inline-flex items-center gap-3 rounded-xl border border-white/25 bg-white/10 px-4 py-3 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+              >
+                <span aria-hidden="true" className="text-xl">✉️</span>
+                <span className="text-left">
+                  <span className="block text-xs text-white/70">Email us</span>
+                  <span className="block font-semibold break-all">info@skillbridgetutors.com</span>
+                </span>
+              </a>
+            </div>
+
             <h1 className="font-heading text-4xl sm:text-5xl xl:text-6xl font-extrabold leading-tight mb-6">
               Maths Tuition That Builds Confidence,
               One Step at a Time

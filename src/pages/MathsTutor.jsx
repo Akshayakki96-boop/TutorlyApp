@@ -51,7 +51,7 @@ export default function MathsTutor() {
     setPageMeta({
       title: 'Online Mathematics Tutors, Online Maths Tutoring | SkillBridge Tutors',
       description: 'Find a private maths tutor for personalised learning. Online mathematics tutors provide flexible lessons to build confidence and improve skills with maths tuition online.',
-      canonicalUrl: 'https://skillbridgetutors.com/maths-tutor/',
+      canonicalUrl: 'https://skillbridgetutors.com/maths-tutor',
       keywords: 'online mathematics tutors, maths tuition, private maths tutor, online maths tutoring'
     })
   }, [])

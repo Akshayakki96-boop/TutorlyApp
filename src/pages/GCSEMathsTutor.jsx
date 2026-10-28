@@ -57,7 +57,7 @@ export default function GCSEMathsTutor() {
     setPageMeta({
       title: 'GCSE Maths Course Online, GCSE Maths Tutor | SkillBridge Tutors',
       description: 'Explore GCSE maths online learning with flexible tuition, topic-based practice and expert guidance to prepare for exams and strengthen core maths skills.',
-      canonicalUrl: 'https://skillbridgetutors.com/gcse-maths-tutor/',
+      canonicalUrl: 'https://skillbridgetutors.com/gcse-maths-tutor',
       keywords: 'GCSE Maths tutor, online GCSE Maths tuition, GCSE Maths course, GCSE Maths lessons'
     })
     return () => {

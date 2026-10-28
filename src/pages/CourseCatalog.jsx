@@ -130,7 +130,7 @@ export default function CourseCatalog() {
     setPageMeta({
       title: 'Mathematics Online Classes, Online Math Courses | SkillBridge Tutors',
       description: 'Get mathematics online classes with flexible lessons. Learn maths online at your own pace with structured courses designed to build confidence and improve skills.',
-      canonicalUrl: 'https://skillbridgetutors.com/courses/',
+      canonicalUrl: 'https://skillbridgetutors.com/courses',
       keywords: 'online maths classes, mathematics tuition, GCSE maths, online maths tutor'
     })
   }, [])

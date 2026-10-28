@@ -41,6 +41,30 @@ const ROUTES = [
     canonical: `${BASE}/quiz`,
   },
   {
+    route: '/about',
+    title: 'About Us | SkillBridge Tutors',
+    description: 'Learn about SkillBridge Tutors - the UK\'s leading online maths tutoring platform dedicated to helping students build confidence and achieve success.',
+    canonical: `${BASE}/about`,
+  },
+  {
+    route: '/services',
+    title: 'Our Services | SkillBridge Tutors',
+    description: 'Discover our comprehensive range of online maths tutoring services including one-to-one sessions, group tutoring, GCSE and A Level preparation, and online courses.',
+    canonical: `${BASE}/services`,
+  },
+  {
+    route: '/contact',
+    title: 'Contact Us | SkillBridge Tutors',
+    description: 'Get in touch with SkillBridge Tutors. We\'re here to answer your questions about our online maths tutoring services.',
+    canonical: `${BASE}/contact`,
+  },
+  {
+    route: '/course-fees',
+    title: 'Course Fees & Pricing | SkillBridge Tutors',
+    description: 'Quality maths tuition at affordable rates. Transparent pricing with no hidden fees. Starting from £8/hour with flexible plans.',
+    canonical: `${BASE}/course-fees`,
+  },
+  {
     route: '/daily-math-facts',
     title: 'Amazing Daily Math Facts, Fun Maths & Learning Tips | SkillBridge Tutors',
     description: 'Explore amazing daily math facts, fun maths concepts, interesting patterns and useful learning tips to make maths engaging for students from Year 1 to GCSE.',
@@ -151,6 +175,12 @@ const ROUTES = [
 ]
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
+
+for (const page of ROUTES) {
+  page.canonical = page.route === '/'
+    ? `${BASE}/`
+    : `${BASE}${page.route.replace(/\/+$/, '')}`
+}
 
 function escHtml(str) {
   return str

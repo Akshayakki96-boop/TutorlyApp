@@ -8,6 +8,30 @@ export default function FAQAccordion({ faqs = [] }) {
     setOpenIndex(prev => (prev === i ? null : i))
   }
 
+  const renderQuestion = (question) => {
+    if (typeof question === 'string') {
+      return question
+    }
+    
+    // If question is an array of segments (richText format)
+    if (Array.isArray(question)) {
+      return question.map((segment, i) => {
+        if (!segment.href) return <span key={i}>{segment.text}</span>
+        
+        const link = new URL(segment.href, 'https://skillbridgetutors.com')
+        const className = 'text-blue-600 dark:text-blue-400 hover:underline font-medium'
+        
+        if (link.origin === 'https://skillbridgetutors.com') {
+          return <Link key={i} to={`${link.pathname}${link.search}${link.hash}`} className={className}>{segment.text}</Link>
+        }
+        
+        return <a key={i} href={segment.href} target="_blank" rel="noopener noreferrer" className={className}>{segment.text}</a>
+      })
+    }
+    
+    return question
+  }
+
   const renderAnswer = (answer) => {
     if (typeof answer === 'string') {
       return answer
@@ -43,7 +67,7 @@ export default function FAQAccordion({ faqs = [] }) {
             onClick={() => toggle(i)}
             className="w-full flex items-center justify-between p-4 bg-white dark:bg-slate-900 text-left"
           >
-            <span className="font-medium text-slate-900 dark:text-white">{item.q}</span>
+            <span className="font-medium text-slate-900 dark:text-white">{renderQuestion(item.q)}</span>
             <span className="ml-3 w-6 h-6 flex items-center justify-center text-slate-500">
               {openIndex === i ? (
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>

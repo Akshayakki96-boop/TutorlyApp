@@ -130,7 +130,9 @@ function escHtml(str) {
     .replace(/>/g, '&gt;')
 }
 
-function injectMeta(html, { title, description, canonical }) {
+function injectMeta(html, { title, description, route }) {
+  const normalizedRoute = route === '/' ? '/' : route.replace(/\/+$/, '')
+  const canonical = `${BASE}${normalizedRoute}`
   let result = html
 
   // Replace <title>…</title>

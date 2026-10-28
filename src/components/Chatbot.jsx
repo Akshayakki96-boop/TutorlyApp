@@ -1,39 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
-
-const RESPONSES = (msg) => {
-  const m = msg.toLowerCase()
-  if (/demo|free class|trial|book demo|book trial/.test(m))
-    return "You can book a FREE demo class by filling the form on this page, or contact us directly at 📧 info@skillbridgetutors.com or 📞 +44 7451 295266."
-  if (/enroll|enrol|admission|join/.test(m))
-    return "To enrol your child, simply submit the enquiry form on this page. Our team will contact you to understand your requirements and schedule classes."
-  if (/subject|teach|courses/.test(m))
-    return "We offer online tutoring in 📐 Maths for students from Year 1 to Year 10, including GCSE."
-  if (/one.to.one|1.to.1|individual|group class/.test(m))
-    return "Yes 😊 We offer both one-to-one and small group classes, depending on your child's learning needs."
-  if (/math/.test(m))
-    return "Our Maths tutoring covers Year 1–10 and GCSE Maths, focusing on concept clarity, problem-solving, and exam preparation."
-  if (/english/.test(m))
-    return "We specialise in Maths tutoring. Please contact us at 📧 info@skillbridgetutors.com for more information."
-  if (/gcse|board|curriculum/.test(m))
-    return "We follow the UK curriculum and provide specialised GCSE tutoring in Maths."
-  if (/class size|how many students/.test(m))
-    return "Our classes are kept small to ensure personalised attention. One-to-one sessions are also available."
-  if (/fee|price|cost/.test(m))
-    return "Our tuition starts from £8 per hour. We also offer discounted bundles for multiple sessions."
-  if (/timing|schedule|time/.test(m))
-    return "We offer flexible class timings to suit school schedules and different time zones."
-  if (/experience|qualified|safe/.test(m))
-    return "All our tutors are experienced, background-verified, and trained to teach in a safe, supportive environment."
-  if (/progress|feedback|report/.test(m))
-    return "Yes 👍 Parents receive regular progress updates and feedback to track their child's improvement."
-  if (/online|mode/.test(m))
-    return "All our classes are conducted online using interactive tools for effective learning."
-  if (/contact|phone|call|email|whatsapp/.test(m))
-    return "You can contact us at 📞 +44 7451 295266, WhatsApp us, or email 📧 info@skillbridgetutors.com."
-  if (/location|address/.test(m))
-    return "We are based in Derby, United Kingdom, and provide online tuition across the UK."
-  return "I'm happy to help 😊 You can ask about booking a free demo, fees, subjects, class timings, or enrolment."
-}
+import { Link } from 'react-router-dom'
+import { getChatbotResponse } from '../lib/chatbotResponses'
 
 function Bubble({ msg }) {
   return (
@@ -49,6 +16,14 @@ function Bubble({ msg }) {
           : 'bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-slate-200 rounded-bl-sm'
       }`}>
         {msg.text}
+        {msg.link && (
+          <Link
+            to={msg.link.href}
+            className="mt-2 block font-semibold text-blue-700 underline dark:text-blue-300"
+          >
+            {msg.link.label}
+          </Link>
+        )}
       </div>
     </div>
   )
@@ -72,7 +47,7 @@ export default function Chatbot() {
     setMessages(prev => [...prev, { from: 'user', text }])
     setInput('')
     setTimeout(() => {
-      setMessages(prev => [...prev, { from: 'bot', text: RESPONSES(text) }])
+      setMessages(prev => [...prev, { from: 'bot', ...getChatbotResponse(text) }])
     }, 450)
   }
 

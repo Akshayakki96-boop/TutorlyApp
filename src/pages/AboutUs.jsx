@@ -40,13 +40,6 @@ const values = [
   }
 ]
 
-const stats = [
-  { number: '500+', label: 'Active Students' },
-  { number: '100+', label: 'Expert Tutors' },
-  { number: '10,000+', label: 'Hours Taught' },
-  { number: '95%', label: 'Satisfaction Rate' }
-]
-
 export default function AboutUs() {
   useEffect(() => {
     setPageMeta({
@@ -160,24 +153,6 @@ export default function AboutUs() {
               <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
                 With our focus on <span className="font-semibold text-blue-600 dark:text-blue-400">quality, reliability, and results</span>, we have become a trusted choice for families across the UK looking for affordable and effective online tuition.
               </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Stats Section */}
-        <div className="bg-white dark:bg-slate-900 py-16 border-y border-slate-200 dark:border-slate-800">
-          <div className="section-wrap">
-            <div className="grid md:grid-cols-4 gap-8">
-              {stats.map((stat, idx) => (
-                <div key={idx} className="text-center">
-                  <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">
-                    {stat.number}
-                  </div>
-                  <p className="text-slate-600 dark:text-slate-400 font-medium">
-                    {stat.label}
-                  </p>
-                </div>
-              ))}
             </div>
           </div>
         </div>

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import Footer from '../components/Footer'
 import Chatbot from '../components/Chatbot'
 import { Link } from 'react-router-dom'
 import { setPageMeta } from '../lib/metaTagManager'
@@ -416,7 +415,6 @@ export default function CourseCatalog() {
           </div>
         </div>
       </main>
-      <Footer />
       <Chatbot />
     </>
   )

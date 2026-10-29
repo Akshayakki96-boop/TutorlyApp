@@ -2,6 +2,7 @@ import { Suspense, lazy, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { ThemeProvider } from './context/ThemeContext'
 import Navigation from './components/Navigation'
+import Footer from './components/Footer'
 import ScrollToTop from './components/ScrollToTop'
 import CookieBanner from './components/CookieBanner'
 import FloatingChat from './components/FloatingChat'
@@ -86,6 +87,7 @@ function AppShell() {
   }, [location.pathname])
   
   const isAdminPath = location.pathname.startsWith('/admin')
+  const isLoginOrRegistrationPath = /\/(login|register)\/?$/.test(location.pathname)
   const isQuizPath = location.pathname.startsWith('/quiz/') && !location.pathname.includes('/quiz/results')
   const isStudentAuthPath = ['/student/login', '/student/reset-password', '/student/register', '/student/payment', '/payment/success', '/payment/cancel', '/teacher/login'].includes(location.pathname)
   const isNoSchemaPath = location.pathname === '/daily-math-facts' || location.pathname === '/quiz'
@@ -149,6 +151,7 @@ function AppShell() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
+      {!isLoginOrRegistrationPath && <Footer />}
       {!isAdminPath && !isStudentAuthPath && !isQuizPath && <ScrollToTop />}
       {!isAdminPath && !isStudentAuthPath && !isQuizPath && <CookieBanner />}
       {!isAdminPath && !isStudentAuthPath && !isQuizPath && <FloatingChat />}

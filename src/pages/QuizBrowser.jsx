@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { quizzes, getCategories } from '../data/quizzes'
-import Footer from '../components/Footer'
 import { setPageMeta } from '../lib/metaTagManager'
 
 export default function QuizBrowser() {
@@ -200,7 +199,6 @@ export default function QuizBrowser() {
         </div>
       </main>
 
-      <Footer />
     </>
   )
 }

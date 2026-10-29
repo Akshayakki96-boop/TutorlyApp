@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import Footer from '../components/Footer'
 import Chatbot from '../components/Chatbot'
 import FAQAccordion from '../components/FAQAccordion'
 import SchemaMarkup from '../components/SchemaMarkup'
@@ -243,7 +242,6 @@ export default function GCSEMathsTutor() {
         </div>
       </section>
 
-      <Footer />
       <Chatbot />
     </main>
     </>

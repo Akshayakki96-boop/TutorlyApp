@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { BLOGS } from '../data/blogsData'
-import Footer from '../components/Footer'
 import Chatbot from '../components/Chatbot'
 import FAQAccordion from '../components/FAQAccordion'
 import SchemaMarkup from '../components/SchemaMarkup'
@@ -176,7 +175,6 @@ export default function BlogDetail() {
           </aside>
         </div>
       </main>
-      <Footer />
       <Chatbot />
     </>
   )

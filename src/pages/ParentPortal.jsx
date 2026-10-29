@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import Footer from '../components/Footer'
 
 const CHILD = {
   name: 'Emily Smith',
@@ -182,7 +181,6 @@ export default function ParentPortal() {
           </div>
         </div>
       </main>
-      <Footer />
     </>
   )
 }

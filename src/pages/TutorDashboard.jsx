@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Footer from '../components/Footer'
 import { apiRequest } from '../lib/apiClient'
 import { clearTeacherAuth } from '../lib/authStorage'
 
@@ -245,7 +244,6 @@ export default function TutorDashboard() {
           </div>
         </div>
       </main>
-      <Footer />
     </>
   )
 }

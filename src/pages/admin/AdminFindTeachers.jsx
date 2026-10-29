@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Footer from '../../components/Footer'
 import TeacherSuggestionList from '../../components/TeacherSuggestionList'
 import { apiRequest } from '../../lib/apiClient'
 import { clearAuth } from '../../lib/authStorage'
@@ -290,7 +289,6 @@ export default function AdminFindTeachers() {
         </div>
       </main>
 
-      <Footer />
     </>
   )
 }

@@ -1,6 +1,5 @@
 import { useParams, useLocation, useNavigate } from 'react-router-dom'
 import { getQuizById } from '../data/quizzes'
-import Footer from '../components/Footer'
 
 export default function QuizResults() {
   const { quizId } = useParams()
@@ -432,7 +431,6 @@ export default function QuizResults() {
         </div>
       </main>
 
-      <Footer />
     </>
   )
 }

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import Footer from '../../components/Footer'
 import { apiRequest } from '../../lib/apiClient'
 import { clearAuth } from '../../lib/authStorage'
 
@@ -191,7 +190,6 @@ export default function AdminAssignClass() {
             </div>
           </div>
         </main>
-        <Footer />
       </>
     )
   }
@@ -443,7 +441,6 @@ export default function AdminAssignClass() {
         </div>
       </main>
 
-      <Footer />
     </>
   )
 }

@@ -7,7 +7,6 @@ import BookingTeam  from '../components/BookingTeam'
 import WhyChooseUs  from '../components/WhyChooseUs'
 import Testimonials from '../components/Testimonials'
 import FAQ          from '../components/FAQ'
-import Footer       from '../components/Footer'
 import Chatbot      from '../components/Chatbot'
 import LeadPopup         from '../components/LeadPopup'
 import SchemaMarkup     from '../components/SchemaMarkup'
@@ -122,7 +121,6 @@ export default function Home() {
         <Testimonials />
         <FAQ />
       </main>
-      <Footer />
       <Chatbot />
     </>
   )

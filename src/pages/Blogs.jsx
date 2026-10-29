@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import Footer from '../components/Footer'
 import Chatbot from '../components/Chatbot'
 import { BLOGS } from '../data/blogsData'
 import { setPageMeta } from '../lib/metaTagManager'
@@ -66,7 +65,6 @@ export default function Blogs() {
           </div>
         </div>
       </main>
-      <Footer />
       <Chatbot />
     </>
   )

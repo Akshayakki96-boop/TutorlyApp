@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { getTodaysFact, getRandomFact, mathFacts, getAllCategories, getFactsByCategory } from '../data/mathFacts'
-import Footer from '../components/Footer'
 import { setPageMeta } from '../lib/metaTagManager'
 
 export default function DailyMathFacts() {
@@ -263,7 +262,6 @@ export default function DailyMathFacts() {
         </div>
       </main>
 
-      <Footer />
     </>
   )
 }

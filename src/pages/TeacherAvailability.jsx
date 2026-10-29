@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Footer from '../components/Footer'
 import AvailabilityCalendar from '../components/AvailabilityCalendar'
 import TimeSlotForm from '../components/TimeSlotForm'
 import { apiRequest } from '../lib/apiClient'
@@ -220,7 +219,6 @@ export default function TeacherAvailability() {
         />
       )}
 
-      <Footer />
     </>
   )
 }

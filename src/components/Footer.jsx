@@ -81,11 +81,11 @@ export default function Footer() {
               <h4 className="font-semibold text-sm uppercase tracking-widest text-slate-400 mb-4">Quick Links</h4>
               <ul className="space-y-2">
                 {[
-                  { label: 'Home', href: '#' },
-                  { label: 'About Us', href: 'about' },
-                  { label: 'Services', href: 'services' },
-                  { label: 'Course Fees', href: 'course-fees' },
-                  { label: 'Contact', href: 'contact' },
+                  { label: 'Home', href: '/' },
+                  { label: 'About Us', href: '/about' },
+                  { label: 'Services', href: '/services' },
+                  { label: 'Course Fees', href: '/course-fees' },
+                  { label: 'Contact', href: '/contact' },
                 ].map(l => (
                   <li key={l.label}>
                     <a href={l.href} className="text-slate-400 hover:text-white text-sm transition-colors">{l.label}</a>

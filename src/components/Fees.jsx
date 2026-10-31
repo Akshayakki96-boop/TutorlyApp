@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 const PLANS = [
   {
     badge: 'Save up to 10%',
@@ -135,15 +137,21 @@ export default function Fees() {
                   ))}
                 </ul>
 
-                <button
-                  onClick={scrollToForm}
-                  className={p.isPromo 
-                    ? 'justify-center w-full rounded-full px-6 py-3 font-semibold text-white bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 shadow-lg shadow-amber-500/30 transition-all duration-200 hover:-translate-y-0.5'
-                    : p.highlight ? 'btn-primary justify-center w-full' : 'btn-secondary justify-center w-full'
-                  }
-                >
-                  {p.isPromo ? '🚀 Claim Offer' : 'Enrol Now'}
-                </button>
+                {p.isPromo ? (
+                  <button
+                    onClick={scrollToForm}
+                    className="justify-center w-full rounded-full px-6 py-3 font-semibold text-white bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 shadow-lg shadow-amber-500/30 transition-all duration-200 hover:-translate-y-0.5"
+                  >
+                    🚀 Claim Offer
+                  </button>
+                ) : (
+                  <Link
+                    to="/student/register"
+                    className={`${p.highlight ? 'btn-primary' : 'btn-secondary'} justify-center w-full`}
+                  >
+                    Enrol Now
+                  </Link>
+                )}
               </div>
             </div>
           ))}

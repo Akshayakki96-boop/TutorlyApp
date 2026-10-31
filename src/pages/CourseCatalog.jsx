@@ -247,9 +247,9 @@ export default function CourseCatalog() {
                         <span className="text-xl font-extrabold font-heading text-blue-700 dark:text-blue-400">{course.price}</span>
                         <span className="text-xs text-slate-400 line-through ml-2">{course.originalPrice}</span>
                       </div>
-                      <button onClick={scrollToEnrol} className="btn-primary text-xs py-2 px-4">
+                      <Link to="/student/register" className="btn-primary text-xs py-2 px-4">
                         Enrol Now
-                      </button>
+                      </Link>
                     </div>
 
                     <div className="flex items-center gap-3 mt-2 text-xs text-slate-400">

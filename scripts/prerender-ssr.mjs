@@ -172,6 +172,18 @@ const ROUTES = [
     description: 'Prepare for GCSE and A Level Maths with a maths tutor gcse online, personalised lessons, past paper practice, and structured revision to boost confidence and exam skills.',
     canonical: `${BASE}/blogs/gcse-a-level-maths-online-tuition/`,
   },
+  {
+    route: '/blogs/gcse-to-a-level-maths-online-tutor',
+    title: 'GCSE to A-Level Maths: Choosing the Right Online Tutor',
+    description: 'Find the right online maths tutor for the move from GCSE to A Level. Learn what experience, lesson style and support to look for with SkillBridge Tutors.',
+    canonical: `${BASE}/blogs/gcse-to-a-level-maths-online-tutor/`,
+  },
+  {
+    route: '/blogs/mathematics-online-classes-build-study-habits',
+    title: 'Mathematics Online Classes | Better Maths Study Habits- SkillBridge Tutors',
+    description: 'Build consistent study habits through Mathematics Online Classes and expert guidance from a GCSE Maths Tutor Online. Improve confidence with regular practice.',
+    canonical: `${BASE}/blogs/mathematics-online-classes-build-study-habits/`,
+  },
 ]
 
 // ── Helpers ───────────────────────────────────────────────────────────────────

@@ -1633,7 +1633,7 @@ export const BLOGS = [
       "Online Tutors",
       "Exam Preparation"
     ],
-    "metaTitle": "GCSE to A-Level Maths: Choosing the Right Online Tutor | SkillBridge Tutors",
+    "metaTitle": "GCSE to A-Level Maths: Choosing the Right Online Tutor",
     "metaDescription": "Find the right online maths tutor for the move from GCSE to A Level. Learn what experience, lesson style and support to look for with SkillBridge Tutors.",
     "metaKeywords": "a level maths tutor online, gcse maths tutor online, online maths tutor, GCSE to A Level maths, maths tutoring, exam preparation",
     "content": [

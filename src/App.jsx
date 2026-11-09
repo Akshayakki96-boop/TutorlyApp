@@ -1,5 +1,6 @@
 import { Suspense, lazy, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 import { ThemeProvider } from './context/ThemeContext'
 import Navigation from './components/Navigation'
 import Footer from './components/Footer'
@@ -12,6 +13,7 @@ import AdminLayout from './components/admin/AdminLayout'
 import OrganizationSchema from './components/OrganizationSchema'
 import { initializeDailyFactsSystem } from './lib/dailyFactsManager'
 import { setCanonicalUrl } from './lib/metaTagManager'
+import { getGoogleClientId } from './lib/googleAuthUtils'
 
 const Home = lazy(() => import('./pages/Home'))
 const Services = lazy(() => import('./pages/Services'))
@@ -65,12 +67,16 @@ function PageLoader() {
 }
 
 export default function App() {
+  const googleClientId = getGoogleClientId()
+  
   return (
-    <ThemeProvider>
-      <BrowserRouter>
-        <AppShell />
-      </BrowserRouter>
-    </ThemeProvider>
+    <GoogleOAuthProvider clientId={googleClientId}>
+      <ThemeProvider>
+        <BrowserRouter>
+          <AppShell />
+        </BrowserRouter>
+      </ThemeProvider>
+    </GoogleOAuthProvider>
   )
 }
 

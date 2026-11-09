@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { apiRequest } from '../lib/apiClient'
+import GoogleSignInButton from '../components/GoogleSignInButton'
+import { handleGoogleSignUp, formatGoogleAuthError } from '../lib/googleAuthUtils'
 
 const initialForm = {
   fullName: '',
@@ -24,6 +26,7 @@ export default function StudentRegister() {
   const [step, setStep] = useState(1)
   const [form, setForm] = useState(initialForm)
   const [loading, setLoading] = useState(false)
+  const [googleLoading, setGoogleLoading] = useState(false)
   const [error, setError] = useState('')
   const [registeredStudent, setRegisteredStudent] = useState(null)
 
@@ -96,6 +99,25 @@ export default function StudentRegister() {
 
   function goToPayment() {
     navigate('/student/payment', { state: registeredStudent })
+  }
+
+  async function onGoogleSignUp(credentialResponse) {
+    setGoogleLoading(true)
+    setError('')
+    
+    try {
+      await handleGoogleSignUp(credentialResponse, {
+        navigate,
+        redirectPath: '/student/payment',
+        onError: (error) => {
+          setError(formatGoogleAuthError(error))
+        },
+      })
+    } catch (err) {
+      setError(formatGoogleAuthError(err))
+    } finally {
+      setGoogleLoading(false)
+    }
   }
 
   return (
@@ -178,6 +200,24 @@ export default function StudentRegister() {
                 </div>
               ) : (
                 <>
+                  <GoogleSignInButton
+                    onSuccess={onGoogleSignUp}
+                    onError={(error) => setError(formatGoogleAuthError(error))}
+                    isLoading={googleLoading}
+                    text="signup_with"
+                    theme="outline"
+                    size="large"
+                    containerClass="mt-8 w-full"
+                  />
+
+                  <div className="relative my-6">
+                    <div className="absolute inset-0 flex items-center">
+                      <div className="w-full border-t border-slate-700"></div>
+                    </div>
+                    <div className="relative flex justify-center text-sm">
+                      <span className="bg-slate-950/80 px-2 text-slate-400">Or fill in the form below</span>
+                    </div>
+                  </div>
               <ol className="mt-8 grid grid-cols-3 gap-2">
                 {STEPS.map((s) => {
                   const isComplete = step > s.id
@@ -284,19 +324,20 @@ export default function StudentRegister() {
                   {step < STEPS.length ? (
                     <button
                       type="submit"
-                      className="w-full rounded-2xl bg-gradient-to-r from-emerald-400 to-cyan-500 px-4 py-3.5 text-sm font-bold text-slate-950 shadow-lg shadow-emerald-500/25 transition hover:brightness-110"
-                    >
-                      Continue
-                    </button>
-                  ) : (
-                    <button
-                      type="submit"
-                      disabled={loading}
-                      className="w-full rounded-2xl bg-gradient-to-r from-emerald-400 to-cyan-500 px-4 py-3.5 text-sm font-bold text-slate-950 shadow-lg shadow-emerald-500/25 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
-                    >
-                      {loading ? 'Creating account...' : 'Create account'}
-                    </button>
-                  )}
+                        disabled={googleLoading}
+                        className="w-full rounded-2xl bg-gradient-to-r from-emerald-400 to-cyan-500 px-4 py-3.5 text-sm font-bold text-slate-950 shadow-lg shadow-emerald-500/25 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
+                      >
+                        Continue
+                      </button>
+                    ) : (
+                      <button
+                        type="submit"
+                        disabled={loading || googleLoading}
+                        className="w-full rounded-2xl bg-gradient-to-r from-emerald-400 to-cyan-500 px-4 py-3.5 text-sm font-bold text-slate-950 shadow-lg shadow-emerald-500/25 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
+                      >
+                        {loading ? 'Creating account...' : 'Create account'}
+                      </button>
+                    )}
                 </div>
               </form>
 

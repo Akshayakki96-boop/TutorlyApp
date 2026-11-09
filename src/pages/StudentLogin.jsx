@@ -2,12 +2,15 @@ import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { apiRequest } from '../lib/apiClient'
 import { saveStudentAuth } from '../lib/authStorage'
+import GoogleSignInButton from '../components/GoogleSignInButton'
+import { handleGoogleSignIn, formatGoogleAuthError } from '../lib/googleAuthUtils'
 
 export default function StudentLogin() {
   const navigate = useNavigate()
   const location = useLocation()
   const [form, setForm] = useState({ email: '', password: '' })
   const [loading, setLoading] = useState(false)
+  const [googleLoading, setGoogleLoading] = useState(false)
   const [error, setError] = useState('')
 
   const redirectPath = location.state?.from?.pathname || '/student-dashboard'
@@ -42,6 +45,25 @@ export default function StudentLogin() {
       setError(err.message || 'Unable to sign in. Please check your credentials.')
     } finally {
       setLoading(false)
+    }
+  }
+
+  async function onGoogleSignIn(credentialResponse) {
+    setGoogleLoading(true)
+    setError('')
+    
+    try {
+      await handleGoogleSignIn(credentialResponse, {
+        navigate,
+        redirectPath,
+        onError: (error) => {
+          setError(formatGoogleAuthError(error))
+        },
+      })
+    } catch (err) {
+      setError(formatGoogleAuthError(err))
+    } finally {
+      setGoogleLoading(false)
     }
   }
 
@@ -159,11 +181,30 @@ export default function StudentLogin() {
 
                 <button
                   type="submit"
-                  disabled={loading}
+                  disabled={loading || googleLoading}
                   className="w-full rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-600 px-4 py-3.5 text-sm font-bold text-slate-950 shadow-lg shadow-cyan-500/30 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
                 >
                   {loading ? 'Signing in...' : 'Sign in'}
                 </button>
+
+                <div className="relative my-6">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-slate-700"></div>
+                  </div>
+                  <div className="relative flex justify-center text-sm">
+                    <span className="bg-slate-950/70 px-2 text-slate-400">Or continue with</span>
+                  </div>
+                </div>
+
+                <GoogleSignInButton
+                  onSuccess={onGoogleSignIn}
+                  onError={(error) => setError(formatGoogleAuthError(error))}
+                  isLoading={googleLoading}
+                  text="signin_with"
+                  theme="outline"
+                  size="large"
+                  containerClass="w-full"
+                />
               </form>
 
               <p className="mt-6 text-sm text-slate-300">

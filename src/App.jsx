@@ -42,6 +42,7 @@ const DailyMathFacts = lazy(() => import('./pages/DailyMathFacts'))
 const QuizBrowser = lazy(() => import('./pages/QuizBrowser'))
 const QuizPlayer = lazy(() => import('./pages/QuizPlayer'))
 const QuizResults = lazy(() => import('./pages/QuizResults'))
+const StudentProfileCompletion = lazy(() => import('./pages/StudentProfileCompletion'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'))
 const AdminRegister = lazy(() => import('./pages/admin/AdminRegister'))
@@ -121,6 +122,7 @@ function AppShell() {
           <Route path="/teacher/apply" element={<TeacherApplication />} />
           <Route element={<StudentProtectedRoute />}>
             <Route path="/student-dashboard" element={<StudentDash />} />
+            <Route path="/student/profile-completion" element={<StudentProfileCompletion />} />
           </Route>
 
           <Route path="/tutor-dashboard" element={<TutorDash />} />

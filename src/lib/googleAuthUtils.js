@@ -37,7 +37,6 @@ export async function handleGoogleSignIn(credentialResponse, options = {}) {
     // Handle the response - new flow allows login even without payment
     if (result?.token) {
       // User has token - log them in
-      // Check if payment is completed
       const isPaymentCompleted = result?.paymentCompleted === true
       
       // Save auth token
@@ -50,8 +49,22 @@ export async function handleGoogleSignIn(credentialResponse, options = {}) {
         studentId: result.studentId 
       })
       
-      // Navigate to dashboard (payment banner will show if payment not completed)
-      navigate?.(redirectPath, { replace: true })
+      // Check if profile needs completion (new Google users)
+      try {
+        const profileResult = await apiRequest('/api/student/auth/profile')
+        const isProfileComplete = profileResult?.profileComplete === true
+        
+        // If profile incomplete, redirect to completion page first
+        if (!isProfileComplete) {
+          navigate?.('/student/profile-completion', { replace: true })
+        } else {
+          // Navigate to dashboard (payment banner will show if payment not completed)
+          navigate?.(redirectPath, { replace: true })
+        }
+      } catch (profileErr) {
+        // If profile check fails, go to dashboard anyway
+        navigate?.(redirectPath, { replace: true })
+      }
     } else if (result?.error) {
       throw new Error(result.error)
     } else {

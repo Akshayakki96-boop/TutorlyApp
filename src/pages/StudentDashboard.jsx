@@ -122,7 +122,7 @@ export default function StudentDashboard() {
     { label: 'Total Classes', value: dashboard?.totalClasses ?? 0, icon: '📅', tone: 'from-blue-500 to-cyan-500' },
     { label: 'Completed', value: dashboard?.completedClasses ?? 0, icon: '✅', tone: 'from-violet-500 to-purple-500' },
     { label: 'Upcoming', value: dashboard?.upcomingClasses ?? 0, icon: '📈', tone: 'from-emerald-500 to-teal-500' },
-    { label: 'Subject', value: dashboard?.subject || '—', icon: '📚', tone: 'from-amber-500 to-orange-500' },
+    { label: 'Subject', value: dashboard?.subject || 'Maths', icon: '📚', tone: 'from-amber-500 to-orange-500' },
   ], [dashboard])
 
   const totalPaid = payments.reduce((sum, payment) => {
@@ -141,6 +141,7 @@ export default function StudentDashboard() {
             </div>
 
             <div className="flex flex-wrap gap-2 sm:gap-3">
+              <Link to="/student/profile-completion" className="inline-flex items-center justify-center rounded-full bg-blue-400 px-3 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-bold text-white hover:bg-blue-500">Edit Profile</Link>
               <button type="button" onClick={handleLogout} className="inline-flex items-center justify-center rounded-full bg-white px-3 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-bold text-slate-900 hover:bg-slate-100">Logout</button>
             </div>
           </div>

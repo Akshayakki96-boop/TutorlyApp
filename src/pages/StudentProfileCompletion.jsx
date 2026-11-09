@@ -14,7 +14,7 @@ export default function StudentProfileCompletion() {
     parentFirstName: '',
     parentLastName: '',
     classYear: '',
-    subject: '',
+    subject: 'Maths',
     address: '',
   })
 
@@ -33,7 +33,7 @@ export default function StudentProfileCompletion() {
           parentFirstName: result.parentFirstName || '',
           parentLastName: result.parentLastName || '',
           classYear: result.classYear || '',
-          subject: result.subject || '',
+          subject: result.subject || 'Maths',
           address: result.address || '',
         })
       }

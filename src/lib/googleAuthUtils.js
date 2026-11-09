@@ -34,27 +34,24 @@ export async function handleGoogleSignIn(credentialResponse, options = {}) {
       }),
     })
 
-    // Handle the response based on whether user exists
+    // Handle the response - new flow allows login even without payment
     if (result?.token) {
-      // Existing user or new user with payment already completed
-      // User is authenticated and has a token
+      // User has token - log them in
+      // Check if payment is completed
+      const isPaymentCompleted = result?.paymentCompleted === true
+      
+      // Save auth token
       saveStudentAuth(result.token, result?.user || { email: result?.email })
-      onSuccess?.({ isNewUser: false, token: result.token })
-      navigate?.(redirectPath, { replace: true })
-    } else if (result?.studentId) {
-      // New user created - awaiting payment
-      // Store the registration data and redirect to payment
-      const studentData = {
-        studentId: result.studentId,
-        email: result?.email,
-        fullName: result?.fullName,
-        authProvider: 'google',
-      }
-      navigate?.('/student/payment', { 
-        state: studentData,
-        replace: true 
+      
+      onSuccess?.({ 
+        isNewUser: false, 
+        token: result.token,
+        paymentCompleted: isPaymentCompleted,
+        studentId: result.studentId 
       })
-      onSuccess?.({ isNewUser: true, studentId: result.studentId })
+      
+      // Navigate to dashboard (payment banner will show if payment not completed)
+      navigate?.(redirectPath, { replace: true })
     } else if (result?.error) {
       throw new Error(result.error)
     } else {
@@ -72,7 +69,7 @@ export async function handleGoogleSignIn(credentialResponse, options = {}) {
  * Similar to handleGoogleSignIn but used in registration context
  */
 export async function handleGoogleSignUp(credentialResponse, options = {}) {
-  const { onSuccess, onError, navigate, redirectPath = '/student/payment' } = options
+  const { onSuccess, onError, navigate, redirectPath = '/student-dashboard' } = options
 
   try {
     if (!credentialResponse?.credential) {
@@ -87,24 +84,30 @@ export async function handleGoogleSignUp(credentialResponse, options = {}) {
       }),
     })
 
-    if (result?.studentId) {
-      // New user created - awaiting payment
-      const studentData = {
-        studentId: result.studentId,
-        email: result?.email,
-        fullName: result?.fullName,
-        authProvider: 'google',
-      }
+    // New flow: All users get token and can login
+    // Payment is optional but shows banner in dashboard
+    if (result?.token) {
+      // User created and authenticated
+      const isPaymentCompleted = result?.paymentCompleted === true
+      
+      // Save auth token
+      saveStudentAuth(result.token, result?.user || { email: result?.email })
+      
+      onSuccess?.({ 
+        isNewUser: true, 
+        token: result.token,
+        paymentCompleted: isPaymentCompleted,
+        studentId: result.studentId 
+      })
+      
+      // Navigate to dashboard - payment banner will show if payment not completed
       navigate?.(redirectPath, { 
-        state: studentData,
+        state: {
+          showPaymentBanner: !isPaymentCompleted,
+          paymentRequired: true
+        },
         replace: true 
       })
-      onSuccess?.({ isNewUser: true, studentId: result.studentId })
-    } else if (result?.token) {
-      // Existing user with payment completed
-      saveStudentAuth(result.token, result?.user || { email: result?.email })
-      navigate?.(redirectPath, { replace: true })
-      onSuccess?.({ isNewUser: false, token: result.token })
     } else if (result?.error) {
       throw new Error(result.error)
     } else {

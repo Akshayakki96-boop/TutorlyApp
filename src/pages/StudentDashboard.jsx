@@ -122,7 +122,7 @@ export default function StudentDashboard() {
     { label: 'Total Classes', value: dashboard?.totalClasses ?? 0, icon: '📅', tone: 'from-blue-500 to-cyan-500' },
     { label: 'Completed', value: dashboard?.completedClasses ?? 0, icon: '✅', tone: 'from-violet-500 to-purple-500' },
     { label: 'Upcoming', value: dashboard?.upcomingClasses ?? 0, icon: '📈', tone: 'from-emerald-500 to-teal-500' },
-    { label: 'Subject', value: dashboard?.subject || 'Maths', icon: '📚', tone: 'from-amber-500 to-orange-500' },
+    { label: 'Subject', value: 'Maths', icon: '📚', tone: 'from-amber-500 to-orange-500' },
   ], [dashboard])
 
   const totalPaid = payments.reduce((sum, payment) => {

@@ -12,7 +12,7 @@ const initialForm = {
   parentFirstName: '',
   parentLastName: '',
   classYear: '',
-  subject: 'Mathematics',
+  subject: 'Maths',
 }
 
 const OPTIONAL_FIELDS = ['parentLastName']

@@ -3,6 +3,14 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { apiRequest } from '../lib/apiClient'
 import './StudentProfileCompletion.css'
 
+const PRIMARY_SUBJECT = 'Maths'
+
+// The API docs tool saves the literal word "string" as a placeholder; show those as blank
+const clean = (value) => {
+  const text = (value ?? '').toString().trim()
+  return text.toLowerCase() === 'string' ? '' : text
+}
+
 export default function StudentProfileCompletion() {
   const navigate = useNavigate()
   const location = useLocation()
@@ -14,7 +22,7 @@ export default function StudentProfileCompletion() {
     parentFirstName: '',
     parentLastName: '',
     classYear: '',
-    subject: 'Maths',
+    subject: PRIMARY_SUBJECT,
     address: '',
   })
 
@@ -28,13 +36,13 @@ export default function StudentProfileCompletion() {
       const result = await apiRequest('/api/student/auth/profile')
       if (result) {
         setFormData({
-          fullName: result.fullName || '',
-          phone: result.phone || '',
-          parentFirstName: result.parentFirstName || '',
-          parentLastName: result.parentLastName || '',
-          classYear: result.classYear || '',
-          subject: result.subject || 'Maths',
-          address: result.address || '',
+          fullName: clean(result.fullName),
+          phone: clean(result.phone),
+          parentFirstName: clean(result.parentFirstName),
+          parentLastName: clean(result.parentLastName),
+          classYear: clean(result.classYear),
+          subject: PRIMARY_SUBJECT,
+          address: clean(result.address),
         })
       }
     } catch (err) {
@@ -80,7 +88,7 @@ export default function StudentProfileCompletion() {
 
       const result = await apiRequest('/api/student/auth/update-profile', {
         method: 'PUT',
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, subject: PRIMARY_SUBJECT }),
       })
 
       if (result) {
@@ -205,25 +213,15 @@ export default function StudentProfileCompletion() {
             <label htmlFor="subject">
               Primary Subject <span className="required">*</span>
             </label>
-            <select
+            <input
+              type="text"
               id="subject"
               name="subject"
-              value={formData.subject}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Select your subject</option>
-              <option value="Mathematics">Mathematics</option>
-              <option value="English">English</option>
-              <option value="Science">Science</option>
-              <option value="Chemistry">Chemistry</option>
-              <option value="Physics">Physics</option>
-              <option value="Biology">Biology</option>
-              <option value="History">History</option>
-              <option value="Geography">Geography</option>
-              <option value="Languages">Languages</option>
-              <option value="Other">Other</option>
-            </select>
+              value={PRIMARY_SUBJECT}
+              readOnly
+              aria-readonly="true"
+              style={{ cursor: 'not-allowed', opacity: 0.8 }}
+            />
           </div>
 
           {/* Address */}

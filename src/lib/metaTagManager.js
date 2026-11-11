@@ -13,8 +13,8 @@ export function setCanonicalUrl(pathname = window.location.pathname, origin = CA
   if (pathname === '/') {
     normalizedPath = '/'
   } else if (pathsWithTrailingSlash.includes(pathname)) {
-    // Keep trailing slash for specified paths
-    normalizedPath = pathname
+    // Add trailing slash for specified paths if not already present
+    normalizedPath = pathname.endsWith('/') ? pathname : pathname + '/'
   } else {
     // Remove trailing slashes for other paths
     normalizedPath = pathname.replace(/\/+$/, '')

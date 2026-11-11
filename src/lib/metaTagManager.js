@@ -6,7 +6,20 @@
 const CANONICAL_ORIGIN = 'https://skillbridgetutors.com'
 
 export function setCanonicalUrl(pathname = window.location.pathname, origin = CANONICAL_ORIGIN) {
-  const normalizedPath = pathname === '/' ? '/' : pathname.replace(/\/+$/, '')
+  // Paths that should preserve trailing slashes for SEO
+  const pathsWithTrailingSlash = ['/blogs', '/courses', '/course-fees', '/contact']
+  
+  let normalizedPath
+  if (pathname === '/') {
+    normalizedPath = '/'
+  } else if (pathsWithTrailingSlash.includes(pathname)) {
+    // Keep trailing slash for specified paths
+    normalizedPath = pathname
+  } else {
+    // Remove trailing slashes for other paths
+    normalizedPath = pathname.replace(/\/+$/, '')
+  }
+  
   const canonicalUrl = `${origin}${normalizedPath}`
   let canonical = document.querySelector('link[rel="canonical"]')
 

@@ -143,9 +143,9 @@ export default function BookingTeam() {
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5" htmlFor="lastName">
-                      Parent Last Name <span className="text-rose-500">*</span>
+                      Parent Last Name <span className="text-slate-400 font-normal">(optional)</span>
                     </label>
-                    <input id="lastName" type="text" name="lastName" required
+                    <input id="lastName" type="text" name="lastName"
                       className="input-field" placeholder="Smith" onChange={checkValidity}/>
                   </div>
                 </div>

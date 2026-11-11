@@ -35,14 +35,14 @@ export default function Hero() {
 
             <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 mb-6">
               <a
-                href="tel:+447451295266"
-                aria-label="Call SkillBridge Tutors at +44 7451 295266"
+                href="tel:+917393821147"
+                aria-label="Call SkillBridge Tutors at +91 7393 821 147"
                 className="inline-flex items-center gap-3 rounded-xl border border-white/25 bg-white/10 px-4 py-3 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
               >
                 <span aria-hidden="true" className="text-xl">📞</span>
                 <span className="text-left">
                   <span className="block text-xs text-white/70">Call us</span>
-                  <span className="block font-semibold">+44 7451 295266</span>
+                  <span className="block font-semibold">+91 7393 821 147</span>
                 </span>
               </a>
               <a

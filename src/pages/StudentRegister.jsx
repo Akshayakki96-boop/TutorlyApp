@@ -15,6 +15,8 @@ const initialForm = {
   subject: 'Mathematics',
 }
 
+const OPTIONAL_FIELDS = ['parentLastName']
+
 const STEPS = [
   { id: 1, title: 'Account', description: 'Your login details', fields: ['fullName', 'email', 'password', 'phone'] },
   { id: 2, title: 'Student', description: 'Learning preferences', fields: ['classYear', 'subject'] },
@@ -37,7 +39,7 @@ export default function StudentRegister() {
 
   function validateStep(stepId) {
     const fields = STEPS.find((s) => s.id === stepId)?.fields || []
-    const hasEmptyField = fields.some((field) => !form[field].trim())
+    const hasEmptyField = fields.some((field) => !OPTIONAL_FIELDS.includes(field) && !form[field].trim())
     if (hasEmptyField) {
       setError('Please fill in every field before continuing.')
       return false
@@ -301,8 +303,8 @@ export default function StudentRegister() {
                     </div>
 
                     <div>
-                      <label className="mb-2 block text-sm font-semibold text-slate-200" htmlFor="parentLastName">Parent last name</label>
-                      <input id="parentLastName" name="parentLastName" type="text" required value={form.parentLastName} onChange={onChange} className="input-field" placeholder="Parent last name" />
+                      <label className="mb-2 block text-sm font-semibold text-slate-200" htmlFor="parentLastName">Parent last name <span className="font-normal text-slate-400">(optional)</span></label>
+                      <input id="parentLastName" name="parentLastName" type="text" value={form.parentLastName} onChange={onChange} className="input-field" placeholder="Parent last name" />
                     </div>
 
                   </>

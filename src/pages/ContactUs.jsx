@@ -10,7 +10,7 @@ const CONTACT_SCHEMA = {
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'Customer Service',
-    telephone: '+44-123-456-7890',
+    telephone: '+91-7393-821-147',
     email: 'support@skillbridgetutors.com',
     availableLanguage: ['en-GB']
   }
@@ -28,7 +28,7 @@ const contactMethods = [
     icon: '💬',
     title: 'WhatsApp',
     description: 'Chat with us on WhatsApp',
-    value: '+44 7451 295266',
+    value: '+91 7393 821 147',
     type: 'whatsapp'
   },
   {
@@ -42,7 +42,7 @@ const contactMethods = [
     icon: '📱',
     title: 'Phone',
     description: 'Call us during business hours',
-    value: '+44 7451 295266',
+    value: '+91 7393 821 147',
     type: 'phone'
   }
 ]
@@ -210,7 +210,7 @@ export default function ContactUs() {
               Book a free trial session with one of our expert tutors today and see the difference personalised learning can make.
             </p>
             <button
-              onClick={() => window.open('https://wa.me/447451295266?text=Hi%20SkillBridge%20Tutors%2C%20I%27d%20like%20to%20book%20a%20free%20trial%20session.', '_blank', 'noopener,noreferrer')}
+              onClick={() => window.open('https://wa.me/917393821147?text=Hi%20SkillBridge%20Tutors%2C%20I%27d%20like%20to%20book%20a%20free%20trial%20session.', '_blank', 'noopener,noreferrer')}
               className="inline-block bg-white text-blue-600 font-bold text-lg py-4 px-12 rounded-full shadow-xl hover:shadow-2xl hover:bg-slate-50 transition-all duration-200 hover:scale-105"
             >
               📚 Book Your First Session on WhatsApp

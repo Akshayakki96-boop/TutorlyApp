@@ -44,7 +44,7 @@ export default function FloatingChat() {
   }
 
   const handleWhatsApp = () => {
-    window.open('https://wa.me/447451295266?text=Hi%20SkillBridge%20Tutors', '_blank')
+    window.open('https://wa.me/917393821147?text=Hi%20SkillBridge%20Tutors', '_blank')
   }
 
   return (

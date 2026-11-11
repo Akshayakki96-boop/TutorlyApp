@@ -78,7 +78,7 @@ export function getChatbotResponse(message) {
   }
   if (/contact|phone|call|email|whatsapp/.test(question)) {
     return {
-      text: 'You can call or WhatsApp us on +44 7451 295266, or email info@skillbridgetutors.com.',
+      text: 'You can call or WhatsApp us on +91 7393 821 147, or email info@skillbridgetutors.com.',
       link: { label: 'Contact us', href: '/contact' }
     }
   }

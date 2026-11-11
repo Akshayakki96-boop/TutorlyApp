@@ -12,6 +12,7 @@ export default function LeadPopup() {
   const [canSubmit, setCanSubmit] = useState(false)
   const [turnstileToken, setTurnstileToken] = useState('')
   const [turnstileFailed, setTurnstileFailed] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
   const formRef = useRef()
 
   useEffect(() => {
@@ -27,6 +28,10 @@ export default function LeadPopup() {
 
   function close() { setIsOpen(false) }
 
+  function handleBackdropClick() {
+    if (!submitting) close()
+  }
+
   function checkValidity() {
     if (!formRef.current) return
     const required = [...formRef.current.querySelectorAll('input[required], select[required]')]
@@ -36,7 +41,7 @@ export default function LeadPopup() {
   async function handleSubmit(e) {
     e.preventDefault()
 
-    if (!formRef.current) return
+    if (!formRef.current || submitting) return
     if (!turnstileToken && !turnstileFailed) {
       Swal.fire({ icon: 'warning', title: 'Verification required', text: 'Please complete the security verification before submitting.' })
       return
@@ -55,6 +60,7 @@ export default function LeadPopup() {
       turnstileToken: turnstileFailed ? 'manual-review-fallback' : turnstileToken,
     }
 
+    setSubmitting(true)
     Swal.fire({ title: 'Processing…', text: 'Saving your enquiry and sending confirmation', allowOutsideClick: false, didOpen: () => Swal.showLoading() })
 
     try {
@@ -72,15 +78,19 @@ export default function LeadPopup() {
       emailjs.sendForm('service_9g63c7d', 'template_w5u46de', formRef.current, 'qCaCx47HrSPJ9YwIO')
         .then(() => {
           Swal.fire({ icon: 'success', title: 'Thank you!', text: 'Your enquiry has been saved and a confirmation has been sent to your email.' })
-          formRef.current.reset()
+          formRef.current?.reset()
           setCanSubmit(false)
           close()
         })
         .catch(err => {
           Swal.fire({ icon: 'error', title: 'Oops…', text: 'Your enquiry was saved, but the auto-reply failed.\n' + JSON.stringify(err) })
+          // The lead is already saved, so close the popup to avoid duplicate submissions
+          close()
         })
+        .finally(() => setSubmitting(false))
     } catch (error) {
       console.error('Lead creation failed', error)
+      setSubmitting(false)
       Swal.fire({
         icon: 'error',
         title: 'Unable to save enquiry',
@@ -93,7 +103,7 @@ export default function LeadPopup() {
 
   return (
     <div className="fixed inset-0 z-[8000] flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label="Book Free Demo">
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={close} />
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={handleBackdropClick} />
       <div className="relative bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto animate-slide-up">
         {/* Close */}
         <button
@@ -133,9 +143,9 @@ export default function LeadPopup() {
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1" htmlFor="popup-lastName">
-                    Parent Last Name <span className="text-rose-500">*</span>
+                    Parent Last Name <span className="text-slate-400 font-normal">(optional)</span>
                   </label>
-                  <input id="popup-lastName" type="text" name="lastName" required placeholder="Smith" className="input-field text-sm py-2.5" onChange={checkValidity}/>
+                  <input id="popup-lastName" type="text" name="lastName" placeholder="Smith" className="input-field text-sm py-2.5" onChange={checkValidity}/>
                 </div>
               </div>
 
@@ -190,10 +200,10 @@ export default function LeadPopup() {
 
             <button
               type="submit"
-              disabled={!canSubmit || (!turnstileToken && !turnstileFailed)}
+              disabled={submitting || !canSubmit || (!turnstileToken && !turnstileFailed)}
               className="btn-primary w-full justify-center mt-4 disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none"
             >
-              Submit Enquiry
+              {submitting ? 'Submitting…' : 'Submit Enquiry'}
             </button>
             <p className="text-center text-xs text-slate-400 mt-2">🔒 Your data is safe. We never share your information.</p>
           </form>

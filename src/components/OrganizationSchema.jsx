@@ -9,7 +9,7 @@ const ORGANIZATION_SCHEMA = {
   logo: 'https://skillbridgetutors.com/Images/skillbridge_logo_only.png',
   image: 'https://skillbridgetutors.com/Images/NewHeaderImage.jpg',
   email: 'info@skillbridgetutors.com',
-  telephone: '+44 7451 295266',
+  telephone: '+91 7393 821 147',
   address: {
     '@type': 'PostalAddress',
     streetAddress: '76 Carlen Drive, Osmaston',

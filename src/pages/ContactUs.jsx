@@ -52,7 +52,7 @@ export default function ContactUs() {
     setPageMeta({
       title: 'Contact Us | SkillBridge Tutors',
       description: 'Get in touch with SkillBridge Tutors. We\'re here to answer your questions about our online maths tutoring services.',
-      canonicalUrl: 'https://skillbridgetutors.com/contact'
+      canonicalUrl: 'https://skillbridgetutors.com/contact/'
     })
   }, [])
 

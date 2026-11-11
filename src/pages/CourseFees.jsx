@@ -62,7 +62,7 @@ export default function CourseFees() {
       title: 'Course Fees & Pricing | SkillBridge Tutors',
       description: 'Quality maths tuition at affordable rates. Transparent pricing with no hidden fees. Starting from £8/hour with flexible plans.',
       keywords: 'course fees, maths tuition pricing, GCSE tuition cost, online tuition rates, affordable tutoring',
-      canonicalUrl: 'https://skillbridgetutors.com/course-fees'
+      canonicalUrl: 'https://skillbridgetutors.com/course-fees/'
     })
   }, [])
 

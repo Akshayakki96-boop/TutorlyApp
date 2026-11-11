@@ -6,7 +6,7 @@ const CONTACT_SCHEMA = {
   '@context': 'https://schema.org',
   '@type': 'ContactPage',
   name: 'Contact SkillBridge Tutors',
-  url: 'https://skillbridgetutors.com/contact',
+  url: 'https://skillbridgetutors.com/contact/',
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'Customer Service',

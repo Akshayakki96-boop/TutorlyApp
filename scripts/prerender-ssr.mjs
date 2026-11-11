@@ -188,10 +188,9 @@ const ROUTES = [
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
+// Pages are served from <route>/index.html, so the canonical always uses the trailing-slash URL
 for (const page of ROUTES) {
-  page.canonical = page.route === '/'
-    ? `${BASE}/`
-    : `${BASE}${page.route.replace(/\/+$/, '')}`
+  page.canonical = `${BASE}${page.route.replace(/\/+$/, '')}/`
 }
 
 function escHtml(str) {

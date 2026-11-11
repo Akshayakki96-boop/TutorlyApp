@@ -17,7 +17,7 @@ const FEES_SCHEMA = {
       '@type': 'ListItem',
       position: 2,
       name: 'Course Fees',
-      item: 'https://skillbridgetutors.com/course-fees'
+      item: 'https://skillbridgetutors.com/course-fees/'
     }
   ]
 }

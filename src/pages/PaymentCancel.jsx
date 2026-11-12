@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom'
+import { isStudentAuthenticated } from '../lib/authStorage'
 
 export default function PaymentCancel() {
+  const loggedIn = isStudentAuthenticated()
+
   return (
     <main className="min-h-screen bg-slate-50 px-6 py-28 dark:bg-slate-950">
       <div className="mx-auto max-w-2xl rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-xl dark:border-slate-800 dark:bg-slate-900 sm:p-12">
@@ -17,8 +20,14 @@ export default function PaymentCancel() {
         </p>
 
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-          <Link to="/student/payment" className="btn-primary">Try payment again</Link>
-          <Link to="/student/login" className="inline-flex items-center justify-center rounded-full border border-slate-300 px-6 py-3 font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800">Go to student login</Link>
+          {loggedIn ? (
+            <Link to="/student-dashboard" className="btn-primary">Back to dashboard</Link>
+          ) : (
+            <>
+              <Link to="/student/payment" className="btn-primary">Try payment again</Link>
+              <Link to="/student/login" className="inline-flex items-center justify-center rounded-full border border-slate-300 px-6 py-3 font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800">Go to student login</Link>
+            </>
+          )}
         </div>
 
         <Link to="/" className="mt-6 inline-block text-sm font-semibold text-blue-600 hover:underline dark:text-blue-300">Back to homepage</Link>

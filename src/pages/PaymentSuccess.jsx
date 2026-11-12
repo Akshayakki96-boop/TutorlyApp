@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { apiRequest } from '../lib/apiClient'
+import { isStudentAuthenticated } from '../lib/authStorage'
 
 export default function PaymentSuccess() {
   const [searchParams] = useSearchParams()
+  const loggedIn = isStudentAuthenticated()
   const orderId = searchParams.get('token')?.trim() || ''
   const payerId = searchParams.get('PayerID')?.trim() || searchParams.get('PayPalID')?.trim() || ''
   const [status, setStatus] = useState(orderId ? 'loading' : 'error')
@@ -62,7 +64,7 @@ export default function PaymentSuccess() {
               <p className="mt-4 leading-relaxed text-slate-600 dark:text-slate-300">Your PayPal payment has been received successfully. Your account is now ready to use.</p>
               <Reference orderId={orderId} payerId={payerId} />
               <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-                <Link to="/student/login" className="btn-primary">Continue to student portal</Link>
+                <Link to={loggedIn ? '/student-dashboard' : '/student/login'} className="btn-primary">{loggedIn ? 'Back to dashboard' : 'Continue to student portal'}</Link>
                 <Link to="/" className="inline-flex items-center justify-center rounded-full border border-slate-300 px-6 py-3 font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800">Back to homepage</Link>
               </div>
             </>
@@ -79,7 +81,7 @@ export default function PaymentSuccess() {
               <h1 className="mt-3 font-heading text-3xl font-bold text-slate-900 dark:text-white">We could not confirm your payment</h1>
               <p className="mt-4 leading-relaxed text-slate-600 dark:text-slate-300">{error}</p>
               <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-                <Link to="/student/payment" className="btn-primary">Return to payment</Link>
+                <Link to={loggedIn ? '/student-dashboard' : '/student/payment'} className="btn-primary">{loggedIn ? 'Back to dashboard' : 'Return to payment'}</Link>
                 <Link to="/" className="inline-flex items-center justify-center rounded-full border border-slate-300 px-6 py-3 font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800">Back to homepage</Link>
               </div>
             </>

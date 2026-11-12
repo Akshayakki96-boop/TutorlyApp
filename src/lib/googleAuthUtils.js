@@ -1,4 +1,4 @@
-import { saveStudentAuth } from './authStorage'
+import { saveStudentAuth, buildStudentUser } from './authStorage'
 import { apiRequest } from './apiClient'
 
 /**
@@ -40,7 +40,7 @@ export async function handleGoogleSignIn(credentialResponse, options = {}) {
       const isPaymentCompleted = result?.paymentCompleted === true
       
       // Save auth token
-      saveStudentAuth(result.token, result?.user || { email: result?.email })
+      saveStudentAuth(result.token, buildStudentUser(result))
       
       onSuccess?.({ 
         isNewUser: false, 
@@ -104,7 +104,7 @@ export async function handleGoogleSignUp(credentialResponse, options = {}) {
       const isPaymentCompleted = result?.paymentCompleted === true
       
       // Save auth token
-      saveStudentAuth(result.token, result?.user || { email: result?.email })
+      saveStudentAuth(result.token, buildStudentUser(result))
       
       onSuccess?.({ 
         isNewUser: true, 

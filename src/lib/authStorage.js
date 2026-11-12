@@ -39,6 +39,17 @@ export function saveStudentAuth(token, user) {
   localStorage.setItem(STUDENT_USER_KEY, JSON.stringify(user ?? null))
 }
 
+// The auth API returns studentId/email/fullName at the top level (no nested user object)
+export function buildStudentUser(result, fallbackEmail = '') {
+  if (result?.user) return result.user
+
+  return {
+    id: result?.studentId ?? result?.id ?? null,
+    email: result?.email || fallbackEmail,
+    fullName: result?.fullName || '',
+  }
+}
+
 export function clearStudentAuth() {
   localStorage.removeItem(STUDENT_TOKEN_KEY)
   localStorage.removeItem(STUDENT_USER_KEY)

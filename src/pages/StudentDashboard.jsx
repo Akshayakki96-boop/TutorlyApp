@@ -28,22 +28,20 @@ export default function StudentDashboard() {
         if (!alive) return
         setDashboard(result)
         setStudent(result)
+        // Older sessions stored no student id, so the dashboard response is the reliable source
+        const id = result?.studentId ?? currentStudent?.id
+        if (id) void loadPayments(id)
       })
       .catch((err) => {
         if (alive) setError(err.message || 'Unable to load your dashboard.')
       })
       .finally(() => { if (alive) setLoadingDashboard(false) })
 
-    if (currentStudent?.id) {
-      void loadPayments(currentStudent.id)
-      void checkPaymentDueDate(currentStudent.id)
-    }
     return () => { alive = false }
   }, [])
 
   async function loadPayments(studentId) {
     setLoadingPayments(true)
-    setError('')
 
     try {
       const result = await apiRequest(`/api/payments/student/${studentId}`)
@@ -55,29 +53,13 @@ export default function StudentDashboard() {
     }
   }
 
-  async function checkPaymentDueDate(studentId) {
-    try {
-      const result = await apiRequest(`/api/payments/due-date/${studentId}`)
-      if (result?.dueDate) {
-        const dueDate = new Date(result.dueDate)
-        setPaymentDueDate(dueDate)
-        
-        const now = new Date()
-        const daysUntilDue = Math.ceil((dueDate - now) / (1000 * 60 * 60 * 24))
-        
-        setIsPaymentDue(daysUntilDue <= 7 && daysUntilDue >= 0)
-      }
-    } catch (err) {
-      console.error('Error checking payment due date:', err)
-    }
-  }
-
   async function handlePayNow(e) {
     e.preventDefault()
     setError('')
     setSuccess('')
 
-    if (!student?.id) {
+    const studentId = student?.studentId ?? student?.id
+    if (!studentId) {
       setError('Student profile is missing. Please log in again.')
       return
     }
@@ -94,7 +76,7 @@ export default function StudentDashboard() {
       const orderResult = await apiRequest('/api/payments/create-order', {
         method: 'POST',
         body: JSON.stringify({
-          studentId: Number(student.id),
+          studentId: Number(studentId),
           amount,
           currency: paymentForm.currency || 'GBP',
         }),
@@ -125,8 +107,10 @@ export default function StudentDashboard() {
     { label: 'Subject', value: 'Maths', icon: '📚', tone: 'from-amber-500 to-orange-500' },
   ], [dashboard])
 
+  const isPaid = (payment) => ['completed', 'paid'].includes(String(payment.status || '').toLowerCase())
+
   const totalPaid = payments.reduce((sum, payment) => {
-    return payment.status === 'Paid' ? sum + Number(payment.amount || 0) : sum
+    return isPaid(payment) ? sum + Number(payment.amount || 0) : sum
   }, 0)
 
   return (
@@ -347,13 +331,13 @@ export default function StudentDashboard() {
                   <div className="rounded-2xl bg-slate-50 p-4 text-sm text-slate-500 dark:bg-slate-800/60">Loading payment records...</div>
                 ) : (
                   payments.map((payment) => (
-                    <div key={payment.id ?? `${payment.amount}-${payment.createdAt}`} className="rounded-2xl border border-slate-200 bg-slate-50 p-3.5 dark:border-slate-700 dark:bg-slate-800/60">
+                    <div key={payment.paymentId ?? payment.id ?? payment.orderId} className="rounded-2xl border border-slate-200 bg-slate-50 p-3.5 dark:border-slate-700 dark:bg-slate-800/60">
                       <div className="flex items-center justify-between gap-3">
                         <div>
-                          <p className="text-sm font-bold text-slate-800 dark:text-slate-100">Payment #{payment.id ?? 'N/A'}</p>
-                          <p className="text-xs text-slate-500 dark:text-slate-400">{new Date(payment.createdAt || Date.now()).toLocaleDateString()}</p>
+                          <p className="text-sm font-bold text-slate-800 dark:text-slate-100">Payment #{payment.paymentId ?? payment.id ?? 'N/A'}</p>
+                          <p className="text-xs text-slate-500 dark:text-slate-400">{payment.createdAt ? new Date(payment.createdAt).toLocaleDateString() : ''}</p>
                         </div>
-                        <span className={`rounded-full px-2.5 py-1 text-[10px] font-bold ${payment.status === 'Paid' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200' : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-200'}`}>{payment.status}</span>
+                        <span className={`rounded-full px-2.5 py-1 text-[10px] font-bold ${isPaid(payment) ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200' : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-200'}`}>{payment.status}</span>
                       </div>
                       <p className="mt-3 text-lg font-black text-slate-900 dark:text-white">£{Number(payment.amount || 0).toFixed(2)}</p>
                     </div>

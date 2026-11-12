@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { apiRequest } from '../lib/apiClient'
-import { saveStudentAuth } from '../lib/authStorage'
+import { saveStudentAuth, buildStudentUser } from '../lib/authStorage'
 import GoogleSignInButton from '../components/GoogleSignInButton'
 import { handleGoogleSignIn, formatGoogleAuthError } from '../lib/googleAuthUtils'
 
@@ -39,7 +39,7 @@ export default function StudentLogin() {
         throw new Error('Login succeeded but no token was returned.')
       }
 
-      saveStudentAuth(token, result?.user || { email: form.email.trim() })
+      saveStudentAuth(token, buildStudentUser(result, form.email.trim()))
       navigate(redirectPath, { replace: true })
     } catch (err) {
       setError(err.message || 'Unable to sign in. Please check your credentials.')

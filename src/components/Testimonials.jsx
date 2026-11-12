@@ -1,10 +1,10 @@
 const REVIEWS = [
   {
     text: '"SkillBridge Tutors helped my son gain confidence in Maths within just a few weeks. The tutor explained concepts clearly and tracked his progress regularly."',
-    name: 'Mrs. Patel',
+    name: 'Wathsala Senadheera',
     role: 'Parent of Year 8 Student, London',
     stars: 5,
-    initials: 'MP',
+    initials: 'WS',
     gradient: 'from-blue-500 to-cyan-500',
   },
   {
@@ -39,7 +39,7 @@ export default function Testimonials() {
             <span className="text-3xl">🤝</span> A Supportive Learning Environment
           </h3>
           <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-            What sets SkillBridge Tutors apart is the atmosphere they create. Learning should feel encouraging, not stressful. Parents such as Mrs. Patel from London have shared how their children gained confidence within just a few weeks of starting lessons.
+            What sets SkillBridge Tutors apart is the atmosphere they create. Learning should feel encouraging, not stressful. Parents such as Wathsala Senadheera from London have shared how their children gained confidence within just a few weeks of starting lessons.
           </p>
           <p className="text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
             With an average parent rating of <strong>4.9 out of 5.0</strong>, SkillBridge Tutors has built trust among UK families looking for reliable, affordable maths tuition.

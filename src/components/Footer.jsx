@@ -97,10 +97,9 @@ export default function Footer() {
 
             {/* Dashboards */}
             <div>
-              <h4 className="font-semibold text-sm uppercase tracking-widest text-slate-400 mb-4">Portals</h4>
+              <h4 className="font-semibold text-sm uppercase tracking-widest text-slate-400 mb-4">Courses</h4>
               <ul className="space-y-2">
                 {[
-                  { label: 'Student Dashboard', href: '/student-dashboard' },
                   { label: 'Course Catalog', href: '/courses' },
                 ].map(l => (
                   <li key={l.label}>

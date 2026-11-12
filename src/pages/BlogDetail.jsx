@@ -31,7 +31,7 @@ export default function BlogDetail() {
       canonical.setAttribute('rel', 'canonical')
       document.head.appendChild(canonical)
     }
-    canonical.setAttribute('href', `https://skillbridgetutors.com/blogs/${post.slug}`)
+    canonical.setAttribute('href', `https://skillbridgetutors.com/blogs/${post.slug}/`)
   }, [post])
 
   if (!post) {
@@ -143,7 +143,7 @@ export default function BlogDetail() {
             })}
 
             <div className="rounded-3xl overflow-hidden shadow-lg">
-              <img src={post.image} alt={post.imageAlt || post.title} className="w-full h-72 object-cover" />
+              <img src={post.image} alt={post.imageAlt || post.title} className={post.imageFit === 'full' ? 'w-full h-auto' : 'w-full h-72 object-cover'} />
             </div>
 
             <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 shadow-sm">

@@ -184,6 +184,12 @@ const ROUTES = [
     description: 'Build consistent study habits through Mathematics Online Classes and expert guidance from a GCSE Maths Tutor Online. Improve confidence with regular practice.',
     canonical: `${BASE}/blogs/mathematics-online-classes-build-study-habits/`,
   },
+  {
+    route: '/blogs/online-gcse-maths-tutoring-measures-learning-progress',
+    title: 'How Online GCSE Maths Tutoring Measures Learning Progress',
+    description: 'Learn how online GCSE maths tutors track student progress through concept understanding, problem-solving skills, accuracy and confidence, beyond examination grades.',
+    canonical: `${BASE}/blogs/online-gcse-maths-tutoring-measures-learning-progress/`,
+  },
 ]
 
 // ── Helpers ───────────────────────────────────────────────────────────────────

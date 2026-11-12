@@ -44,7 +44,7 @@ export default function Blogs() {
             {sortedPosts.map(post => (
               <article key={post.id} className="card overflow-hidden flex flex-col hover:shadow-lg transition-shadow">
                 <div className="h-48 bg-slate-200 dark:bg-slate-800">
-                  <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
+                  <img src={post.image} alt={post.title} className={`w-full h-full object-cover ${post.imageFit === 'full' ? 'object-top' : ''}`} />
                 </div>
                 <div className="p-5 flex flex-col flex-1">
                   <Link to={`/blogs/${post.slug}`} className="font-heading font-bold text-slate-900 dark:text-white text-lg mb-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">

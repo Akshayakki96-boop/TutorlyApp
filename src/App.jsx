@@ -20,6 +20,7 @@ const Services = lazy(() => import('./pages/Services'))
 const AboutUs = lazy(() => import('./pages/AboutUs'))
 const CourseFees = lazy(() => import('./pages/CourseFees'))
 const ContactUs = lazy(() => import('./pages/ContactUs'))
+const TestimonialsPage = lazy(() => import('./pages/TestimonialsPage'))
 const CourseCatalog = lazy(() => import('./pages/CourseCatalog'))
 const StudentDash = lazy(() => import('./pages/StudentDashboard'))
 const StudentLogin = lazy(() => import('./pages/StudentLogin'))
@@ -111,6 +112,7 @@ function AppShell() {
           <Route path="/about" element={<AboutUs />} />
           <Route path="/course-fees" element={<CourseFees />} />
           <Route path="/contact" element={<ContactUs />} />
+          <Route path="/testimonials" element={<TestimonialsPage />} />
 
           <Route path="/student/login" element={<StudentLogin />} />
           <Route path="/student/reset-password" element={<StudentResetPassword />} />

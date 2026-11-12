@@ -85,6 +85,7 @@ export default function Footer() {
                   { label: 'About Us', href: '/about' },
                   { label: 'Services', href: '/services' },
                   { label: 'Course Fees', href: '/course-fees' },
+                  { label: 'Testimonials', href: '/testimonials' },
                   { label: 'Contact', href: '/contact' },
                 ].map(l => (
                   <li key={l.label}>

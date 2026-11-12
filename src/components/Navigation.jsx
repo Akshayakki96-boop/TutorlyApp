@@ -5,7 +5,7 @@ import { useTheme } from '../context/ThemeContext'
 const NAV_LINKS = [
   { label: 'About Us',    href: '/about',      page: null, newTab: true },
   { label: 'Services',    href: '/services',   page: null, newTab: true },
-  { label: 'GCSE Board',  href: '#board-info', page: '/' },
+  { label: 'Testimonials', href: '/testimonials', page: null, newTab: true },
   { label: 'Course Fees', href: '/course-fees', page: null, newTab: true },
   { label: 'Courses',     href: '/courses',    page: null, newTab: true },
   { label: 'Blogs',       href: '/blogs',      page: null, newTab: true },

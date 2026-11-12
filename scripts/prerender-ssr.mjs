@@ -65,6 +65,12 @@ const ROUTES = [
     canonical: `${BASE}/course-fees`,
   },
   {
+    route: '/testimonials',
+    title: 'Parent & Student Testimonials | SkillBridge Tutors',
+    description: 'Read what parents and students say about SkillBridge Tutors online maths tuition, from Year 1 to GCSE, with personalised one-to-one lessons.',
+    canonical: `${BASE}/testimonials`,
+  },
+  {
     route: '/daily-math-facts',
     title: 'Amazing Daily Math Facts, Fun Maths & Learning Tips | SkillBridge Tutors',
     description: 'Explore amazing daily math facts, fun maths concepts, interesting patterns and useful learning tips to make maths engaging for students from Year 1 to GCSE.',

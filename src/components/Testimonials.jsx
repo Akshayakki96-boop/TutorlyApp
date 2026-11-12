@@ -1,21 +1,5 @@
-const REVIEWS = [
-  {
-    text: '"SkillBridge Tutors helped my son gain confidence in Maths within just a few weeks. The tutor explained concepts clearly and tracked his progress regularly."',
-    name: 'Wathsala Senadheera',
-    role: 'Parent of Year 8 Student, London',
-    stars: 5,
-    initials: 'WS',
-    gradient: 'from-blue-500 to-cyan-500',
-  },
-  {
-    text: '"I was struggling with GCSE Maths, but the personalised approach made a huge difference. I feel much more confident going into my exams."',
-    name: 'Emily R.',
-    role: 'GCSE Student, Manchester',
-    stars: 5,
-    initials: 'ER',
-    gradient: 'from-green-500 to-emerald-500',
-  },
-]
+import { Link } from 'react-router-dom'
+import { REVIEWS } from '../data/testimonialsData'
 
 function Stars({ count }) {
   return (
@@ -29,7 +13,7 @@ function Stars({ count }) {
   )
 }
 
-export default function Testimonials() {
+export default function Testimonials({ showHeading = true }) {
   return (
     <section id="testimonials" className="py-20 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950">
       <div className="section-wrap">
@@ -46,13 +30,15 @@ export default function Testimonials() {
           </p>
         </div>
 
-        <div className="text-center mb-14">
-          <span className="section-tag">💬 Testimonials</span>
-          <h2 className="section-heading">What Parents &amp; Students Say</h2>
-          <p className="section-sub">Trusted by families across the UK for quality Maths tuition</p>
-        </div>
+        {showHeading && (
+          <div className="text-center mb-14">
+            <span className="section-tag">💬 Testimonials</span>
+            <h2 className="section-heading">What Parents &amp; Students Say</h2>
+            <p className="section-sub">Trusted by families across the UK for quality Maths tuition</p>
+          </div>
+        )}
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className={`grid gap-6 ${REVIEWS.length < 3 ? 'md:grid-cols-2 max-w-4xl mx-auto' : 'md:grid-cols-3'}`}>
           {REVIEWS.map(r => (
             <div key={r.name} className="card card-hover p-7 flex flex-col">
               {/* Quote icon */}
@@ -85,6 +71,14 @@ export default function Testimonials() {
             <span className="text-amber-700 dark:text-amber-300 font-bold text-sm">4.9 / 5.0</span>
             <span className="text-amber-600 dark:text-amber-400 text-sm">— Average Parent Rating</span>
           </div>
+
+          {showHeading && (
+            <div className="mt-6">
+              <Link to="/testimonials" className="font-semibold text-blue-600 hover:underline dark:text-blue-400">
+                Read all testimonials →
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </section>

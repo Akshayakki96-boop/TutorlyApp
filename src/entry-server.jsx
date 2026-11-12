@@ -28,6 +28,7 @@ import MathsALevelTutor from './pages/MathsALevelTutor'
 import MathsTutor       from './pages/MathsTutor'
 import DailyMathFacts   from './pages/DailyMathFacts'
 import QuizBrowser      from './pages/QuizBrowser'
+import TestimonialsPage from './pages/TestimonialsPage'
 
 export function render(url) {
   const isNoSchemaPath = url === '/daily-math-facts' || url === '/daily-math-facts/' || url === '/quiz' || url === '/quiz/'
@@ -48,6 +49,7 @@ export function render(url) {
             <Route path="/maths-tutor"         element={<MathsTutor />} />
             <Route path="/daily-math-facts"    element={<DailyMathFacts />} />
             <Route path="/quiz"                element={<QuizBrowser />} />
+            <Route path="/testimonials"        element={<TestimonialsPage />} />
             <Route path="*"                    element={<Home />} />
           </Routes>
         </Suspense>

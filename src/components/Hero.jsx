@@ -7,6 +7,12 @@ const STATS = [
   { value: '£8',    label: 'Starting Per Session',        icon: '💷' },
 ]
 
+const TUTOR_HIGHLIGHTS = [
+  { icon: '🎓', value: '10+ Years', label: 'of teaching experience' },
+  { icon: '📐', value: 'GCSE Maths', label: 'Foundation & Higher, KS2 and KS3' },
+  { icon: '📋', value: 'UK Curriculum', label: 'Structured one-to-one lessons' },
+]
+
 export default function Hero() {
   const navigate = useNavigate()
 
@@ -162,6 +168,35 @@ export default function Hero() {
                 <p className="text-slate-500 text-xs font-medium">/ session</p>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── About Our Tutors ── */}
+      <div className="relative z-10 section-wrap pb-10">
+        <div className="rounded-2xl border border-white/20 bg-white/10 p-6 text-white backdrop-blur-sm sm:p-8">
+          <div className="grid gap-6 lg:grid-cols-[1.6fr_1fr] lg:items-center">
+            <div>
+              <h2 className="font-heading text-2xl font-extrabold mb-3">About Our Tutors</h2>
+              <p className="text-white/85 leading-relaxed mb-3">
+                Our tutors bring over 10 years of teaching experience, specialising in GCSE Mathematics (Foundation and Higher), KS2 and KS3 subjects. They have a strong understanding of the UK curriculum and focus on delivering engaging, structured and personalised one-to-one lessons.
+              </p>
+              <p className="text-white/85 leading-relaxed">
+                Our teaching approach emphasises clear concept explanations, problem-solving techniques, regular practice and exam preparation. We aim to identify each student’s learning gaps, strengthen their understanding and build confidence to achieve better academic results.
+              </p>
+            </div>
+
+            <ul className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
+              {TUTOR_HIGHLIGHTS.map(h => (
+                <li key={h.value} className="flex items-center gap-3 rounded-xl border border-white/20 bg-white/10 px-4 py-3">
+                  <span aria-hidden="true" className="text-2xl">{h.icon}</span>
+                  <span>
+                    <span className="block font-heading text-lg font-extrabold leading-tight">{h.value}</span>
+                    <span className="block text-sm text-white/70">{h.label}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>

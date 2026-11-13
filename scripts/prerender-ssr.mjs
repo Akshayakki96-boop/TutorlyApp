@@ -196,6 +196,12 @@ const ROUTES = [
     description: 'Learn how online GCSE maths tutors track student progress through concept understanding, problem-solving skills, accuracy and confidence, beyond examination grades.',
     canonical: `${BASE}/blogs/online-gcse-maths-tutoring-measures-learning-progress/`,
   },
+  {
+    route: '/blogs/maths-as-life-skill-study-online-confidence',
+    title: 'Maths as a Life Skill: Study Maths Online with Confidence',
+    description: 'Discover how to study maths online through real-life examples, practical problem-solving and personalised A-Level Maths guidance to build confidence.',
+    canonical: `${BASE}/blogs/maths-as-life-skill-study-online-confidence/`,
+  },
 ]
 
 // ── Helpers ───────────────────────────────────────────────────────────────────

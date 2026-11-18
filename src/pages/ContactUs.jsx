@@ -29,6 +29,7 @@ const contactMethods = [
     title: 'WhatsApp',
     description: 'Chat with us on WhatsApp',
     value: '+91 7393 821 147',
+    link: 'https://wa.me/917393821147',
     type: 'whatsapp'
   },
   {
@@ -36,6 +37,7 @@ const contactMethods = [
     title: 'Email',
     description: 'Send us a detailed message',
     value: 'info@skillbridgetutors.com',
+    link: 'mailto:info@skillbridgetutors.com',
     type: 'email'
   },
   {
@@ -43,6 +45,7 @@ const contactMethods = [
     title: 'Phone',
     description: 'Call us during business hours',
     value: '+91 7393 821 147',
+    link: 'tel:+917393821147',
     type: 'phone'
   }
 ]
@@ -89,9 +92,19 @@ export default function ContactUs() {
                 <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">
                   {method.description}
                 </p>
-                <p className="font-semibold text-blue-600 dark:text-blue-400 text-sm break-all">
-                  {method.value}
-                </p>
+                {method.link ? (
+                  <a
+                    href={method.link}
+                    {...(method.type === 'whatsapp' ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                    className="font-semibold text-blue-600 dark:text-blue-400 text-sm break-all hover:underline"
+                  >
+                    {method.value}
+                  </a>
+                ) : (
+                  <p className="font-semibold text-blue-600 dark:text-blue-400 text-sm break-all">
+                    {method.value}
+                  </p>
+                )}
               </div>
             ))}
           </div>

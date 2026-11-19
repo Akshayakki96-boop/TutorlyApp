@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { apiRequest } from '../lib/apiClient'
 import { clearStudentAuth, getStudentUser } from '../lib/authStorage'
+import { openRazorpayCheckout } from '../lib/razorpayClient'
 
 export default function StudentDashboard() {
   const navigate = useNavigate()
@@ -73,7 +74,7 @@ export default function StudentDashboard() {
     setPaying(true)
 
     try {
-      const orderResult = await apiRequest('/api/payments/create-order', {
+      const order = await apiRequest('/api/payments/create-order', {
         method: 'POST',
         body: JSON.stringify({
           studentId: Number(studentId),
@@ -82,15 +83,30 @@ export default function StudentDashboard() {
         }),
       })
 
-      const approvalUrl = orderResult?.approvalUrl
-      if (!approvalUrl) {
-        throw new Error('Payment order was created without a redirect URL.')
-      }
+      const result = await openRazorpayCheckout({
+        order,
+        student: { name: order.studentName, email: order.studentEmail, contact: order.studentPhone },
+        description: 'Tuition payment',
+      })
 
-      // Hand off to PayPal; it redirects back to /payment/success or /payment/cancel.
-      window.location.href = approvalUrl
+      await apiRequest('/api/payments/verify', {
+        method: 'POST',
+        body: JSON.stringify({
+          razorpayOrderId: result.orderId,
+          razorpayPaymentId: result.paymentId,
+          razorpaySignature: result.signature,
+        }),
+      })
+
+      setSuccess('Payment received successfully. Thank you!')
+      await loadPayments(studentId)
     } catch (err) {
-      setError(err.message || 'Unable to process the payment right now.')
+      if (err.message === 'cancelled') {
+        setError('Payment was cancelled.')
+      } else {
+        setError(err.message || 'Unable to process the payment right now.')
+      }
+    } finally {
       setPaying(false)
     }
   }

@@ -1,9 +1,11 @@
 import { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { apiRequest } from '../lib/apiClient'
+import { openRazorpayCheckout } from '../lib/razorpayClient'
 
 export default function StudentPayment() {
   const location = useLocation()
+  const navigate = useNavigate()
   const { studentId, email, fullName } = location.state || {}
 
   const [amount, setAmount] = useState('49')
@@ -28,20 +30,34 @@ export default function StudentPayment() {
     setLoading(true)
 
     try {
-      const orderResult = await apiRequest('/api/payments/create-order', {
+      const order = await apiRequest('/api/payments/create-order', {
         method: 'POST',
         body: JSON.stringify({ studentId, amount: numericAmount, currency }),
       })
 
-      const approvalUrl = orderResult?.approvalUrl
-      if (!approvalUrl) {
-        throw new Error('Payment order was created without a redirect URL.')
-      }
+      const result = await openRazorpayCheckout({
+        order,
+        student: { name: order.studentName || fullName, email: order.studentEmail || email, contact: order.studentPhone },
+        description: 'Enrollment fee',
+      })
 
-      // Hand off to PayPal; it redirects back to /payment/success or /payment/cancel.
-      window.location.href = approvalUrl
+      await apiRequest('/api/payments/verify', {
+        method: 'POST',
+        body: JSON.stringify({
+          razorpayOrderId: result.orderId,
+          razorpayPaymentId: result.paymentId,
+          razorpaySignature: result.signature,
+        }),
+      })
+
+      navigate('/payment/success', { state: { orderId: result.orderId, paymentId: result.paymentId } })
     } catch (err) {
+      if (err.message === 'cancelled') {
+        navigate('/payment/cancel')
+        return
+      }
       setError(err.message || 'Unable to start the payment. Please try again.')
+    } finally {
       setLoading(false)
     }
   }
@@ -95,7 +111,7 @@ export default function StudentPayment() {
               disabled={loading}
               className="w-full rounded-2xl bg-gradient-to-r from-emerald-400 to-cyan-500 px-4 py-3.5 text-sm font-bold text-slate-950 shadow-lg shadow-emerald-500/25 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
             >
-              {loading ? 'Redirecting to PayPal...' : 'Pay now with PayPal'}
+              {loading ? 'Processing payment...' : 'Pay now'}
             </button>
           </div>
         </div>

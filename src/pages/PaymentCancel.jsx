@@ -13,10 +13,10 @@ export default function PaymentCancel() {
           </svg>
         </div>
 
-        <p className="mt-6 text-sm font-semibold uppercase tracking-[0.25em] text-amber-600 dark:text-amber-300">PayPal payment</p>
+        <p className="mt-6 text-sm font-semibold uppercase tracking-[0.25em] text-amber-600 dark:text-amber-300">Payment cancelled</p>
         <h1 className="mt-3 font-heading text-3xl font-bold text-slate-900 dark:text-white">Payment cancelled</h1>
         <p className="mt-4 leading-relaxed text-slate-600 dark:text-slate-300">
-          Your PayPal payment was cancelled or wasn’t completed. No payment has been confirmed for this attempt.
+          Your payment was cancelled or wasn't completed. No payment has been confirmed for this attempt.
         </p>
 
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">

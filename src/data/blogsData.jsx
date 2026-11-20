@@ -2399,7 +2399,7 @@ export const BLOGS = [
     "slug": "learn-maths-online-personalised-tutoring",
     "title": "Learn Maths Online: How Personalised Tutoring Can Improve Your Skills",
     "excerpt": "Discover how to learn maths online with SkillBridge Tutors through one-to-one lessons, expert guidance and tailored practice to improve skills and boost confidence.",
-    "image": "/Images/online-tuition-near-me-768x576.jpg",
+    "image": "/Images/learn-maths-online-personalised-tutoring.png",
     "date": "2026-11-20",
     "readingTime": "3 min read",
     "author": "SkillBridge Tutor Team",

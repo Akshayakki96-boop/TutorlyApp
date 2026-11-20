@@ -4,6 +4,7 @@ import { apiRequest } from '../lib/apiClient'
 import { saveStudentAuth, buildStudentUser } from '../lib/authStorage'
 import GoogleSignInButton from '../components/GoogleSignInButton'
 import { handleGoogleSignIn, formatGoogleAuthError } from '../lib/googleAuthUtils'
+import { useAutoDismiss } from '../lib/useAutoDismiss'
 
 export default function StudentLogin() {
   const navigate = useNavigate()
@@ -12,6 +13,7 @@ export default function StudentLogin() {
   const [loading, setLoading] = useState(false)
   const [googleLoading, setGoogleLoading] = useState(false)
   const [error, setError] = useState('')
+  useAutoDismiss(error, () => setError(''))
 
   const redirectPath = location.state?.from?.pathname || '/student-dashboard'
 

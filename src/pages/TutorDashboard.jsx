@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { apiRequest } from '../lib/apiClient'
 import { clearTeacherAuth } from '../lib/authStorage'
+import { useAutoDismiss } from '../lib/useAutoDismiss'
 
 export default function TutorDashboard() {
   const navigate = useNavigate()
@@ -9,6 +10,7 @@ export default function TutorDashboard() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [selectedSessionId, setSelectedSessionId] = useState(null)
+  useAutoDismiss(error, () => setError(''))
 
   useEffect(() => {
     let alive = true

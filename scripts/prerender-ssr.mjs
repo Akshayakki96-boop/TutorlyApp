@@ -202,6 +202,12 @@ const ROUTES = [
     description: 'Discover how to study maths online through real-life examples, practical problem-solving and personalised A-Level Maths guidance to build confidence.',
     canonical: `${BASE}/blogs/maths-as-life-skill-study-online-confidence/`,
   },
+  {
+    route: '/blogs/better-results-maths-tuition-private-maths-tutor',
+    title: 'Get Better Results from Maths Tuition with a Private Maths Tutor - SkillBridge Tutors',
+    description: 'Improve maths skills with SkillBridge Tutors through personalised tuition, expert guidance and regular practice to build confidence and achieve better results.',
+    canonical: `${BASE}/blogs/better-results-maths-tuition-private-maths-tutor/`,
+  },
 ]
 
 // ── Helpers ───────────────────────────────────────────────────────────────────

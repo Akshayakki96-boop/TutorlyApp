@@ -2,16 +2,18 @@ import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { apiRequest } from '../lib/apiClient'
 import { openRazorpayCheckout } from '../lib/razorpayClient'
+import { PAYMENT_CURRENCY, PAYMENT_PACKAGES, findPaymentPackage } from '../data/paymentPackages'
+import { useAutoDismiss } from '../lib/useAutoDismiss'
 
 export default function StudentPayment() {
   const location = useLocation()
   const navigate = useNavigate()
   const { studentId, email, fullName } = location.state || {}
 
-  const [amount, setAmount] = useState('49')
-  const [currency, setCurrency] = useState('GBP')
+  const [packageId, setPackageId] = useState(PAYMENT_PACKAGES[0].id)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  useAutoDismiss(error, () => setError(''))
 
   async function handlePayNow() {
     setError('')
@@ -21,26 +23,52 @@ export default function StudentPayment() {
       return
     }
 
-    const numericAmount = Number(amount)
-    if (!numericAmount || numericAmount <= 0) {
-      setError('Please enter a valid payment amount.')
-      return
-    }
+    const selectedPackage = findPaymentPackage(packageId)
 
     setLoading(true)
 
+    let order
     try {
-      const order = await apiRequest('/api/payments/create-order', {
+      order = await apiRequest('/api/payments/create-order', {
         method: 'POST',
-        body: JSON.stringify({ studentId, amount: numericAmount, currency }),
+        body: JSON.stringify({ studentId, amount: selectedPackage.amount, currency: PAYMENT_CURRENCY }),
       })
+    } catch (err) {
+      setError(err.message || 'Unable to start the payment. Please try again.')
+      setLoading(false)
+      return
+    }
 
-      const result = await openRazorpayCheckout({
+    let result
+    try {
+      result = await openRazorpayCheckout({
         order,
         student: { name: order.studentName || fullName, email: order.studentEmail || email, contact: order.studentPhone },
         description: 'Enrollment fee',
       })
+    } catch (err) {
+      // Covers both a dismissed modal ("cancelled") and a real decline from the bank
+      // or Razorpay's risk engine (payment.failed). An order was created on the
+      // backend either way, so it must be marked failed/cancelled here - otherwise it
+      // stays stuck in "Created" status even though the payment never went through.
+      try {
+        await apiRequest('/api/payments/cancel', {
+          method: 'POST',
+          body: JSON.stringify({ razorpayOrderId: order.orderId }),
+        })
+      } catch (cancelErr) {
+        console.error('Failed to update payment status after a failed/cancelled checkout:', cancelErr)
+      }
+      if (err.message === 'cancelled') {
+        navigate('/payment/cancel')
+      } else {
+        setError(err.message || 'Payment failed. Please try again.')
+      }
+      setLoading(false)
+      return
+    }
 
+    try {
       await apiRequest('/api/payments/verify', {
         method: 'POST',
         body: JSON.stringify({
@@ -52,11 +80,10 @@ export default function StudentPayment() {
 
       navigate('/payment/success', { state: { orderId: result.orderId, paymentId: result.paymentId } })
     } catch (err) {
-      if (err.message === 'cancelled') {
-        navigate('/payment/cancel')
-        return
-      }
-      setError(err.message || 'Unable to start the payment. Please try again.')
+      // Payment was accepted by Razorpay but we could not verify it with our backend.
+      // Do not auto-cancel the order here: the charge may have actually succeeded,
+      // so surface the issue instead of mislabeling a possibly-successful payment.
+      setError(err.message || 'We could not confirm your payment. Please contact support with your payment details before retrying.')
     } finally {
       setLoading(false)
     }
@@ -78,26 +105,16 @@ export default function StudentPayment() {
         </div>
 
         <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-5">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-200" htmlFor="amount">Amount</label>
-              <input
-                id="amount"
-                type="number"
-                min="1"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                className="input-field"
-              />
-            </div>
-            <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-200" htmlFor="currency">Currency</label>
-              <select id="currency" value={currency} onChange={(e) => setCurrency(e.target.value)} className="input-field">
-                <option value="GBP">GBP (£)</option>
-                <option value="USD">USD ($)</option>
-                <option value="EUR">EUR (€)</option>
-              </select>
-            </div>
+          <div>
+            <label className="mb-2 block text-sm font-semibold text-slate-200" htmlFor="package">Package</label>
+            <select id="package" value={packageId} onChange={(e) => setPackageId(e.target.value)} className="input-field">
+              {PAYMENT_PACKAGES.map((pkg) => (
+                <option key={pkg.id} value={pkg.id}>
+                  {pkg.label} — £{pkg.amount}
+                </option>
+              ))}
+            </select>
+            <p className="mt-2 text-xs text-slate-400">{findPaymentPackage(packageId).description}</p>
           </div>
 
           {error && (

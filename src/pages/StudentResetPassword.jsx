@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { apiRequest } from '../lib/apiClient'
+import { useAutoDismiss } from '../lib/useAutoDismiss'
 
 const initialForm = {
   email: '',
@@ -19,6 +20,8 @@ export default function StudentResetPassword() {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
+  useAutoDismiss(message, () => setMessage(''))
+  useAutoDismiss(error, () => setError(''))
 
   function onChange(e) {
     const { name, value } = e.target

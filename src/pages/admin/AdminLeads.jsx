@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { apiRequest } from '../../lib/apiClient'
+import { useAutoDismiss } from '../../lib/useAutoDismiss'
 
 const EMPTY_FORM = {
   fullName: '',
@@ -16,6 +17,7 @@ export default function AdminLeads() {
   const [loading, setLoading] = useState(false)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
+  useAutoDismiss(error, () => setError(''))
 
   async function loadLeads() {
     setLoading(true)

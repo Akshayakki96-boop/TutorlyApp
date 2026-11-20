@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
 import { apiRequest } from '../../lib/apiClient'
+import { useAutoDismiss } from '../../lib/useAutoDismiss'
 
 export default function AdminDemo() {
   const [slotFilter, setSlotFilter] = useState({ fromUtc: '', toUtc: '' })
@@ -24,6 +25,8 @@ export default function AdminDemo() {
   const [bookingSortModel, setBookingSortModel] = useState([{ field: 'startTime', sort: 'asc' }])
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
+  useAutoDismiss(message, () => setMessage(''))
+  useAutoDismiss(error, () => setError(''))
 
   function buildQuery(params) {
     const query = new URLSearchParams()

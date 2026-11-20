@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { apiRequest } from '../../lib/apiClient'
 import { clearAuth } from '../../lib/authStorage'
+import { useAutoDismiss } from '../../lib/useAutoDismiss'
 
 const DAYS_OF_WEEK = {
   0: 'Sunday',
@@ -22,6 +23,8 @@ export default function AdminClassesManager() {
   const [rescheduleModal, setRescheduleModal] = useState(null)
   const [rescheduleData, setRescheduleData] = useState({ startTime: '', endTime: '', reason: '' })
   const [rescheduling, setRescheduling] = useState(false)
+  useAutoDismiss(error, () => setError(''))
+  useAutoDismiss(success, () => setSuccess(''))
 
   useEffect(() => {
     loadClasses()

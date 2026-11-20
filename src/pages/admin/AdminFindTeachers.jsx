@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import TeacherSuggestionList from '../../components/TeacherSuggestionList'
 import { apiRequest } from '../../lib/apiClient'
 import { clearAuth } from '../../lib/authStorage'
+import { useAutoDismiss } from '../../lib/useAutoDismiss'
 
 const DAYS_OF_WEEK = [
   { name: 'Sunday', value: 0 },
@@ -25,6 +26,8 @@ export default function AdminFindTeachers() {
   const [searching, setSearching] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
+  useAutoDismiss(error, () => setError(''))
+  useAutoDismiss(success, () => setSuccess(''))
 
   function validateForm() {
     setError('')

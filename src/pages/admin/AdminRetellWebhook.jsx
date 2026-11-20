@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { apiRequest } from '../../lib/apiClient'
+import { useAutoDismiss } from '../../lib/useAutoDismiss'
 
 const DEFAULT_PAYLOAD = {
   event: 'call.completed',
@@ -21,6 +22,7 @@ export default function AdminRetellWebhook() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [responseText, setResponseText] = useState('')
+  useAutoDismiss(error, () => setError(''))
 
   async function sendWebhook(e) {
     e.preventDefault()

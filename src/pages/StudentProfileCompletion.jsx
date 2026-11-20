@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { apiRequest } from '../lib/apiClient'
+import { useAutoDismiss } from '../lib/useAutoDismiss'
 import './StudentProfileCompletion.css'
 
 const PRIMARY_SUBJECT = 'Maths'
@@ -16,6 +17,7 @@ export default function StudentProfileCompletion() {
   const location = useLocation()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  useAutoDismiss(error, () => setError(null))
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',

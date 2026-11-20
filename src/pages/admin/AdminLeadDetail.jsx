@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { apiRequest } from '../../lib/apiClient'
+import { useAutoDismiss } from '../../lib/useAutoDismiss'
 
 export default function AdminLeadDetail() {
   const { id } = useParams()
   const [lead, setLead] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  useAutoDismiss(error, () => setError(''))
 
   useEffect(() => {
     let alive = true

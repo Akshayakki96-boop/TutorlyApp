@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { apiRequest } from '../../lib/apiClient'
+import { useAutoDismiss } from '../../lib/useAutoDismiss'
 
 const EMPTY_CREATE = { fullName: '', email: '', subjects: '', password: '' }
 const EMPTY_UPDATE = { id: '', fullName: '', email: '', subjects: '', password: '', isActive: true }
@@ -13,6 +14,7 @@ export default function AdminTeachers() {
   const [savingUpdate, setSavingUpdate] = useState(false)
   const [deletingId, setDeletingId] = useState(null)
   const [error, setError] = useState('')
+  useAutoDismiss(error, () => setError(''))
 
   async function loadTeachers() {
     setLoading(true)

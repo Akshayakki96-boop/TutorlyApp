@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useAutoDismiss } from '../lib/useAutoDismiss'
 
 const DAYS_OF_WEEK = [
   { name: 'Sunday', value: 0 },
@@ -14,6 +15,7 @@ export default function TimeSlotForm({ dayOfWeek, onSubmit, onCancel, loading = 
   const [startTime, setStartTime] = useState('09:00')
   const [endTime, setEndTime] = useState('10:00')
   const [error, setError] = useState('')
+  useAutoDismiss(error, () => setError(''))
 
   const dayName = DAYS_OF_WEEK.find(d => d.value === dayOfWeek)?.name || 'Unknown'
 

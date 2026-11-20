@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { apiRequest } from '../../lib/apiClient'
 import { clearAuth } from '../../lib/authStorage'
+import { useAutoDismiss } from '../../lib/useAutoDismiss'
 
 const DAYS_OF_WEEK = {
   0: 'Sunday',
@@ -35,6 +36,8 @@ export default function AdminAssignClass() {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   const [loadingStudents, setLoadingStudents] = useState(false)
+  useAutoDismiss(error, () => setError(''))
+  useAutoDismiss(success, () => setSuccess(''))
 
   // Load students on mount
   useEffect(() => {

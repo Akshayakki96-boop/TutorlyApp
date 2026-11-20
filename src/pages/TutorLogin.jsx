@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { apiRequest } from '../lib/apiClient'
 import { saveTeacherAuth } from '../lib/authStorage'
+import { useAutoDismiss } from '../lib/useAutoDismiss'
 
 export default function TutorLogin() {
   const navigate = useNavigate()
@@ -9,6 +10,7 @@ export default function TutorLogin() {
   const [form, setForm] = useState({ email: '', password: '' })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  useAutoDismiss(error, () => setError(''))
 
   const redirectPath = location.state?.from?.pathname || '/tutor-dashboard'
 

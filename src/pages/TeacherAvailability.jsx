@@ -4,6 +4,7 @@ import AvailabilityCalendar from '../components/AvailabilityCalendar'
 import TimeSlotForm from '../components/TimeSlotForm'
 import { apiRequest } from '../lib/apiClient'
 import { clearTeacherAuth } from '../lib/authStorage'
+import { useAutoDismiss } from '../lib/useAutoDismiss'
 
 export default function TeacherAvailability() {
   const navigate = useNavigate()
@@ -13,6 +14,8 @@ export default function TeacherAvailability() {
   const [success, setSuccess] = useState('')
   const [selectedDay, setSelectedDay] = useState(null)
   const [submitting, setSubmitting] = useState(false)
+  useAutoDismiss(error, () => setError(''))
+  useAutoDismiss(success, () => setSuccess(''))
 
   // Load availability on mount
   useEffect(() => {

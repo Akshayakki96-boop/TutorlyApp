@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { apiRequest } from '../lib/apiClient'
 import GoogleSignInButton from '../components/GoogleSignInButton'
 import { handleGoogleSignUp, formatGoogleAuthError } from '../lib/googleAuthUtils'
+import { useAutoDismiss } from '../lib/useAutoDismiss'
 
 const initialForm = {
   fullName: '',
@@ -31,6 +32,7 @@ export default function StudentRegister() {
   const [googleLoading, setGoogleLoading] = useState(false)
   const [error, setError] = useState('')
   const [registeredStudent, setRegisteredStudent] = useState(null)
+  useAutoDismiss(error, () => setError(''))
 
   function onChange(e) {
     const { name, value } = e.target

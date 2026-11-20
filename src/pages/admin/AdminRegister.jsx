@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { apiRequest } from '../../lib/apiClient'
+import { useAutoDismiss } from '../../lib/useAutoDismiss'
 
 export default function AdminRegister() {
   const navigate = useNavigate()
@@ -8,6 +9,8 @@ export default function AdminRegister() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
+  useAutoDismiss(error, () => setError(''))
+  useAutoDismiss(success, () => setSuccess(''))
 
   function onChange(e) {
     const { name, value } = e.target

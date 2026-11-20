@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { apiRequest } from '../../lib/apiClient'
 import { saveAuth } from '../../lib/authStorage'
+import { useAutoDismiss } from '../../lib/useAutoDismiss'
 
 export default function AdminLogin() {
   const navigate = useNavigate()
@@ -9,6 +10,7 @@ export default function AdminLogin() {
   const [form, setForm] = useState({ email: '', password: '' })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  useAutoDismiss(error, () => setError(''))
 
   const redirectPath = location.state?.from?.pathname || '/admin'
 

@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getApiBaseUrl, apiRequest } from '../../lib/apiClient'
+import { useAutoDismiss } from '../../lib/useAutoDismiss'
 
 export default function AdminDashboard() {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [stats, setStats] = useState({ leads: 0, teachers: 0, slots: 0, bookings: 0 })
+  useAutoDismiss(error, () => setError(''))
 
   useEffect(() => {
     let alive = true

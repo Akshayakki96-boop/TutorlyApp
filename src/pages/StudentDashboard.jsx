@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { apiRequest } from '../lib/apiClient'
 import { clearStudentAuth, getStudentUser } from '../lib/authStorage'
 import { openRazorpayCheckout } from '../lib/razorpayClient'
+import { PAYMENT_CURRENCY, PAYMENT_PACKAGES, findPaymentPackage } from '../data/paymentPackages'
+import { useAutoDismiss } from '../lib/useAutoDismiss'
 
 export default function StudentDashboard() {
   const navigate = useNavigate()
@@ -13,11 +15,13 @@ export default function StudentDashboard() {
   const [paymentDueDate, setPaymentDueDate] = useState(null)
   const [isPaymentDue, setIsPaymentDue] = useState(false)
   const [showAlternativePayment, setShowAlternativePayment] = useState(false)
-  const [paymentForm, setPaymentForm] = useState({ amount: '149', currency: 'GBP' })
+  const [paymentForm, setPaymentForm] = useState({ packageId: PAYMENT_PACKAGES[0].id })
   const [loadingPayments, setLoadingPayments] = useState(false)
   const [paying, setPaying] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
+  useAutoDismiss(error, () => setError(''))
+  useAutoDismiss(success, () => setSuccess(''))
 
   useEffect(() => {
     const currentStudent = getStudentUser() || { fullName: 'Student' }
@@ -45,7 +49,9 @@ export default function StudentDashboard() {
     setLoadingPayments(true)
 
     try {
-      const result = await apiRequest(`/api/payments/student/${studentId}`)
+      // Cache-bust: a unique query string + no-store avoids a stale cached
+      // response (browser or CDN) masking a status change we just made.
+      const result = await apiRequest(`/api/payments/student/${studentId}?_=${Date.now()}`, { cache: 'no-store' })
       setPayments(Array.isArray(result) ? result : [])
     } catch (err) {
       setError(err.message || 'Unable to load payment records.')
@@ -65,30 +71,54 @@ export default function StudentDashboard() {
       return
     }
 
-    const amount = Number(paymentForm.amount)
-    if (!amount || amount <= 0) {
-      setError('Please enter a valid payment amount.')
-      return
-    }
+    const selectedPackage = findPaymentPackage(paymentForm.packageId)
 
     setPaying(true)
 
+    let order
     try {
-      const order = await apiRequest('/api/payments/create-order', {
+      order = await apiRequest('/api/payments/create-order', {
         method: 'POST',
         body: JSON.stringify({
           studentId: Number(studentId),
-          amount,
-          currency: paymentForm.currency || 'GBP',
+          amount: selectedPackage.amount,
+          currency: PAYMENT_CURRENCY,
         }),
       })
+    } catch (err) {
+      setError(err.message || 'Unable to start the payment. Please try again.')
+      setPaying(false)
+      return
+    }
 
-      const result = await openRazorpayCheckout({
+    let result
+    try {
+      result = await openRazorpayCheckout({
         order,
         student: { name: order.studentName, email: order.studentEmail, contact: order.studentPhone },
         description: 'Tuition payment',
       })
+    } catch (err) {
+      // Covers every way checkout can end without a completed payment: the payer
+      // dismissing the modal ("cancelled") as well as a real decline from the bank
+      // or Razorpay's risk engine (payment.failed). Either way an order was created
+      // on the backend, so it must be marked failed/cancelled here - otherwise it is
+      // left stuck in "Created" status forever even though the payment never went through.
+      setError(err.message === 'cancelled' ? 'Payment was cancelled.' : (err.message || 'Payment failed. Please try again.'))
+      try {
+        await apiRequest('/api/payments/cancel', {
+          method: 'POST',
+          body: JSON.stringify({ razorpayOrderId: order.orderId }),
+        })
+      } catch (cancelErr) {
+        console.error('Failed to update payment status after a failed/cancelled checkout:', cancelErr)
+      }
+      await loadPayments(studentId)
+      setPaying(false)
+      return
+    }
 
+    try {
       await apiRequest('/api/payments/verify', {
         method: 'POST',
         body: JSON.stringify({
@@ -101,11 +131,10 @@ export default function StudentDashboard() {
       setSuccess('Payment received successfully. Thank you!')
       await loadPayments(studentId)
     } catch (err) {
-      if (err.message === 'cancelled') {
-        setError('Payment was cancelled.')
-      } else {
-        setError(err.message || 'Unable to process the payment right now.')
-      }
+      // Payment was accepted by Razorpay but we could not verify it with our backend.
+      // Do not auto-cancel the order here: the charge may have actually succeeded,
+      // so surface the issue instead of mislabeling a possibly-successful payment.
+      setError(err.message || 'We could not confirm your payment. Please contact support with your payment details before retrying.')
     } finally {
       setPaying(false)
     }
@@ -124,6 +153,7 @@ export default function StudentDashboard() {
   ], [dashboard])
 
   const isPaid = (payment) => ['completed', 'paid'].includes(String(payment.status || '').toLowerCase())
+  const isFailedOrCancelled = (payment) => ['failed', 'cancelled'].includes(String(payment.status || '').toLowerCase())
 
   const totalPaid = payments.reduce((sum, payment) => {
     return isPaid(payment) ? sum + Number(payment.amount || 0) : sum
@@ -243,23 +273,13 @@ export default function StudentDashboard() {
                   </div>
 
                   <div>
-                    <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200">Amount</label>
-                    <input
-                      type="number"
-                      step="0.01"
-                      min="1"
-                      value={paymentForm.amount}
-                      onChange={(e) => setPaymentForm((prev) => ({ ...prev, amount: e.target.value }))}
-                      className="input-field"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200">Currency</label>
-                    <select value={paymentForm.currency} onChange={(e) => setPaymentForm((prev) => ({ ...prev, currency: e.target.value }))} className="input-field">
-                      <option value="GBP">GBP</option>
-                      <option value="USD">USD</option>
-                      <option value="EUR">EUR</option>
+                    <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-200">Package</label>
+                    <select value={paymentForm.packageId} onChange={(e) => setPaymentForm((prev) => ({ ...prev, packageId: e.target.value }))} className="input-field">
+                      {PAYMENT_PACKAGES.map((pkg) => (
+                        <option key={pkg.id} value={pkg.id}>
+                          {pkg.label} — £{pkg.amount}
+                        </option>
+                      ))}
                     </select>
                   </div>
 
@@ -298,23 +318,13 @@ export default function StudentDashboard() {
                   ) : (
                     <form onSubmit={handlePayNow} className="space-y-3">
                       <div>
-                        <label className="mb-2 block text-xs font-semibold text-slate-700 dark:text-slate-200">Amount</label>
-                        <input
-                          type="number"
-                          step="0.01"
-                          min="1"
-                          value={paymentForm.amount}
-                          onChange={(e) => setPaymentForm((prev) => ({ ...prev, amount: e.target.value }))}
-                          className="input-field text-sm"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="mb-2 block text-xs font-semibold text-slate-700 dark:text-slate-200">Currency</label>
-                        <select value={paymentForm.currency} onChange={(e) => setPaymentForm((prev) => ({ ...prev, currency: e.target.value }))} className="input-field text-sm">
-                          <option value="GBP">GBP</option>
-                          <option value="USD">USD</option>
-                          <option value="EUR">EUR</option>
+                        <label className="mb-2 block text-xs font-semibold text-slate-700 dark:text-slate-200">Package</label>
+                        <select value={paymentForm.packageId} onChange={(e) => setPaymentForm((prev) => ({ ...prev, packageId: e.target.value }))} className="input-field text-sm">
+                          {PAYMENT_PACKAGES.map((pkg) => (
+                            <option key={pkg.id} value={pkg.id}>
+                              {pkg.label} — £{pkg.amount}
+                            </option>
+                          ))}
                         </select>
                       </div>
 
@@ -353,7 +363,7 @@ export default function StudentDashboard() {
                           <p className="text-sm font-bold text-slate-800 dark:text-slate-100">Payment #{payment.paymentId ?? payment.id ?? 'N/A'}</p>
                           <p className="text-xs text-slate-500 dark:text-slate-400">{payment.createdAt ? new Date(payment.createdAt).toLocaleDateString() : ''}</p>
                         </div>
-                        <span className={`rounded-full px-2.5 py-1 text-[10px] font-bold ${isPaid(payment) ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200' : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-200'}`}>{payment.status}</span>
+                        <span className={`rounded-full px-2.5 py-1 text-[10px] font-bold ${isPaid(payment) ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200' : isFailedOrCancelled(payment) ? 'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-200' : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-200'}`}>{payment.status}</span>
                       </div>
                       <p className="mt-3 text-lg font-black text-slate-900 dark:text-white">£{Number(payment.amount || 0).toFixed(2)}</p>
                     </div>

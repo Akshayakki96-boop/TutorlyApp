@@ -208,6 +208,12 @@ const ROUTES = [
     description: 'Improve maths skills with SkillBridge Tutors through personalised tuition, expert guidance and regular practice to build confidence and achieve better results.',
     canonical: `${BASE}/blogs/better-results-maths-tuition-private-maths-tutor/`,
   },
+  {
+    route: '/blogs/learn-maths-online-personalised-tutoring',
+    title: 'Learn Maths Online: How Personalised Tutoring Improves Skills',
+    description: 'Discover how to learn maths online with SkillBridge Tutors through one-to-one lessons, expert guidance and tailored practice to improve skills and boost confidence.',
+    canonical: `${BASE}/blogs/learn-maths-online-personalised-tutoring/`,
+  },
 ]
 
 // ── Helpers ───────────────────────────────────────────────────────────────────

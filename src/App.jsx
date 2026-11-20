@@ -9,6 +9,7 @@ import CookieBanner from './components/CookieBanner'
 import FloatingChat from './components/FloatingChat'
 import ProtectedRoute from './components/admin/ProtectedRoute'
 import StudentProtectedRoute from './components/student/StudentProtectedRoute'
+import TeacherProtectedRoute from './components/teacher/TeacherProtectedRoute'
 import AdminLayout from './components/admin/AdminLayout'
 import OrganizationSchema from './components/OrganizationSchema'
 import { initializeDailyFactsSystem } from './lib/dailyFactsManager'
@@ -127,8 +128,10 @@ function AppShell() {
             <Route path="/student/profile-completion" element={<StudentProfileCompletion />} />
           </Route>
 
-          <Route path="/tutor-dashboard" element={<TutorDash />} />
-          <Route path="/teacher/availability" element={<TeacherAvailability />} />
+          <Route element={<TeacherProtectedRoute />}>
+            <Route path="/tutor-dashboard" element={<TutorDash />} />
+            <Route path="/teacher/availability" element={<TeacherAvailability />} />
+          </Route>
           <Route path="/parent-portal" element={<ParentPortal />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/:slug" element={<BlogDetail />} />
